@@ -14,7 +14,7 @@ public class Hosed : MonoBehaviour
     private int Size;
     private LineRenderer LineDrawer;
     private float Theta = 0f;
-
+    public bool DebugDrawEditor = false;
     /// <summary>
     /// Start this instance.
     /// </summary>
@@ -63,5 +63,20 @@ public class Hosed : MonoBehaviour
 
         EdgeCollider.points = edgePoints;
         CurrentRadius = Radius;
+    }
+    void OnDrawGizmos()
+    {
+        if(DebugDrawEditor)
+        {
+            DebugDraw();
+        }
+    }
+    void DebugDraw()
+    {
+        Gizmos.color = Color.green;
+        for(int i = 0; i < EdgeCollider.points.Length; i++)
+        {
+            Gizmos.DrawLine(gameObject.transform.position, EdgeCollider.points[i]);
+        }
     }
 }

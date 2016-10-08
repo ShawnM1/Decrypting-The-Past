@@ -112,10 +112,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 232805280}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.69, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.17, y: -10.01, z: 0}
+  m_LocalScale: {x: 1, y: 0.45669007, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_Children: []
   m_Father: {fileID: 1818820094}
   m_RootOrder: 0
@@ -350,7 +350,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1001 &1683277396
 Prefab:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_IsKinematic
@@ -441,8 +441,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 8
-  NumPoints: 32
+  NumPoints: 26
   ThetaScale: 0.01
+  DebugDrawEditor: 1
 --- !u!68 &1818820092
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -457,37 +458,31 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
   - {x: 0, y: 8}
-  - {x: 1.5607226, y: 7.846282}
-  - {x: 3.0614676, y: 7.391036}
-  - {x: 4.444562, y: 6.651757}
-  - {x: 5.656854, y: 5.656854}
-  - {x: 6.6517572, y: 4.4445615}
-  - {x: 7.391036, y: 3.0614674}
-  - {x: 7.8462825, y: 1.5607219}
-  - {x: 8, y: -0.0000003496911}
-  - {x: 7.846282, y: -1.5607226}
-  - {x: 7.391036, y: -3.0614681}
-  - {x: 6.6517563, y: -4.444563}
-  - {x: 5.656854, y: -5.656854}
-  - {x: 4.4445615, y: -6.6517572}
-  - {x: 3.0614662, y: -7.391037}
-  - {x: 1.5607225, y: -7.8462825}
+  - {x: 1.9145254, y: 7.7675347}
+  - {x: 3.7177856, y: 7.083648}
+  - {x: 5.304981, y: 5.988086}
+  - {x: 6.583871, y: 4.5445175}
+  - {x: 7.48013, y: 2.836839}
+  - {x: 7.941671, y: 0.9642935}
+  - {x: 7.941671, y: -0.9642942}
+  - {x: 7.4801297, y: -2.8368397}
+  - {x: 6.58387, y: -4.544519}
+  - {x: 5.304981, y: -5.988086}
+  - {x: 3.7177844, y: -7.0836487}
+  - {x: 1.9145254, y: -7.7675347}
   - {x: -0.0000006993822, y: -8}
-  - {x: -1.5607239, y: -7.846282}
-  - {x: -3.0614674, y: -7.391036}
-  - {x: -4.4445624, y: -6.6517563}
-  - {x: -5.656855, y: -5.656853}
-  - {x: -6.651758, y: -4.44456}
-  - {x: -7.3910375, y: -3.061465}
-  - {x: -7.846282, y: -1.5607231}
-  - {x: -8, y: 0.000000095399045}
-  - {x: -7.846282, y: 1.5607233}
-  - {x: -7.3910356, y: 3.0614688}
-  - {x: -6.651756, y: 4.4445634}
-  - {x: -5.6568522, y: 5.656856}
-  - {x: -4.4445624, y: 6.651757}
-  - {x: -3.0614674, y: 7.3910365}
-  - {x: -1.5607219, y: 7.8462825}
+  - {x: -1.9145267, y: -7.7675343}
+  - {x: -3.7177856, y: -7.083648}
+  - {x: -5.304982, y: -5.9880853}
+  - {x: -6.583872, y: -4.5445166}
+  - {x: -7.4801307, y: -2.8368366}
+  - {x: -7.941671, y: -0.9642937}
+  - {x: -7.941671, y: 0.96429396}
+  - {x: -7.4801297, y: 2.8368404}
+  - {x: -6.58387, y: 4.54452}
+  - {x: -5.3049793, y: 5.9880877}
+  - {x: -3.7177856, y: 7.083648}
+  - {x: -1.9145247, y: 7.7675347}
   - {x: 0.0000013987644, y: 8}
 --- !u!120 &1818820093
 LineRenderer:
@@ -636,14 +631,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1818820090}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 232805281}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1820835851}
+  m_RootOrder: 0
 --- !u!50 &1818820096
 Rigidbody2D:
   serializedVersion: 2
@@ -672,3 +667,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad0c7f0cc915774ea3606761eabb040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LetterPrefab: {fileID: 1000013724231286, guid: 1cd1720b28cbfda46ba09c94d5357165,
+    type: 2}
+--- !u!1 &1820835850
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1820835851}
+  m_Layer: 0
+  m_Name: LetterPicker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820835851
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820835850}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.125, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 1818820094}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
