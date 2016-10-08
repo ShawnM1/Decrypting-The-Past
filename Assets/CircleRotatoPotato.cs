@@ -11,8 +11,10 @@ public class CircleRotatoPotato : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float h = Input.GetAxis("Horizontal");
-        Quaternion theRotation = transform.localRotation;
-        theRotation.z += .1f*h;
-        transform.rotation = theRotation;
+        ////Quaternion theRotation = transform.localRotation;
+        //theRotation.z += .1f*h;
+        float x = transform.rotation.eulerAngles.z;
+        x += .6f * h;
+        transform.rotation = Quaternion.Euler(0, 0, x);
     }
 }
