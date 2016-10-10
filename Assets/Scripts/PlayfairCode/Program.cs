@@ -33,6 +33,7 @@ namespace PlayfairCipher
                
             } else if (input.Equals("d"))
             {
+                Console.WriteLine("enter ciphertext to decrypt");
                 
                 
 
