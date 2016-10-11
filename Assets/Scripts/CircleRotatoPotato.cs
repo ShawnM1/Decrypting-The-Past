@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class CircleRotatoPotato : MonoBehaviour {
-
     Hosed hosed;
     private string alphabet = "abcdefghijklmnopqrstuvwxyz";
     int anglePerItem;
-    public GameObject LetterPrefab;
-    private EdgeCollider2D collider;
+    public TextMesh mesh;
+
+    public string CurrentString = "";
 	// Use this for initialization
 	void Start () {
         hosed = GetComponent<Hosed>();
-        collider = GetComponent<EdgeCollider2D>();
-        anglePerItem = 360 / hosed.NumPoints;
-        GenerateLetters();
+        anglePerItem = 360 / 25;
+        mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
 	}
 	
 	// Update is called once per frame
@@ -22,21 +22,18 @@ public class CircleRotatoPotato : MonoBehaviour {
         float z = transform.localEulerAngles.z; ;
         z += 1 * h;
         transform.eulerAngles = new Vector3(0, 0, z);
-        print(GetLetter());
+        mesh.text = GetLetter().ToString();
     }
     public char GetLetter()
     {
-        print(((int)transform.localEulerAngles.z / anglePerItem) % 360);
+        //print(((int)transform.localEulerAngles.z / anglePerItem) % 360);
         return alphabet[((int)transform.localEulerAngles.z / anglePerItem)];
     }
-    public void GenerateLetters()
+    public void AppendLetter()
     {
-        for(int i = 0; i < alphabet.Length; i++)
-        {
-            GameObject tmp = (GameObject)GameObject.Instantiate(LetterPrefab, new Vector3(collider.points[i].x, collider.points[i].y,this.transform.position.z),Quaternion.identity);
-            tmp.transform.parent = this.transform.parent;
-            tmp.GetComponent<TextMesh>().text = alphabet[i].ToString();
-
-        }
+        StringBuilder builder = new StringBuilder(CurrentString);
+        builder.Append(GetLetter().ToString());
+        CurrentString = builder.ToString();
+        print(CurrentString);
     }
 }
