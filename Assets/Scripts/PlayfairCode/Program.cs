@@ -441,6 +441,11 @@ namespace PlayfairCipher
             }
             return index;
         }
+        private static char[,] getMatrix()
+        {
+            return matrix;
+        }
+
 
 
     }
