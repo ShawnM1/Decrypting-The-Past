@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Text;
 
-public class CircleRotatoPotato : MonoBehaviour {
+public class CircleRotatoPotato : AnswerInput {
     Hosed hosed;
     private string alphabet = "abcdefghijklmnopqrstuvwxyz";
     int anglePerItem;
     public TextMesh mesh;
     public TextMesh resultMesh;
-
-    public string CurrentString = "";
+    
 	// Use this for initialization
 	void Start () {
         hosed = GetComponent<Hosed>();
@@ -27,10 +26,10 @@ public class CircleRotatoPotato : MonoBehaviour {
         mesh.text = GetLetter().ToString();
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            if (CurrentString.Length > 0)
+            if (currentText.Length > 0)
             {
-                CurrentString = CurrentString.Remove(CurrentString.Length - 1, 1);
-                resultMesh.text = CurrentString;
+                currentText = currentText.Remove(currentText.Length - 1, 1);
+                resultMesh.text = currentText;
             }
             
         }
@@ -42,10 +41,11 @@ public class CircleRotatoPotato : MonoBehaviour {
     }
     public void AppendLetter()
     {
-        StringBuilder builder = new StringBuilder(CurrentString);
+        StringBuilder builder = new StringBuilder(base.currentText);
         builder.Append(GetLetter().ToString());
-        CurrentString = builder.ToString();
-        resultMesh.text = CurrentString;
-        print(CurrentString);
+        base.currentText = builder.ToString();
+        resultMesh.text = base.currentText;
+        print(base.currentText);
     }
+
 }
