@@ -29,7 +29,8 @@ public class HUD : MonoBehaviour {
     }
     public void UISetup()
     {
-        BottomUIText.text = "Encrypt: " + gom.ceasarQuestionOne.plaintext +"with key: " + gom.ceasarQuestionOne.key;
+        // BottomUIText.text = "Encrypt: " + gom.ceasarQuestionOne.plaintext +"with key: " + gom.ceasarQuestionOne.key;
+        BottomUIText.text = gom.ceasarQuestionOne.message;
         TransitionIn();
     }
 }

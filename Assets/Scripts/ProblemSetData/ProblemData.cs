@@ -15,6 +15,37 @@ public class ProblemData : MonoBehaviour {
     
     public string ciphertext;
     public TextType ProblemType;
+    public string message;
+    public ProblemData(string key, string plaintext, string ciphertext, TextType ProblemType)
+    {
+        this.key = key;
+        this.plaintext = plaintext;
+        this.ciphertext = ciphertext;
+        this.ProblemType = ProblemType;
+        switch (ProblemType)
+        {
+            case TextType.PlainText:
+                {
+                    message = "Encrpyt " + plaintext + " with key of " + key;
+                    break;
+                }
+            case TextType.CipherText:
+                {
+                    message = "Decrpyt " + ciphertext + " with key of " + key;
+                    break;
+                }
+            default:
+                {
+                    message = "error";
+                    break;
+                }
+
+                
+
+                
+        }
+ 
+    }
      
 	// Use this for initialization
 	void Start () {
@@ -46,6 +77,8 @@ public class ProblemData : MonoBehaviour {
 
         }
     }
+    
+   
 
 
         
