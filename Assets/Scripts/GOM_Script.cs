@@ -9,7 +9,7 @@ public class GOM_Script : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ceasarQuestionOne = new ProblemData("1","hello", "ifmmp", TextType.PlainText);
+        ceasarQuestionOne = new ProblemData("1","hello", "ifmmp", TextType.CipherText);
      
     }
 	

@@ -6,7 +6,7 @@ using System.Collections;
     PlainText
 }
 
-public class ProblemData : MonoBehaviour {
+public class ProblemData : ScriptableObject {
     // Data
     
     public string key;
@@ -16,6 +16,7 @@ public class ProblemData : MonoBehaviour {
     public string ciphertext;
     public TextType ProblemType;
     public string message;
+
     public ProblemData(string key, string plaintext, string ciphertext, TextType ProblemType)
     {
         this.key = key;
@@ -24,12 +25,12 @@ public class ProblemData : MonoBehaviour {
         this.ProblemType = ProblemType;
         switch (ProblemType)
         {
-            case TextType.PlainText:
+            case TextType.CipherText:
                 {
                     message = "Encrpyt " + plaintext + " with key of " + key;
                     break;
                 }
-            case TextType.CipherText:
+            case TextType.PlainText:
                 {
                     message = "Decrpyt " + ciphertext + " with key of " + key;
                     break;
