@@ -18,7 +18,7 @@ public class PlayfairButton : MonoBehaviour {
     {
         if(Vector2.Distance(player.transform.position,this.transform.position) < 5)
         {
-            if(Input.GetKey(KeyCode.Return))
+            if(Input.GetKeyDown(KeyCode.Return))
             {
                 playfair.AppendCurrentText(mesh.text);
             }

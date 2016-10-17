@@ -555,7 +555,7 @@ public class Playfair : ProblemHandler
 
     public override void UpdateUI()
     {
-        throw new NotImplementedException();
+        HUD.SetTopText(CurrentText);
     }
 }
 

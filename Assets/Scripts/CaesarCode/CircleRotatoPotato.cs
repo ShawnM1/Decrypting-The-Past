@@ -25,7 +25,7 @@ public class CircleRotatoPotato : ProblemHandler {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
         float h = Input.GetAxis("Horizontal");
         float z = transform.localEulerAngles.z; ;
         z += 1 * h;
@@ -39,12 +39,11 @@ public class CircleRotatoPotato : ProblemHandler {
     }
     public override void UpdateUI()
     {
-        resultMesh.text = currentText;
+        resultMesh.text = CurrentText;
     }
 
     public override void OnGoToNextProblem()
     {
-        currentText = "";
         UpdateUI();
     }
 
