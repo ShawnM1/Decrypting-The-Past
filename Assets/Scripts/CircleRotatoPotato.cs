@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text;
+using System;
+using UnityEngine.SceneManagement;
 
-public class CircleRotatoPotato : AnswerInput {
+public class CircleRotatoPotato : ProblemHandler {
     Hosed hosed;
     private string alphabet = "abcdefghijklmnopqrstuvwxyz";
     int anglePerItem;
@@ -10,11 +12,16 @@ public class CircleRotatoPotato : AnswerInput {
     public TextMesh resultMesh;
     
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
+        problems = new ProblemData[2];
+        problems[0] = new ProblemData("1", "hello", "ifmmp", TextType.CipherText);
+        problems[1] = new ProblemData("2", "hello", "jgnnq", TextType.CipherText);
         hosed = GetComponent<Hosed>();
         anglePerItem = 360 / 25;
         mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
         resultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
+        print("Start Called");
+        base.Start();
 	}
 	
 	// Update is called once per frame
@@ -24,28 +31,26 @@ public class CircleRotatoPotato : AnswerInput {
         z += 1 * h;
         transform.eulerAngles = new Vector3(0, 0, z);
         mesh.text = GetLetter().ToString();
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            if (currentText.Length > 0)
-            {
-                currentText = currentText.Remove(currentText.Length - 1, 1);
-                resultMesh.text = currentText;
-            }
-            
-        }
+        base.Update();
     }
     public char GetLetter()
     {
-        //print(((int)transform.localEulerAngles.z / anglePerItem) % 360);
         return alphabet[((int)transform.localEulerAngles.z / anglePerItem)];
     }
-    public void AppendLetter()
+    public override void UpdateUI()
     {
-        StringBuilder builder = new StringBuilder(base.currentText);
-        builder.Append(GetLetter().ToString());
-        base.currentText = builder.ToString();
-        resultMesh.text = base.currentText;
-        print(base.currentText);
+        resultMesh.text = currentText;
     }
 
+    public override void OnGoToNextProblem()
+    {
+        currentText = "";
+        UpdateUI();
+    }
+
+    public override void OnAllProblemsSolved()
+    {
+        //Display Score window "YOU WIN"
+        SceneManager.LoadScene("PlayFair");
+    }
 }

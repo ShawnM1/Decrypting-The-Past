@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
   - enabled: 1
     path: Assets/Scenes/CaesarCipher.unity
+  - enabled: 1
+    path: Assets/Scenes/PlayFair.unity

@@ -10,7 +10,7 @@ public class LetterBlock : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
-        potato.AppendLetter();
+        potato.AppendCurrentText(potato.GetLetter().ToString());
 
     }
 }

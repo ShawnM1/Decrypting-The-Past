@@ -4,15 +4,15 @@ using System.Collections;
 
 public class HUD : MonoBehaviour {
     static Text BottomUIText;
+    static Text TopUIText;
     static Animator animator;
     private GOM_Script gom;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
+        TopUIText = this.transform.Find("UITopText").GetComponent<Text>();
         animator = GetComponent<Animator>();
-        gom = FindObjectOfType<GOM_Script>();
         print("Called");
-        UISetup();
 	}
 	
 	// Update is called once per frame
@@ -27,10 +27,14 @@ public class HUD : MonoBehaviour {
     {
         BottomUIText.text = text;
     }
-    public void UISetup()
+    public static void SetTopText(string text)
+    {
+        TopUIText.text = text;
+    }
+    public static void UISetup(ProblemData data)
     {
         // BottomUIText.text = "Encrypt: " + gom.ceasarQuestionOne.plaintext +"with key: " + gom.ceasarQuestionOne.key;
-        BottomUIText.text = gom.ceasarQuestionOne.message;
+        BottomUIText.text = data.message;
         TransitionIn();
     }
 }

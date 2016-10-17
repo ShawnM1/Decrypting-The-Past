@@ -3,13 +3,12 @@ using System.Collections;
 
 public class GOM_Script : MonoBehaviour {
     // public ProblemData[] problemDataArray;
-    public ProblemData ceasarQuestionOne;
-    public AnswerInput input;
+    //public ProblemData ceasarQuestionOne;
+    public ProblemHandler input;
     
 
 	// Use this for initialization
 	void Start () {
-        ceasarQuestionOne = new ProblemData("1","hello", "ifmmp", TextType.CipherText);
      
     }
 	
@@ -19,13 +18,17 @@ public class GOM_Script : MonoBehaviour {
 	}
     public void CheckAnswer()
     {
-        if(ceasarQuestionOne.compareResult(input.currentText))
+        /*if(input.problems[0].compareResult(input.currentText))
         {
             print("Correct");
         }
         else
         {
             print("Hosed");
+        }*/
+        if(input.GoToNextProblem())
+        {
+            
         }
     }
 }
