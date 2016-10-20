@@ -16,6 +16,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     }
     public virtual void Start()
     {
+        currentText = "iskyiq";
         HUD.UISetup(problems[currentProblem]);
     }
     public virtual void Update()
@@ -30,32 +31,42 @@ public abstract class ProblemHandler : MonoBehaviour {
             }
         }
     }
+    public void CickToGoToNextProblem()
+    {
+        GoToNextProblem();
+    }
     /// <summary>
     /// Checks to see if the problem is solved. If so, move on to the next problem. If its the last problem solved, show stats and go to the next level.
     /// </summary>
     /// <returns></returns>
     public bool GoToNextProblem()
     {
-        if(problems[currentProblem].compareResult(currentText))
+        if (currentProblem <= problems.Length - 1)
         {
-            currentProblem++;
-            currentText = "";
-            //Ghetto Way of skipping the rest of the execution
-            if(currentProblem > problems.Length - 1)
+            if (problems[currentProblem].compareResult(currentText))
             {
-                OnAllProblemsSolved();
-                return true;
+                currentProblem++;
+                currentText = "";
+                //Do UI BS
+                if(currentProblem <= problems.Length - 1)
+                {
+                    HUD.UISetup(problems[currentProblem]);
+                    OnGoToNextProblem();
+                    return true;
+                }
+                else
+                {
+                    OnAllProblemsSolved();
+                    return true;
+                }
             }
-            //Do UI BS
-            HUD.UISetup(problems[currentProblem]);
-            OnGoToNextProblem();
-            return true;
+            else
+            {
+                print("Wrong Answer .exe");
+                return false;
+            }
         }
-        else
-        {
-            print("Wrong Answer .exe");
-            return false;
-        }
+        return false;
     }
     /// <summary>
     /// Goes to the next problem

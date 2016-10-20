@@ -551,6 +551,7 @@ public class Playfair : ProblemHandler
     public override void OnAllProblemsSolved()
     {
         //Nex tLEvel
+        print("Winner my chicken dinner");
     }
 
     public override void UpdateUI()
