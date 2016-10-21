@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text;
+using System.Collections.Generic;
 
 public abstract class ProblemHandler : MonoBehaviour {
   
     public ProblemData[] problems = null;
+    public Queue<ProblemData> problemQueue = null;
     private string currentText = "";
     private int currentProblem = 0;
+
+    public int CurrentProblem
+    {
+        get
+        {
+            return currentProblem;
+        }
+    }
+
     public string CurrentText
     {
         get
@@ -45,6 +56,7 @@ public abstract class ProblemHandler : MonoBehaviour {
         {
             if (problems[currentProblem].compareResult(currentText))
             {
+
                 currentProblem++;
                 currentText = "";
                 //Do UI BS
@@ -67,6 +79,42 @@ public abstract class ProblemHandler : MonoBehaviour {
             }
         }
         return false;
+    }
+    public bool nextProblemTesting()
+    {
+        ProblemData currentProblem = problemQueue.Peek();
+        // if true, there are more problems to load if they get it right.
+        if (problemQueue.Count > 1)
+        {
+           if (currentProblem.compareResult(CurrentText))
+            {
+                problemQueue.Dequeue();
+                HUD.UISetup(problemQueue.Peek());
+                return true;
+            } else
+            {
+                print("Wrong answer.png");
+                return false;
+            }
+        } else if(problemQueue.Count ==1) {
+            if (currentProblem.compareResult(CurrentText))
+            {
+                problemQueue.Dequeue();
+                HUD.UISetup(problemQueue.Peek());
+                return true;
+            }
+            else
+            {
+                print("Wrong answer.png");
+                return false;
+            }
+        }
+        else
+        {
+            OnAllProblemsSolved();
+            return true;
+        }
+
     }
     /// <summary>
     /// Goes to the next problem

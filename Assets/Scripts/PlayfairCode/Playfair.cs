@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Playfair : ProblemHandler
 {
@@ -12,7 +13,7 @@ public class Playfair : ProblemHandler
     private string ciphertext;
     private static StringBuilder alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
     private string answer;
-    
+    private Text inputText;
 
     void Start()
     {
@@ -40,13 +41,29 @@ public class Playfair : ProblemHandler
 
         }
         Console.ReadLine();*/
+
+        inputText = GameObject.Find("InputText").GetComponent<Text>();
         problems = new ProblemData[1];
         problems[0] = new ProblemData("secret", "hello", "iskyiq", TextType.CipherText);
+        //problemQueue.Enqueue(new ProblemData("secret", "hello", "iskyiq", TextType.CipherText));
         ProblemSetup(problems[0]);
         base.Start();
         
 
     }
+
+    public void checkKeyInput()
+    {
+        if(inputText.text.Equals(formatKey(problems[CurrentProblem].key)))
+        {
+            print("Jolly good show my friend!");
+        }
+        else
+        {
+            print("Get hosed fine sir.");
+        }
+    }
+
     void ProblemSetup(ProblemData data)
     {
         keyword = data.key;
