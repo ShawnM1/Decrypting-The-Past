@@ -41,12 +41,11 @@ public class Playfair : ProblemHandler
 
         }
         Console.ReadLine();*/
-
         inputText = GameObject.Find("InputText").GetComponent<Text>();
-        problems = new ProblemData[1];
-        problems[0] = new ProblemData("secret", "hello", "iskyiq", TextType.CipherText);
-        //problemQueue.Enqueue(new ProblemData("secret", "hello", "iskyiq", TextType.CipherText));
-        ProblemSetup(problems[0]);
+        problems = new ProblemData[2];
+        problems[0] = new ProblemData(this,"secret", "hello", TextType.CipherText);
+        problems[1] = new ProblemData(this, "secret", "blah", TextType.PlainText);
+        //ProblemSetup(problems[0]);
         base.Start();
         
 
@@ -64,11 +63,13 @@ public class Playfair : ProblemHandler
         }
     }
 
-    void ProblemSetup(ProblemData data)
+     public override void ProblemSetup(ProblemData data)
     {
         keyword = data.key;
-        fillMatrix(keyword);
         //Call Grid here
+        fillMatrix(keyword);
+        data.ciphertext = GenerateCipherText();
+        CurrentProblemData.UpdateMessage();
         GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
         ciphertext = data.ciphertext;
         plaintext = data.plaintext;
@@ -142,6 +143,7 @@ public class Playfair : ProblemHandler
     /// <param name="key"></param>
     private static void fillMatrix(String key)
     {
+        alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
         String fKey = formatKey(key);
 
         StringBuilder formattedKey = new StringBuilder(fKey);
@@ -563,6 +565,7 @@ public class Playfair : ProblemHandler
     public override void OnGoToNextProblem()
     {
         //Recreate Matrix
+        base.OnGoToNextProblem();
     }
 
     public override void OnAllProblemsSolved()
@@ -574,6 +577,16 @@ public class Playfair : ProblemHandler
     public override void UpdateUI()
     {
         HUD.SetTopText(CurrentText);
+    }
+
+    public override string GenerateCipherText()
+    {
+        return encrypt(problems[CurrentProblem].plaintext);
+    }
+
+    public override string GeneratePlainText()
+    {
+        return "";
     }
 }
 

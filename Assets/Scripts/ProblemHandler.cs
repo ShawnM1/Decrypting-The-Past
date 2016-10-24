@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public abstract class ProblemHandler : MonoBehaviour {
   
     public ProblemData[] problems = null;
-    public Queue<ProblemData> problemQueue = null;
     private string currentText = "";
     private int currentProblem = 0;
 
@@ -25,9 +24,18 @@ public abstract class ProblemHandler : MonoBehaviour {
             return currentText;
         }
     }
+    public ProblemData CurrentProblemData
+    {
+        get
+        {
+            return problems[currentProblem];
+        }
+    }
+    
     public virtual void Start()
     {
-        currentText = "iskyiq";
+        currentText = "ISKYIQ";
+        ProblemSetup(CurrentProblemData);
         HUD.UISetup(problems[currentProblem]);
     }
     public virtual void Update()
@@ -56,14 +64,15 @@ public abstract class ProblemHandler : MonoBehaviour {
         {
             if (problems[currentProblem].compareResult(currentText))
             {
-
+                print("Correct");
                 currentProblem++;
                 currentText = "";
                 //Do UI BS
                 if(currentProblem <= problems.Length - 1)
                 {
-                    HUD.UISetup(problems[currentProblem]);
                     OnGoToNextProblem();
+                    HUD.UISetup(problems[currentProblem]);
+                    
                     return true;
                 }
                 else
@@ -80,46 +89,13 @@ public abstract class ProblemHandler : MonoBehaviour {
         }
         return false;
     }
-    public bool nextProblemTesting()
-    {
-        ProblemData currentProblem = problemQueue.Peek();
-        // if true, there are more problems to load if they get it right.
-        if (problemQueue.Count > 1)
-        {
-           if (currentProblem.compareResult(CurrentText))
-            {
-                problemQueue.Dequeue();
-                HUD.UISetup(problemQueue.Peek());
-                return true;
-            } else
-            {
-                print("Wrong answer.png");
-                return false;
-            }
-        } else if(problemQueue.Count ==1) {
-            if (currentProblem.compareResult(CurrentText))
-            {
-                problemQueue.Dequeue();
-                HUD.UISetup(problemQueue.Peek());
-                return true;
-            }
-            else
-            {
-                print("Wrong answer.png");
-                return false;
-            }
-        }
-        else
-        {
-            OnAllProblemsSolved();
-            return true;
-        }
-
-    }
     /// <summary>
     /// Goes to the next problem
     /// </summary>
-    public abstract void OnGoToNextProblem();
+    public virtual void OnGoToNextProblem()
+    {
+        ProblemSetup(CurrentProblemData);
+    }
     /// <summary>
     /// Event for what happens when all problems have been solved.
     /// </summary>
@@ -140,5 +116,8 @@ public abstract class ProblemHandler : MonoBehaviour {
         UpdateUI();
         print(currentText);
     }
+    public abstract string GenerateCipherText();
+    public abstract string GeneratePlainText();
+    public abstract void ProblemSetup(ProblemData data);
     
 }

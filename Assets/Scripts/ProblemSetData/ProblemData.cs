@@ -16,13 +16,15 @@ public class ProblemData : ScriptableObject {
     public string ciphertext;
     public TextType ProblemType;
     public string message;
+    ProblemHandler handler;
 
-    public ProblemData(string key, string plaintext, string ciphertext, TextType ProblemType)
+    public ProblemData(ProblemHandler _handler,string key, string plaintext,TextType ProblemType)
     {
         this.key = key;
         this.plaintext = plaintext;
-        this.ciphertext = ciphertext;
+        this.ciphertext = "";
         this.ProblemType = ProblemType;
+        handler = _handler;
         switch (ProblemType)
         {
             case TextType.CipherText:
@@ -47,10 +49,34 @@ public class ProblemData : ScriptableObject {
         }
  
     }
-     
+    public void UpdateMessage()
+    {
+        switch (ProblemType)
+        {
+            case TextType.CipherText:
+                {
+                    message = "Encrpyt " + plaintext + " with key of " + key;
+                    break;
+                }
+            case TextType.PlainText:
+                {
+                    message = "Decrpyt " + ciphertext + " with key of " + key;
+                    break;
+                }
+            default:
+                {
+                    message = "error";
+                    break;
+                }
+
+
+
+
+        }
+    }
 	// Use this for initialization
 	void Start () {
-	
+        
 	}
 	
 	// Update is called once per frame
@@ -59,6 +85,7 @@ public class ProblemData : ScriptableObject {
 	}
     public bool compareResult(string answer)
     {
+        answer = answer.ToLower();
         switch (ProblemType)
         {
             case TextType.PlainText:

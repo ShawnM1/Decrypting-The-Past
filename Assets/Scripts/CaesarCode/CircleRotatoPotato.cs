@@ -14,8 +14,8 @@ public class CircleRotatoPotato : ProblemHandler {
 	// Use this for initialization
 	public override void Start () {
         problems = new ProblemData[2];
-        problems[0] = new ProblemData("1", "hello", "ifmmp", TextType.CipherText);
-        problems[1] = new ProblemData("2", "hello", "jgnnq", TextType.CipherText);
+        problems[0] = new ProblemData(this,"1", "hello", TextType.CipherText);
+        problems[1] = new ProblemData(this,"2", "hello", TextType.CipherText);
         hosed = GetComponent<Hosed>();
         anglePerItem = 360 / 25;
         mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
@@ -51,5 +51,20 @@ public class CircleRotatoPotato : ProblemHandler {
     {
         //Display Score window "YOU WIN"
         SceneManager.LoadScene("PlayFair");
+    }
+
+    public override string GenerateCipherText()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override string GeneratePlainText()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ProblemSetup(ProblemData data)
+    {
+        throw new NotImplementedException();
     }
 }
