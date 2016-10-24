@@ -53,7 +53,7 @@ public class Playfair : ProblemHandler
 
     public void checkKeyInput()
     {
-        if(inputText.text.Equals(formatKey(problems[CurrentProblem].key)))
+        if(inputText.text.Equals(formatKey(CurrentProblemData.key)))
         {
             print("Jolly good show my friend!");
         }
@@ -581,7 +581,7 @@ public class Playfair : ProblemHandler
 
     public override string GenerateCipherText()
     {
-        return encrypt(problems[CurrentProblem].plaintext);
+        return encrypt(CurrentProblemData.plaintext);
     }
 
     public override string GeneratePlainText()
