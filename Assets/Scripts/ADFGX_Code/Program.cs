@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 
-class ADFGX_Cipher
+class ADFGX_Cipher : ProblemHandler
 {
     private string key;
     private string plaintext;
@@ -18,30 +18,23 @@ class ADFGX_Cipher
     static void Main(string[] args)
     {
         ADFGX_Cipher obj = new ADFGX_Cipher("312", "placeholder", "hello");
-        string ciphertext = obj.encrypt();
+        /*string ciphertext = obj.encrypt();
         Console.WriteLine("");
         Console.WriteLine(ciphertext);
         
-        Console.ReadLine();
+        Console.ReadLine();*/
     }
     public ADFGX_Cipher(string key, string ciphertext, string plaintext)
     {
         this.key = key;
         this.plaintext = plaintext;
         this.ciphertext = ciphertext;
-        matrix = new char[5, 5]{ 
-        
-                /*a*/  /*d*/ /*f*/ /*g*/ /*x*/
-       /*a*/     { 'b', 't', 'a', 'l', 'p'}, 
-       /*d*/     { 'd', 'h', 'o', 'z', 'k'}, 
-       /*f*/     { 'q', 'f', 'v', 's', 'n'}, 
-       /*g*/     { 'g', 'i', 'c', 'u', 'x'},
-       /*x*/     { 'm', 'r', 'e', 'w', 'y'}};
 
+    
     }
-    public string encrypt()
+    public string encrypt(string plaintext)
     {
-        string plaintext = this.plaintext;
+        // string plaintext = this.plaintext;
         StringBuilder matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
         char currentChar;
@@ -251,6 +244,48 @@ class ADFGX_Cipher
         return s;
 
     }
+    private static void fillMatrix()
+    {
+        System.Random r = new System.Random();
+        StringBuilder alphabet = new StringBuilder("abcdefghiklmnopqrstuvwxyz");
+        int alphabetLength = alphabet.Length - 1;
 
+        for (int i = 0; i < 5; i++)
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                int removeIndex = r.Next(0, alphabetLength);
+                matrix[i, k] = alphabet[removeIndex];
+                alphabet.Remove(removeIndex, 1);
+            }
+        }
+    }
+
+    public override void OnAllProblemsSolved()
+    {
+       
+    }
+
+    public override void UpdateUI()
+    {
+        
+    }
+
+    public override string GenerateCipherText()
+    {
+        return encrypt(CurrentProblemData.plaintext);
+    }
+
+    public override string GeneratePlainText()
+    {
+        return "";
+    }
+
+    public override void ProblemSetup(ProblemData data)
+    {
+        fillMatrix();
+
+
+    }
 }
 
