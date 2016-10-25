@@ -11,31 +11,32 @@ class ADFGX_Cipher : ProblemHandler
     private string key;
     private string plaintext;
     private string ciphertext;
+    private StringBuilder matrixText;
     private static char[,] table;
     static char[,] matrix;
 
 
-    static void Main(string[] args)
+    void start()
     {
-        ADFGX_Cipher obj = new ADFGX_Cipher("312", "placeholder", "hello");
-        /*string ciphertext = obj.encrypt();
-        Console.WriteLine("");
-        Console.WriteLine(ciphertext);
-        
-        Console.ReadLine();*/
+        problems = new ProblemData[2];
+        problems[0] = new ProblemData(this, "312", "hello", TextType.Encryption);
+        problems[1] = new ProblemData(this, "231", "hello", TextType.Decryption);
     }
-    public ADFGX_Cipher(string key, string ciphertext, string plaintext)
+
+
+    /*public ADFGX_Cipher(string key, string ciphertext, string plaintext)
     {
         this.key = key;
         this.plaintext = plaintext;
         this.ciphertext = ciphertext;
 
     
-    }
+    }*/
+
     public string encrypt(string plaintext)
     {
         // string plaintext = this.plaintext;
-        StringBuilder matrixText = new StringBuilder();
+        matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
         char currentChar;
         int currentCharRow;
@@ -114,6 +115,15 @@ class ADFGX_Cipher : ProblemHandler
         // return removeWhitespace(ciphertext.ToString());
         return ciphertext.ToString().Replace(" ", string.Empty);
         
+
+    }
+    public string decrypt(string ciphertext)
+    {
+        for (int i = 0; i < matrixText.Length; i+=2)
+        {
+           
+        }
+        return "";
 
     }
     public void fillTable(string matrixText)
@@ -263,7 +273,7 @@ class ADFGX_Cipher : ProblemHandler
 
     public override void OnAllProblemsSolved()
     {
-       
+        print("winner winner chicken dinner");
     }
 
     public override void UpdateUI()
