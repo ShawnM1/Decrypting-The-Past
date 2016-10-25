@@ -17,30 +17,6 @@ public class Playfair : ProblemHandler
 
     void Start()
     {
-        /*Console.WriteLine("Encrypt (E) or Decrypt (D)");
-        string input = Console.ReadLine().ToString().ToLower();
-        Console.WriteLine("enter a keyword");
-
-        keyword = Console.ReadLine();
-        fillMatrix(keyword);
-
-
-        if (input.Equals("e"))
-        {
-
-            Console.WriteLine("enter the plaintext to encrypt");
-            string plaintext = Console.ReadLine().ToString();
-            Console.WriteLine(encrypt(plaintext));
-
-
-        } else if (input.Equals("d"))
-        {
-            Console.WriteLine("enter ciphertext to decrypt");
-
-
-
-        }
-        Console.ReadLine();*/
         inputText = GameObject.Find("InputText").GetComponent<Text>();
         problems = new ProblemData[2];
         problems[0] = new ProblemData(this,"secret", "hello", TextType.Encryption);
@@ -53,6 +29,7 @@ public class Playfair : ProblemHandler
 
     public void checkKeyInput()
     {
+        print("Formatted Key: " + formatKey(CurrentProblemData.key));
         if(inputText.text.Equals(formatKey(CurrentProblemData.key)))
         {
             print("Jolly good show my friend!");
@@ -81,6 +58,7 @@ public class Playfair : ProblemHandler
         {
             answer = decrypt(ciphertext);
         }
+        base.ProblemSetup(data);
     }
 
     /// <summary>

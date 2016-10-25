@@ -18,7 +18,6 @@ public class UITextGrid : MonoBehaviour {
             {
 
                 GameObject objectElement = new GameObject();
-               
                 Text tmp = objectElement.AddComponent<Text>();
                 tmp.rectTransform.sizeDelta = new Vector2(10, 10);
                 objectElement = (GameObject)GameObject.Instantiate(objectElement,this.transform.position,Quaternion.identity);
