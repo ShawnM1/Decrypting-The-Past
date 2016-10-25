@@ -43,8 +43,8 @@ public class Playfair : ProblemHandler
         Console.ReadLine();*/
         inputText = GameObject.Find("InputText").GetComponent<Text>();
         problems = new ProblemData[2];
-        problems[0] = new ProblemData(this,"secret", "hello", TextType.CipherText);
-        problems[1] = new ProblemData(this, "secret", "blah", TextType.PlainText);
+        problems[0] = new ProblemData(this,"secret", "hello", TextType.Encryption);
+        problems[1] = new ProblemData(this, "secret", "blah", TextType.Decryption);
         //ProblemSetup(problems[0]);
         base.Start();
         
@@ -73,11 +73,11 @@ public class Playfair : ProblemHandler
         GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
         ciphertext = data.ciphertext;
         plaintext = data.plaintext;
-        if (data.ProblemType == TextType.CipherText)
+        if (data.ProblemType == TextType.Encryption)
         {
             answer = encrypt(plaintext);
         }
-        else if (data.ProblemType == TextType.PlainText)
+        else if (data.ProblemType == TextType.Decryption)
         {
             answer = decrypt(ciphertext);
         }

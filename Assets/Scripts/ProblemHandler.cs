@@ -34,13 +34,14 @@ public abstract class ProblemHandler : MonoBehaviour {
     #endregion
     public virtual void Start()
     {
-        currentText = "ISKYIQ";
         ProblemSetup(CurrentProblemData);
         HUD.UISetup(problems[currentProblem]);
     }
     
     public void CickToGoToNextProblem()
     {
+        print("PlainText: " + CurrentProblemData.plaintext);
+        print("CipherText: " + CurrentProblemData.ciphertext);
         GoToNextProblem();
     }
     /// <summary>
@@ -121,6 +122,18 @@ public abstract class ProblemHandler : MonoBehaviour {
     public abstract void UpdateUI();
     public abstract string GenerateCipherText();
     public abstract string GeneratePlainText();
-    public abstract void ProblemSetup(ProblemData data);
+    public virtual void ProblemSetup(ProblemData data)
+    {
+        CurrentProblemData.UpdateMessage();
+        if (CurrentProblemData.ProblemType == TextType.Encryption)
+        {
+            currentText = CurrentProblemData.ciphertext;
+        }
+        else
+        {
+            currentText = CurrentProblemData.plaintext;
+        }
+        HUD.UISetup(CurrentProblemData);
+    }
     #endregion
 }

@@ -14,8 +14,8 @@ public class CircleRotatoPotato : ProblemHandler {
 	// Use this for initialization
 	public override void Start () {
         problems = new ProblemData[2];
-        problems[0] = new ProblemData(this,"1", "hello", TextType.CipherText);
-        problems[1] = new ProblemData(this,"2", "hello", TextType.CipherText);
+        problems[0] = new ProblemData(this,"1", "hello", TextType.Encryption);
+        problems[1] = new ProblemData(this,"2", "hello", TextType.Decryption);
         hosed = GetComponent<Hosed>();
         anglePerItem = 360 / 25;
         mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
@@ -45,6 +45,7 @@ public class CircleRotatoPotato : ProblemHandler {
     public override void OnGoToNextProblem()
     {
         UpdateUI();
+        base.OnGoToNextProblem();
     }
 
     public override void OnAllProblemsSolved()
@@ -55,16 +56,43 @@ public class CircleRotatoPotato : ProblemHandler {
 
     public override string GenerateCipherText()
     {
-        throw new NotImplementedException();
+        return EncryptCipher(int.Parse(CurrentProblemData.key), CurrentProblemData.plaintext);
     }
 
     public override string GeneratePlainText()
     {
+        return EncryptCipher(-int.Parse(CurrentProblemData.key), CurrentProblemData.plaintext);
         throw new NotImplementedException();
     }
 
     public override void ProblemSetup(ProblemData data)
     {
-        throw new NotImplementedException();
+        base.ProblemSetup(data);
+    }
+    /// <summary>
+    /// This function can encrypt or decrypt a cipher depending wheather the key is positive.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public string EncryptCipher(int key, string message)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < message.Length; i++)
+        {
+            builder.Append(alphabet[(FindLetterPositionInAlpha(message[i]) + key) % 25]);
+        }
+        return builder.ToString();
+    }
+    private int FindLetterPositionInAlpha(char c)
+    {
+        for (int i = 0; i < alphabet.Length; i++)
+        {
+            if (c == alphabet[i])
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }

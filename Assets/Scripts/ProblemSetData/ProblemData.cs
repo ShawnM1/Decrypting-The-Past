@@ -2,8 +2,8 @@
 using System.Collections;
  public enum TextType
 {
-    CipherText,
-    PlainText
+    Encryption,
+    Decryption
 }
 
 public class ProblemData : ScriptableObject {
@@ -12,54 +12,35 @@ public class ProblemData : ScriptableObject {
     public string key;
    
     public string plaintext;
-    
     public string ciphertext;
     public TextType ProblemType;
     public string message;
     ProblemHandler handler;
+    string DisplayText;
 
     public ProblemData(ProblemHandler _handler,string key, string plaintext,TextType ProblemType)
     {
         this.key = key;
         this.plaintext = plaintext;
         this.ciphertext = "";
+
         this.ProblemType = ProblemType;
         handler = _handler;
-        switch (ProblemType)
-        {
-            case TextType.CipherText:
-                {
-                    message = "Encrpyt " + plaintext + " with key of " + key;
-                    break;
-                }
-            case TextType.PlainText:
-                {
-                    message = "Decrpyt " + ciphertext + " with key of " + key;
-                    break;
-                }
-            default:
-                {
-                    message = "error";
-                    break;
-                }
-
-                
-
-                
-        }
  
     }
     public void UpdateMessage()
     {
         switch (ProblemType)
         {
-            case TextType.CipherText:
+            case TextType.Encryption:
                 {
+                    ciphertext = handler.GenerateCipherText();
                     message = "Encrpyt " + plaintext + " with key of " + key;
                     break;
                 }
-            case TextType.PlainText:
+            case TextType.Decryption:
                 {
+                    ciphertext = handler.GenerateCipherText();
                     message = "Decrpyt " + ciphertext + " with key of " + key;
                     break;
                 }
@@ -68,32 +49,19 @@ public class ProblemData : ScriptableObject {
                     message = "error";
                     break;
                 }
-
-
-
-
         }
     }
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
     public bool compareResult(string answer)
     {
         answer = answer.ToLower();
         switch (ProblemType)
         {
-            case TextType.PlainText:
+            case TextType.Decryption:
                 {
                     return answer.Equals(plaintext.ToLower());
 
                 }
-            case TextType.CipherText:
+            case TextType.Encryption:
                 {
                     return answer.Equals(ciphertext.ToLower());
 
@@ -105,10 +73,4 @@ public class ProblemData : ScriptableObject {
 
         }
     }
-    
-   
-
-
-        
-    
 }
