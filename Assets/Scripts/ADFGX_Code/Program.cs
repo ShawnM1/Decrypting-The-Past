@@ -116,14 +116,65 @@ class ADFGX_Cipher : ProblemHandler
         return ciphertext.ToString().Replace(" ", string.Empty);
         
 
-    }
-    public string decrypt(string ciphertext)
+    }/// <summary>
+    /// Normally decryption works by taking the ciphertext and putting it into the correct
+    /// column positions/lengths in the key table to find the matrixText. Since we are always encrypting, we have the table
+    /// and matrixText already. Simply take the matrixText, and use the letter indexes to reference the matrix.
+    /// </summary>
+    /// <returns></returns>
+    public string decrypt()
     {
-        for (int i = 0; i < matrixText.Length; i+=2)
+        StringBuilder _ciphertext = new StringBuilder();
+       // match pair chars from matrixText to plaintext (in matrix)
+       for (int i = 0; i < matrixText.Length; i+=2)
         {
-           
+            char c1 = matrixText[i];
+            int indexChar1 = -1;
+
+            char c2 = matrixText[i + 1];
+            int indexChar2 = -1;
+
+            switch(c1)
+            {
+                case 'A':
+                    indexChar1 = 0;
+                    break;
+                case 'D':
+                    indexChar1 = 1;
+                    break;
+                case 'F':
+                    indexChar1 = 2;
+                    break;
+                case 'G':
+                    indexChar1 = 3;
+                    break;
+                    
+                case 'X':
+                    indexChar1 = 4;
+                    break;                  
+             }
+            switch(c2)
+            {
+                case 'A':
+                    indexChar2 = 0;
+                    break;
+                case 'D':
+                    indexChar2 = 1;
+                    break;
+                case 'F':
+                    indexChar2 = 2;
+                    break;
+                case 'G':
+                    indexChar2 = 3;
+                    break;
+                case 'X':
+                    indexChar2 = 4;
+                    break;
+            }
+            _ciphertext.Append(matrix[indexChar1, indexChar2]);
+
         }
-        return "";
+        return _ciphertext.ToString();
 
     }
     public void fillTable(string matrixText)
