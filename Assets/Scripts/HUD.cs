@@ -7,17 +7,35 @@ public class HUD : MonoBehaviour {
     static Text TopUIText;
     static Animator animator;
     private GOM_Script gom;
+    private GameObject pauseMenu;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
         TopUIText = this.transform.Find("UITopText").GetComponent<Text>();
         animator = GetComponent<Animator>();
+        pauseMenu = this.transform.Find("PauseMenu").gameObject;
         print("Called");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+            if (pauseMenu.active)
+            {
+               
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+            pauseMenu.SetActive(!pauseMenu.active);
+        }
+
+        
 	}
     public static void TransitionIn()
     {
@@ -36,5 +54,11 @@ public class HUD : MonoBehaviour {
         // BottomUIText.text = "Encrypt: " + gom.ceasarQuestionOne.plaintext +"with key: " + gom.ceasarQuestionOne.key;
         BottomUIText.text = data.message;
         TransitionIn();
+    }
+
+    public void resumeGameOnClick()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 }
