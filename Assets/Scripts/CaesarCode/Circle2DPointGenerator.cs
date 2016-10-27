@@ -2,7 +2,7 @@
 using System.Collections;
 
 [ExecuteInEditMode]
-public class Hosed : MonoBehaviour
+public class Circle2DPointGenerator : MonoBehaviour
 {
     public float Radius = 1.0f;
     public int NumPoints = 32;

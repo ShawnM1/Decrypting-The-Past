@@ -4,8 +4,8 @@ using System.Text;
 using System;
 using UnityEngine.SceneManagement;
 
-public class CircleRotatoPotato : ProblemHandler {
-    Hosed hosed;
+public class CaesarCipher : ProblemHandler {
+    Circle2DPointGenerator pointGenerator;
     private string alphabet = "abcdefghijklmnopqrstuvwxyz";
     int anglePerItem;
     public TextMesh mesh;
@@ -17,7 +17,7 @@ public class CircleRotatoPotato : ProblemHandler {
         AddProblem(new ProblemData(this,"1", TextType.Encryption));
         AddProblem(new ProblemData(this,"2", TextType.Decryption));
 
-        hosed = GetComponent<Hosed>();
+        pointGenerator = GetComponent<Circle2DPointGenerator>();
         anglePerItem = 360 / 25;
         mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
         resultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
