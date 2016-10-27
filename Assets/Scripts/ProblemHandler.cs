@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public abstract class ProblemHandler : MonoBehaviour {
 
     #region Variables
-    public ProblemData[] problems = null;
+    public List<string> _words = new List<string>();
+    public List<ProblemData> problems = new List<ProblemData>();
     private string currentText = "";
     private int currentProblem = 0;
     #endregion
@@ -32,6 +33,32 @@ public abstract class ProblemHandler : MonoBehaviour {
         }
     }
     #endregion
+    public void PopulateWordDictionary(params string[] words)
+    {
+        foreach(string x in words)
+        {
+            _words.Add(x.ToLower());
+        }
+    }
+    string GetRandomWord()
+    {
+        if(_words.Count > 0)
+        {
+            string tmp = _words[Random.Range(0, _words.Count)];
+            _words.Remove(tmp);
+            return tmp;
+        }
+        return null;
+    }
+    public void AddProblem(ProblemData data)
+    {
+        if(_words.Count > 0)
+        {
+            ProblemData tmp = new ProblemData(this, data.key, data.ProblemType);
+            tmp.plaintext = GetRandomWord();
+            problems.Add(tmp);
+        }
+    }
     public virtual void Start()
     {
         ProblemSetup(CurrentProblemData);
@@ -50,7 +77,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     /// <returns></returns>
     public bool GoToNextProblem()
     {
-        if (currentProblem <= problems.Length - 1)
+        if (currentProblem <= problems.Count - 1)
         {
             if (problems[currentProblem].compareResult(currentText))
             {
@@ -58,7 +85,7 @@ public abstract class ProblemHandler : MonoBehaviour {
                 currentProblem++;
                 currentText = "";
                 //Do UI BS
-                if(currentProblem <= problems.Length - 1)
+                if(currentProblem <= problems.Count - 1)
                 {
                     OnGoToNextProblem();
                     HUD.UISetup(problems[currentProblem]);

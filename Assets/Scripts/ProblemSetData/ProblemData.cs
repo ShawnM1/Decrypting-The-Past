@@ -18,7 +18,7 @@ public class ProblemData : ScriptableObject {
     ProblemHandler handler;
     string DisplayText;
 
-    public ProblemData(ProblemHandler _handler,string key, string plaintext,TextType ProblemType)
+    public ProblemData(ProblemHandler _handler,string key,TextType ProblemType)
     {
         this.key = key;
         this.plaintext = plaintext;

@@ -18,9 +18,9 @@ class ADFGX_Cipher : ProblemHandler
 
     void start()
     {
-        problems = new ProblemData[2];
-        problems[0] = new ProblemData(this, "312", "hello", TextType.Encryption);
-        problems[1] = new ProblemData(this, "231", "hello", TextType.Decryption);
+        PopulateWordDictionary("Car", "Hello");
+        AddProblem(new ProblemData(this, "312", TextType.Encryption));
+        AddProblem(new ProblemData(this, "231", TextType.Decryption));
     }
 
 

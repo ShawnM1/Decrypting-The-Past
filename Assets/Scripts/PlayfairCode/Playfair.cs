@@ -18,9 +18,9 @@ public class Playfair : ProblemHandler
     void Start()
     {
         inputText = GameObject.Find("InputText").GetComponent<Text>();
-        problems = new ProblemData[2];
-        problems[0] = new ProblemData(this,"secret", "hello", TextType.Encryption);
-        problems[1] = new ProblemData(this, "secret", "blah", TextType.Decryption);
+        PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
+        AddProblem(new ProblemData(this,"secret", TextType.Encryption));
+        AddProblem(new ProblemData(this, "secret", TextType.Decryption));
         //ProblemSetup(problems[0]);
         base.Start();
         
