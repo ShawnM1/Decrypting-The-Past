@@ -13,9 +13,12 @@ public class CaesarCipher : ProblemHandler {
     
 	// Use this for initialization
 	public override void Start () {
-        PopulateWordDictionary("Hello", "Cicirello");
+        PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         AddProblem(new ProblemData(this,"1", TextType.Encryption));
         AddProblem(new ProblemData(this,"2", TextType.Decryption));
+        AddProblem(new ProblemData(this, "3", TextType.Encryption));
+        AddProblem(new ProblemData(this, "4", TextType.Decryption));
+        AddProblem(new ProblemData(this, "5", TextType.Encryption));
 
         pointGenerator = GetComponent<Circle2DPointGenerator>();
         anglePerItem = 360 / 25;
