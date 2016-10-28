@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour {
     private GOM_Script gom;
     private GameObject pauseMenu;
     private static string previousBottomText;
+    private static bool showingWrongText = false;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -63,12 +64,17 @@ public class HUD : MonoBehaviour {
     }
     public static void ShowWrongAnswerText()
     {
-        previousBottomText = BottomUIText.text;
-        SetBottomText("Wrong Answer. Try Again!");
-        animator.SetTrigger("ShowWrongAnswer");
+        if (!showingWrongText)
+        {
+            showingWrongText = true;
+            previousBottomText = BottomUIText.text;
+            SetBottomText("Wrong Answer. Try Again!");
+            animator.SetTrigger("ShowWrongAnswer");
+        }
     }
     private void restorePreviousBottomText()
     {
+        showingWrongText = false;
         SetBottomText(previousBottomText);
         TransitionIn();
     }
