@@ -101,6 +101,7 @@ public abstract class ProblemHandler : MonoBehaviour {
             else
             {
                 print("Wrong Answer .exe");
+                HUD.ShowWrongAnswerText();
                 return false;
             }
         }
@@ -137,6 +138,10 @@ public abstract class ProblemHandler : MonoBehaviour {
                 UpdateUI();
             }
         }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            GoToNextProblem();
+        }
     }
     #region Abstract Methods (These are defined in Cipher)
     /// <summary>
@@ -152,13 +157,16 @@ public abstract class ProblemHandler : MonoBehaviour {
     public virtual void ProblemSetup(ProblemData data)
     {
         CurrentProblemData.UpdateMessage();
-        if (CurrentProblemData.ProblemType == TextType.Encryption)
+        if (Application.isEditor)
         {
-            currentText = CurrentProblemData.ciphertext;
-        }
-        else
-        {
-            currentText = CurrentProblemData.plaintext;
+            if (CurrentProblemData.ProblemType == TextType.Encryption)
+            {
+                currentText = CurrentProblemData.ciphertext;
+            }
+            else
+            {
+                currentText = CurrentProblemData.plaintext;
+            }
         }
         HUD.UISetup(CurrentProblemData);
     }

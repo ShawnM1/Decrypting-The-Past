@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour {
     static Animator animator;
     private GOM_Script gom;
     private GameObject pauseMenu;
+    private static string previousBottomText;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -51,7 +52,6 @@ public class HUD : MonoBehaviour {
     }
     public static void UISetup(ProblemData data)
     {
-        // BottomUIText.text = "Encrypt: " + gom.ceasarQuestionOne.plaintext +"with key: " + gom.ceasarQuestionOne.key;
         BottomUIText.text = data.message;
         TransitionIn();
     }
@@ -60,5 +60,16 @@ public class HUD : MonoBehaviour {
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
+    }
+    public static void ShowWrongAnswerText()
+    {
+        previousBottomText = BottomUIText.text;
+        SetBottomText("Wrong Answer. Try Again!");
+        animator.SetTrigger("ShowWrongAnswer");
+    }
+    private void restorePreviousBottomText()
+    {
+        SetBottomText(previousBottomText);
+        TransitionIn();
     }
 }
