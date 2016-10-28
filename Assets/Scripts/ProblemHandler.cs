@@ -140,7 +140,7 @@ public abstract class ProblemHandler : MonoBehaviour {
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            GoToNextProblem();
+            //GoToNextProblem();
         }
     }
     #region Abstract Methods (These are defined in Cipher)
