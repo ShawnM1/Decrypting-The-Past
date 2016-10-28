@@ -13,6 +13,7 @@ public class CaesarCipher : ProblemHandler {
     
 	// Use this for initialization
 	public override void Start () {
+        HUD.SetTopText("Ceasar Cipher");
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         AddProblem(new ProblemData(this,"1", TextType.Encryption));
         AddProblem(new ProblemData(this,"2", TextType.Decryption));
