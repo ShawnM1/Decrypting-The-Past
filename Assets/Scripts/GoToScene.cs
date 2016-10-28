@@ -6,7 +6,14 @@ public class GoToScene : MonoBehaviour {
 
 	public void goToScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(GoToSceneEnumerator(sceneName));
+    }
+    IEnumerator GoToSceneEnumerator(string sceneName)
+    {
+        Time.timeScale = 1;
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+        yield return async;
+        Debug.Log("Loading complete");
     }
     public void ExitToOS()
     {
