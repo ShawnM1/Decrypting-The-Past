@@ -17,7 +17,7 @@ public class Playfair : ProblemHandler
 
     void Start()
     {
-        HUD.SetTopText("Playfair Cipher");
+        //HUD.SetTopText("Playfair Cipher");
         inputText = GameObject.Find("InputText").GetComponent<Text>();
         PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
         AddProblem(new ProblemData(this,"secret", TextType.Encryption));
