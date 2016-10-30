@@ -14,11 +14,21 @@ public class Playfair : ProblemHandler
     private static StringBuilder alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
     private string answer;
     private Text inputText;
+    private Button inputTextButton;
+    private GameObject KeyInput;
+    private int matrixCounter = 0;
+    private GameObject gameObjectMatrix;
+    private GameObject player;
 
     void Start()
     {
         //HUD.SetTopText("Playfair Cipher");
+        LockInput();
         inputText = GameObject.Find("InputText").GetComponent<Text>();
+        inputTextButton = GameObject.Find("InputTextButton").GetComponent<Button>();
+        KeyInput = GameObject.Find("KeyInputCanvas");
+        gameObjectMatrix = GameObject.Find("Grid");
+        player = GameObject.Find("CharacterRobotBoy");
         PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
         AddProblem(new ProblemData(this,"secret", TextType.Encryption));
         AddProblem(new ProblemData(this, "secret", TextType.Decryption));
@@ -33,22 +43,92 @@ public class Playfair : ProblemHandler
         print("Formatted Key: " + formatKey(CurrentProblemData.key));
         if(inputText.text.Equals(formatKey(CurrentProblemData.key)))
         {
-            print("Jolly good show my friend!");
+            //Correct Move to step 2
+            if(CurrentProblemData.ProblemType == TextType.Encryption)
+            {
+                inputTextButton.onClick.RemoveAllListeners();
+                inputTextButton.onClick.AddListener(checkPlainTextInput);
+                HUD.SetTopText("Please Format the PlainText");
+            }
+            else
+            {
+
+                //Fill Matrix
+                SetupMatrixInput();
+            }
         }
         else
         {
             print("Get hosed fine sir.");
         }
     }
+    public void checkPlainTextInput()
+    {
+        print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.plaintext));
+        if(inputText.text.Equals(formatPlaintext(CurrentProblemData.plaintext)))
+        {
+            ///Next we fill the matrix
+            ///Call the matrix UI
+            SetupMatrixInput();
+        }
+    }
+    public string GetRow(int row)
+    {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < 5; i++)
+        {
+            builder.Append(matrix[row, i]);
+        }
+        return builder.ToString();
+    }
+    public void checkMatrixInput()
+    {
+        print("Matrix Row " + matrixCounter + ": " + GetRow(matrixCounter));
+        if (inputText.text.Equals(GetRow(matrixCounter)) && (matrixCounter < 5))
+        {
+            matrixCounter++;
+            HUD.SetTopText("Please enter the " + (matrixCounter) + " row of the matrix");
+            if(matrixCounter > 4)
+            {
+                //Fade the UI out and Display the matrix and play the game
+                ShowMatrix();
+                matrixCounter = 0;
+                inputTextButton.onClick.RemoveAllListeners();
+            }
+        }
+        else
+        {
+            print("Matrix is wrong");
+        }
+    }
+    void ShowMatrix()
+    {
+        UnlockInput();
+        gameObjectMatrix.SetActive(true);
+        player.SetActive(true);
+    }
+    void SetupMatrixInput()
+    {
+        inputTextButton.onClick.RemoveAllListeners();
+        inputTextButton.onClick.AddListener(checkMatrixInput);
+        HUD.SetTopText("Please enter the 0 row of the Matrix");
+        matrixCounter = 0;
+    }
 
      public override void ProblemSetup(ProblemData data)
     {
         keyword = data.key;
         //Call Grid here
+        HUD.SetTopText("Please Format the Key");
+        player.SetActive(false);
+        LockInput();
+        KeyInput.SetActive(true);
+        inputTextButton.onClick.AddListener(checkKeyInput);
         fillMatrix(keyword);
         data.ciphertext = GenerateCipherText();
         CurrentProblemData.UpdateMessage();
-        GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
+        gameObjectMatrix.GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
+        gameObjectMatrix.SetActive(false);
         ciphertext = data.ciphertext;
         plaintext = data.plaintext;
         if (data.ProblemType == TextType.Encryption)

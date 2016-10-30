@@ -16,11 +16,14 @@ public class PlayfairButton : MonoBehaviour {
 	
     void FixedUpdate()
     {
-        if(Vector2.Distance(player.transform.position,this.transform.position) < 5)
+        if (player.active)
         {
-            if(Input.GetKeyDown(KeyCode.Return))
+            if (Vector2.Distance(player.transform.position, this.transform.position) < 5)
             {
-                playfair.AppendCurrentText(mesh.text);
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    playfair.AppendCurrentText(mesh.text);
+                }
             }
         }
     }

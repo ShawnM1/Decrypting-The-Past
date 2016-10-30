@@ -8,6 +8,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     #region Variables
     public List<string> _words = new List<string>();
     public List<ProblemData> problems = new List<ProblemData>();
+    private bool lockInput = false;
     private string currentText = "";
     private int currentProblem = 0;
     #endregion
@@ -130,18 +131,29 @@ public abstract class ProblemHandler : MonoBehaviour {
     public virtual void Update()
     {
         //Handles deleting a character off the end of current text
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (!lockInput)
         {
-            if (currentText.Length > 0)
+            if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                currentText = currentText.Remove(currentText.Length - 1, 1);
-                UpdateUI();
+                if (currentText.Length > 0)
+                {
+                    currentText = currentText.Remove(currentText.Length - 1, 1);
+                    UpdateUI();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                //GoToNextProblem();
             }
         }
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            //GoToNextProblem();
-        }
+    }
+    public void UnlockInput()
+    {
+        lockInput = false;
+    }
+    public void LockInput()
+    {
+        lockInput = true;
     }
     #region Abstract Methods (These are defined in Cipher)
     /// <summary>
