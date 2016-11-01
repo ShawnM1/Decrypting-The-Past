@@ -12,15 +12,18 @@ class ADFGX_Cipher : ProblemHandler
     private string plaintext;
     private string ciphertext;
     private StringBuilder matrixText;
-    private static char[,] table;
-    static char[,] matrix;
+    public static char[,] table;
+    public static char[,] matrix = new char[5,5];
 
 
     void start()
     {
+        fillMatrix();
+        printMatrix();
         PopulateWordDictionary("Car", "Hello");
         AddProblem(new ProblemData(this, "312", TextType.Encryption));
         AddProblem(new ProblemData(this, "231", TextType.Decryption));
+        
     }
 
 
@@ -35,7 +38,7 @@ class ADFGX_Cipher : ProblemHandler
 
     public string encrypt(string plaintext)
     {
-        // string plaintext = this.plaintext;
+
         matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
         char currentChar;
@@ -227,7 +230,8 @@ class ADFGX_Cipher : ProblemHandler
         {
             for (int k = 0; k < 5; k++)
             {
-                char temp = matrix[i, k];
+                char temp;
+                temp = matrix[i, k];
                 if (c.Equals(temp))
                 {
                     row = i;
@@ -347,6 +351,24 @@ class ADFGX_Cipher : ProblemHandler
         fillMatrix();
 
 
+    }
+    public void printTesting()
+    {
+        print(encrypt("hello"));
+    }
+    public void printMatrix()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            if (i > 0)
+            {
+                print("\n");
+            }
+            for (int k = 0; k < 5; k++)
+            {
+                print(matrix[i, k]);
+            }
+        }
     }
 }
 
