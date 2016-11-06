@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
 class ADFGX_Cipher : ProblemHandler
 {
-    private string key;
+    private string CurrentProblemData;
     private string plaintext;
     private string ciphertext;
     private StringBuilder matrixText;
@@ -16,14 +17,16 @@ class ADFGX_Cipher : ProblemHandler
     public static char[,] matrix = new char[5,5];
 
 
-    void start()
+    void Start()
     {
         fillMatrix();
-        printMatrix();
+       // printMatrix();
         PopulateWordDictionary("Car", "Hello");
-        AddProblem(new ProblemData(this, "312", TextType.Encryption));
-        AddProblem(new ProblemData(this, "231", TextType.Decryption));
-        
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
+        GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
+        base.Start();
+        print("ct " + this.GenerateCipherText());
     }
 
 
@@ -35,7 +38,76 @@ class ADFGX_Cipher : ProblemHandler
 
     
     }*/
+    public string generateRandomKey()
+    {
+        StringBuilder key = new StringBuilder();
+        StringBuilder keyOptions = new StringBuilder("1234");
+        System.Random r = new System.Random();
+        while(keyOptions.Length > 0)
+        {
+            int randomPos = r.Next(0, keyOptions.Length - 1);
+            key.Append(keyOptions[randomPos]);
+            keyOptions.Remove(randomPos, 1);
+        }
+        return key.ToString();
 
+    }
+    public void checkMatrixText()
+    {
+        if(matrixText.Equals(GameObject.Find("InputField").GetComponent<Text>().text))
+        {
+            // Now they can fill the table accordingly.
+
+        }
+    }
+    public string getEncodedCharText(char c)
+    {
+        StringBuilder encodedCharText = new StringBuilder();
+        int charRow = getCharRowIndex(c);
+        int charCol = getCharColIndex(c);
+
+       // print(c +  "              "  +"Row :   " + charRow + " Col :  " + charCol);
+
+        switch (charRow)
+        {
+            case 0:
+                encodedCharText.Append('A');
+                break;
+            case 1:
+                encodedCharText.Append('D');
+                break;
+            case 2:
+                encodedCharText.Append('F');
+                break;
+            case 3:
+                encodedCharText.Append('G');
+                break;
+            case 4:
+                encodedCharText.Append('X');
+                break;
+        }
+        switch (charCol)
+        {
+            case 0:
+                encodedCharText.Append('A');
+                break;
+            case 1:
+                encodedCharText.Append('D');
+                break;
+            case 2:
+                encodedCharText.Append('F');
+                break;
+            case 3:
+                encodedCharText.Append('G');
+                break;
+            case 4:
+                encodedCharText.Append('X');
+                break;
+        }
+
+        return encodedCharText.ToString();
+
+    }
     public string encrypt(string plaintext)
     {
 
@@ -46,7 +118,12 @@ class ADFGX_Cipher : ProblemHandler
         int currentCharCol;
         for (int i = 0; i < plaintext.Length; i++)
         {
-            currentChar = plaintext[i];
+           // matrixText.Append(getEncodedCharText(plaintext[i]));
+
+
+
+
+           currentChar = plaintext[i];
             currentCharRow = getCharRowIndex(currentChar);
             currentCharCol = getCharColIndex(currentChar);
 
@@ -86,16 +163,16 @@ class ADFGX_Cipher : ProblemHandler
                     matrixText.Append('X');
                     break;
             }
-
+            
         }
         fillTable(matrixText.ToString());
 
-        for (int i = 0; i < key.Length; i++)
+        for (int i = 0; i < base.CurrentProblemData.key.Length; i++)
         {
            
-            string s = (i+1).ToString();
-            int index = key.IndexOf(s);
-            switch(key.IndexOf(s))
+            string s = (i + 1).ToString();
+            int index = base.CurrentProblemData.key.IndexOf(s);
+            switch(base.CurrentProblemData.key.IndexOf(s))
             {
                 case 0:
                     ciphertext.Append(getColumn(index));
@@ -184,8 +261,7 @@ class ADFGX_Cipher : ProblemHandler
     {
         StringBuilder text = new StringBuilder(matrixText);
 
-        int numOfCols = key.Length;
-
+        int numOfCols = base.CurrentProblemData.key.Length;
         int numOfRows;
         if (text.Length % numOfCols != 0)
         {
@@ -313,13 +389,13 @@ class ADFGX_Cipher : ProblemHandler
     {
         System.Random r = new System.Random();
         StringBuilder alphabet = new StringBuilder("abcdefghiklmnopqrstuvwxyz");
-        int alphabetLength = alphabet.Length - 1;
 
         for (int i = 0; i < 5; i++)
         {
             for (int k = 0; k < 5; k++)
             {
-                int removeIndex = r.Next(0, alphabetLength);
+                int removeIndex = r.Next(0, alphabet.Length);
+                //print(removeIndex + " " + alphabet);
                 matrix[i, k] = alphabet[removeIndex];
                 alphabet.Remove(removeIndex, 1);
             }
@@ -333,12 +409,12 @@ class ADFGX_Cipher : ProblemHandler
 
     public override void UpdateUI()
     {
-        
+        HUD.SetTopText(CurrentText);
     }
 
     public override string GenerateCipherText()
     {
-        return encrypt(CurrentProblemData.plaintext);
+        return encrypt(base.CurrentProblemData.plaintext);
     }
 
     public override string GeneratePlainText()
@@ -349,7 +425,7 @@ class ADFGX_Cipher : ProblemHandler
     public override void ProblemSetup(ProblemData data)
     {
         fillMatrix();
-
+        base.ProblemSetup(data);
 
     }
     public void printTesting()
@@ -366,7 +442,7 @@ class ADFGX_Cipher : ProblemHandler
             }
             for (int k = 0; k < 5; k++)
             {
-                print(matrix[i, k]);
+                print(matrix[i, k].ToString()); 
             }
         }
     }

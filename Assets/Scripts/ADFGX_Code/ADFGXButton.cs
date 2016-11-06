@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayfairButton : MonoBehaviour {
+public class ADFGXButton : MonoBehaviour
+{
 
     public int DetectionRadius = 5;
     GameObject player;
     TextMesh mesh;
-    ProblemHandler handler;
-	// Use this for initialization
-	void Start () {
+    ADFGX_Cipher handler;
+    // Use this for initialization
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         mesh = GetComponent<TextMesh>();
-        handler = GameObject.FindObjectOfType<ProblemHandler>();
-	}
-	
+        handler = GameObject.FindObjectOfType<ADFGX_Cipher>();
+    }
+
     void FixedUpdate()
     {
         if (player.active)
@@ -22,7 +24,7 @@ public class PlayfairButton : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    handler.AppendCurrentText(mesh.text);
+                    handler.AppendCurrentText(handler.getEncodedCharText(mesh.text[0]));
                 }
             }
         }
