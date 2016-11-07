@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 class ADFGX_Cipher : ProblemHandler
 {
+    private StringBuilder encodedCharText = new StringBuilder();
     private string CurrentProblemData;
     private string plaintext;
     private string ciphertext;
@@ -26,7 +27,7 @@ class ADFGX_Cipher : ProblemHandler
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
         GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
         base.Start();
-        print("ct " + this.GenerateCipherText());
+      //  print("ct " + this.GenerateCipherText());
     }
 
 
@@ -62,58 +63,52 @@ class ADFGX_Cipher : ProblemHandler
     }
     public string getEncodedCharText(char c)
     {
-        StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
-        int charCol = getCharColIndex(c);
-        StringBuilder tempTesting = new StringBuilder();
-        // breakpoint
-        print(c +  "              "  +"Row :   " + charRow + " Col :  " + charCol);
+        int charCol = getCharColIndex(c);       
         // breakpoint
        // print(matrix);
 
         switch (charRow)
         {
             case 1:
-               tempTesting.Append('A');
+               encodedCharText.Append('A');
                 break;
             case 2:
-                tempTesting.Append('D');
+                encodedCharText.Append('D');
                 break;
             case 3:
-                tempTesting.Append('F');
+                encodedCharText.Append('F');
                 break;
             case 4:
-                tempTesting.Append('G');
+                encodedCharText.Append('G');
                 break;
             case 5:
-                tempTesting.Append('X');
+                encodedCharText.Append('X');
                 break;
         }
         switch (charCol)
         {
             case 1:
-                tempTesting.Append('A');
+                encodedCharText.Append('A');
                 break;
             case 2:
-                tempTesting.Append('D');
+                encodedCharText.Append('D');
                 break;
             case 3:
-                tempTesting.Append('F');
+                encodedCharText.Append('F');
                 break;
             case 4:
-                tempTesting.Append('G');
+                encodedCharText.Append('G');
                 break;
             case 5:
-                tempTesting.Append('X');
+                encodedCharText.Append('X');
                 break;
         }
         // breakpoint
-        print("char " + c + " is : " + tempTesting);
+        print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);
         // breakpoint
-        encodedCharText.Append(tempTesting);
-        // breakpoint
-        print(encodedCharText);
-        return encodedCharText.ToString();
+        // print(encodedCharText);
+        return "matrix text : " + encodedCharText.ToString();
 
     }
     public string encrypt(string plaintext)
@@ -127,9 +122,6 @@ class ADFGX_Cipher : ProblemHandler
         for (int i = 0; i < plaintext.Length; i++)
         {
             matrixText.Append(getEncodedCharText(plaintext[i]));
-
-
-
             /*
             currentChar = plaintext[i];
             currentCharRow = getCharRowIndex(currentChar);
