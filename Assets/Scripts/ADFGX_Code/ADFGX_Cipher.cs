@@ -65,46 +65,54 @@ class ADFGX_Cipher : ProblemHandler
         StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
         int charCol = getCharColIndex(c);
-
-       // print(c +  "              "  +"Row :   " + charRow + " Col :  " + charCol);
+        StringBuilder tempTesting = new StringBuilder();
+        // breakpoint
+        print(c +  "              "  +"Row :   " + charRow + " Col :  " + charCol);
+        // breakpoint
+        print(matrix);
 
         switch (charRow)
         {
             case 0:
-                encodedCharText.Append('A');
+               tempTesting.Append('A');
                 break;
             case 1:
-                encodedCharText.Append('D');
+                tempTesting.Append('D');
                 break;
             case 2:
-                encodedCharText.Append('F');
+                tempTesting.Append('F');
                 break;
             case 3:
-                encodedCharText.Append('G');
+                tempTesting.Append('G');
                 break;
             case 4:
-                encodedCharText.Append('X');
+                tempTesting.Append('X');
                 break;
         }
         switch (charCol)
         {
             case 0:
-                encodedCharText.Append('A');
+                tempTesting.Append('A');
                 break;
             case 1:
-                encodedCharText.Append('D');
+                tempTesting.Append('D');
                 break;
             case 2:
-                encodedCharText.Append('F');
+                tempTesting.Append('F');
                 break;
             case 3:
-                encodedCharText.Append('G');
+                tempTesting.Append('G');
                 break;
             case 4:
-                encodedCharText.Append('X');
+                tempTesting.Append('X');
                 break;
         }
-
+        // breakpoint
+        print("char " + c + " is : " + tempTesting);
+        // breakpoint
+        encodedCharText.Append(tempTesting);
+        // breakpoint
+        print(encodedCharText);
         return encodedCharText.ToString();
 
     }
@@ -118,12 +126,12 @@ class ADFGX_Cipher : ProblemHandler
         int currentCharCol;
         for (int i = 0; i < plaintext.Length; i++)
         {
-           // matrixText.Append(getEncodedCharText(plaintext[i]));
+            matrixText.Append(getEncodedCharText(plaintext[i]));
 
 
 
-
-           currentChar = plaintext[i];
+            /*
+            currentChar = plaintext[i];
             currentCharRow = getCharRowIndex(currentChar);
             currentCharCol = getCharColIndex(currentChar);
 
@@ -163,7 +171,7 @@ class ADFGX_Cipher : ProblemHandler
                     matrixText.Append('X');
                     break;
             }
-            
+            */
         }
         fillTable(matrixText.ToString());
 
