@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayfairGrid : MonoBehaviour {
+    public char[,] ADFGX_array;
     public GameObject prefab;
     public int xOffset = 1;
     public int width = 5;
@@ -57,34 +58,39 @@ public class PlayfairGrid : MonoBehaviour {
     public void injectADFGX(char[,] array)
     {
         string ADFGX = " ADFGX";
-        char[,] newArray = new char[6,6];
+        ADFGX_array = new char[6,6];
         for (int i = 0; i < 6; i++)
         {
             for (int k = 0; k < 6; k++)
             {
                 if (i == 0 && k > 0)
                 {
-                    newArray[i, k] = ADFGX[k];
+                    ADFGX_array[i, k] = ADFGX[k];
                 }
                 else if(k == 0 && i > 0)
                 {
-                    newArray[i, k] = ADFGX[i];
+                    ADFGX_array[i, k] = ADFGX[i];
                 }
                 else
                 {
+                    if (i == 0 & k == 0)
+                    {
+                        ADFGX_array[i, k] = ' ';
+                    }
                     if (i > 0 && k > 0)
                     {
-                        newArray[i, k] = array[i - 1, k - 1];
+                        ADFGX_array[i, k] = array[i - 1, k - 1];
                     }                    
                   
                 }
             }
         }
+        print(ADFGX_array);
         for (int i = 0; i < 6; i++)
         {
             for (int k = 0; k < 6; k++)
             {
-                ADFGXobjectMatrix[i, k].GetComponent<TextMesh>().text = newArray[i, k].ToString();
+                ADFGXobjectMatrix[i, k].GetComponent<TextMesh>().text = ADFGX_array[i, k].ToString();
             }
         }
     }

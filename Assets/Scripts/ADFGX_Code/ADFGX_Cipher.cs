@@ -69,41 +69,41 @@ class ADFGX_Cipher : ProblemHandler
         // breakpoint
         print(c +  "              "  +"Row :   " + charRow + " Col :  " + charCol);
         // breakpoint
-        print(matrix);
+       // print(matrix);
 
         switch (charRow)
         {
-            case 0:
+            case 1:
                tempTesting.Append('A');
                 break;
-            case 1:
+            case 2:
                 tempTesting.Append('D');
                 break;
-            case 2:
+            case 3:
                 tempTesting.Append('F');
                 break;
-            case 3:
+            case 4:
                 tempTesting.Append('G');
                 break;
-            case 4:
+            case 5:
                 tempTesting.Append('X');
                 break;
         }
         switch (charCol)
         {
-            case 0:
+            case 1:
                 tempTesting.Append('A');
                 break;
-            case 1:
+            case 2:
                 tempTesting.Append('D');
                 break;
-            case 2:
+            case 3:
                 tempTesting.Append('F');
                 break;
-            case 3:
+            case 4:
                 tempTesting.Append('G');
                 break;
-            case 4:
+            case 5:
                 tempTesting.Append('X');
                 break;
         }
@@ -309,13 +309,14 @@ class ADFGX_Cipher : ProblemHandler
     }
     private static int getCharRowIndex(char c)
     {
+        char[,] array = GameObject.Find("Grid").GetComponent<PlayfairGrid>().ADFGX_array;
         int row = -1;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 6; k++)
             {
                 char temp;
-                temp = matrix[i, k];
+                temp = array[i, k];
                 if (c.Equals(temp))
                 {
                     row = i;
@@ -328,12 +329,14 @@ class ADFGX_Cipher : ProblemHandler
     }
     private static int getCharColIndex(char c)
     {
+        char[,] array = GameObject.Find("Grid").GetComponent<PlayfairGrid>().ADFGX_array;
+        
         int col = -1;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 6; k++)
             {
-                char temp = matrix[i, k];
+                char temp = array[i, k];
                 if (c.Equals(temp))
                 {
                     col = k;
