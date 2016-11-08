@@ -9,11 +9,11 @@ using UnityEngine.UI;
 
 class ADFGX_Cipher : ProblemHandler
 {
-    private StringBuilder encodedCharText = new StringBuilder();
+    
     private string CurrentProblemData;
     private string plaintext;
     private string ciphertext;
-    private StringBuilder matrixText;
+    private StringBuilder matrixText ;
     public static char[,] table;
     public static char[,] matrix = new char[5,5];
 
@@ -63,13 +63,16 @@ class ADFGX_Cipher : ProblemHandler
     }
     public string getEncodedCharText(char c)
     {
+        StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
         int charCol = getCharColIndex(c);       
         // breakpoint
-       // print(matrix);
+       print(matrix);
 
         switch (charRow)
         {
+            case 0:
+
             case 1:
                encodedCharText.Append('A');
                 break;
@@ -88,6 +91,8 @@ class ADFGX_Cipher : ProblemHandler
         }
         switch (charCol)
         {
+            case 0:
+                
             case 1:
                 encodedCharText.Append('A');
                 break;
@@ -108,7 +113,7 @@ class ADFGX_Cipher : ProblemHandler
         print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);
         // breakpoint
         // print(encodedCharText);
-        return "matrix text : " + encodedCharText.ToString();
+        return encodedCharText.ToString();
 
     }
     public string encrypt(string plaintext)
@@ -122,6 +127,7 @@ class ADFGX_Cipher : ProblemHandler
         for (int i = 0; i < plaintext.Length; i++)
         {
             matrixText.Append(getEncodedCharText(plaintext[i]));
+           
             /*
             currentChar = plaintext[i];
             currentCharRow = getCharRowIndex(currentChar);
