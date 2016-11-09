@@ -283,8 +283,6 @@ class ADFGX_Cipher : ProblemHandler
 
         for (int i = 0; i < numOfRows; i++)
         {
-
-
             for (int k = 0; k < numOfCols; k++)
             {
                 if (text.Length > 0)
@@ -410,6 +408,40 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
+    /// <summary>
+    /// loops through all 4 inputfield objects.
+    /// Compares each text entry to the corresponding column in 
+    /// table[,].
+    /// </summary>
+    /// <returns></returns>
+    public bool checkTableInput()
+    {
+       bool b = false;
+       for (int i = 0; i < 5; i++)
+        {
+            string input = GameObject.Find("inputField"+(i+1)).GetComponent<Text>().text;
+
+            if (!input.Equals(getColumn(i)))
+            {
+                print("inputfield" + i + " is incorrect");
+                b = false;
+                break;
+            } else
+            {
+                b = true;
+            }
+        }
+        return b;
+
+    }
+    /// <summary>
+    /// Method to check inputfield data in panel.
+    /// </summary>
+    public void clickCheckTableInput()
+    {
+        checkTableInput();
+    }
+    
 
     public override void OnAllProblemsSolved()
     {
@@ -437,9 +469,9 @@ class ADFGX_Cipher : ProblemHandler
         base.ProblemSetup(data);
 
     }
-    public void printTesting()
+    public void printMatrixText()
     {
-        print(encrypt("hello"));
+        print(matrixText);
     }
     public void printMatrix()
     {
