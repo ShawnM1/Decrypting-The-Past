@@ -358,8 +358,8 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
-    private static string getColumn(int index)
-    {
+    private string getColumn(int index)
+    {   
         StringBuilder columnData = new StringBuilder();
         int rowLength = table.GetLength(0);
         int colLength = table.GetLength(1);
@@ -417,20 +417,23 @@ class ADFGX_Cipher : ProblemHandler
     public bool checkTableInput()
     {
        bool b = false;
-       for (int i = 0; i < 5; i++)
-        {
-            string input = GameObject.Find("inputField"+(i+1)).GetComponent<Text>().text;
-
-            if (!input.Equals(getColumn(i)))
-            {
-                print("inputfield" + i + " is incorrect");
-                b = false;
-                break;
-            } else
-            {
-                b = true;
-            }
-        }
+        for (int i = 0; i < 5; i++)
+         {
+            string input = GameObject.Find("InputField"+(i+1)).transform.FindChild("Text").GetComponent<Text>().text;
+            print("input " +input);
+            string currentColumn = getColumn(i);
+            print("current col" +currentColumn);
+            if (!input.ToUpper().Equals(currentColumn))
+             {
+                 print("inputfield" + (i+1) + " is incorrect");
+                 b = false;
+                 break;
+             } else
+             {
+                 b = true;
+             }
+         }
+       
         return b;
 
     }
