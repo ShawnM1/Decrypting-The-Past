@@ -27,18 +27,10 @@ class ADFGX_Cipher : ProblemHandler
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
         GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
         base.Start();
+       
       //  print("ct " + this.GenerateCipherText());
     }
 
-
-    /*public ADFGX_Cipher(string key, string ciphertext, string plaintext)
-    {
-        this.key = key;
-        this.plaintext = plaintext;
-        this.ciphertext = ciphertext;
-
-    
-    }*/
     public string generateRandomKey()
     {
         StringBuilder key = new StringBuilder();
@@ -110,7 +102,7 @@ class ADFGX_Cipher : ProblemHandler
                 break;
         }
         // breakpoint
-        print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);
+       // print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);
         // breakpoint
         // print(encodedCharText);
         return encodedCharText.ToString();
@@ -375,7 +367,7 @@ class ADFGX_Cipher : ProblemHandler
 
             }
         }
-        return columnData.ToString();
+        return columnData.ToString().Trim();
     }
     private static string removeWhitespace(string s)
     {
@@ -416,16 +408,20 @@ class ADFGX_Cipher : ProblemHandler
     /// <returns></returns>
     public bool checkTableInput()
     {
-       bool b = false;
-        for (int i = 0; i < 5; i++)
+
+        bool b = false;
+        for (int i = 0; i < 4; i++)
          {
             string input = GameObject.Find("InputField"+(i+1)).transform.FindChild("Text").GetComponent<Text>().text;
-            print("input " +input);
-            string currentColumn = getColumn(i);
-            print("current col" +currentColumn);
+            char currentChar = base.CurrentProblemData.key[i];
+            // index of c in the key
+            int indexPos = base.CurrentProblemData.key.IndexOf(currentChar);
+            string currentColumn = getColumn(indexPos);
+            
             if (!input.ToUpper().Equals(currentColumn))
              {
                  print("inputfield" + (i+1) + " is incorrect");
+                
                  b = false;
                  break;
              } else
@@ -437,6 +433,7 @@ class ADFGX_Cipher : ProblemHandler
         return b;
 
     }
+  
     /// <summary>
     /// Method to check inputfield data in panel.
     /// </summary>
@@ -469,6 +466,7 @@ class ADFGX_Cipher : ProblemHandler
     public override void ProblemSetup(ProblemData data)
     {
         fillMatrix();
+        data.ciphertext = GenerateCipherText();
         base.ProblemSetup(data);
 
     }
