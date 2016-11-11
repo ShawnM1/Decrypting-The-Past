@@ -43,10 +43,17 @@ class ADFGX_Cipher : ProblemHandler
     }
     public void checkMatrixText()
     {
-        if(matrixText.Equals(GameObject.Find("InputField").GetComponent<Text>().text))
+        if (CurrentProblemData.ProblemType == TextType.Encryption)
         {
-            // Now they can fill the table accordingly.
-            print("Good Job");
+            if (HUD.GetInputText().Equals(matrixText))
+            {
+                print("Matrix Text Correct");
+                //Show Table With cool effect
+            }
+        }
+        else
+        {
+
         }
     }
     public string getEncodedCharText(char c)
@@ -434,7 +441,10 @@ class ADFGX_Cipher : ProblemHandler
     /// </summary>
     public void clickCheckTableInput()
     {
-        checkTableInput();
+        if(checkTableInput())
+        {
+            print("Table Correct");
+        }
     }
     
 
@@ -463,9 +473,15 @@ class ADFGX_Cipher : ProblemHandler
         fillMatrix();
         data.ciphertext = GenerateCipherText();
         base.ProblemSetup(data);
-        
+        if(CurrentProblemData.ProblemType == TextType.Encryption)
+        {
+            //MapUI Button
+            HUD.SetActionButtonEvent(() => this.checkMatrixText());
+        }   
 
     }
+    
+
     public void printMatrixText()
     {
         print(matrixText);
@@ -484,5 +500,6 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
+
 }
 

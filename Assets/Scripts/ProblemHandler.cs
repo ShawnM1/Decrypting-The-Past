@@ -155,6 +155,11 @@ public abstract class ProblemHandler : MonoBehaviour {
     {
         lockInput = true;
     }
+    public void CheckInputFromHUD()
+    {
+        currentText = HUD.GetInputText();
+        GoToNextProblem();
+    }
     #region Abstract Methods (These are defined in Cipher)
     /// <summary>
     /// Event for what happens when all problems have been solved.
