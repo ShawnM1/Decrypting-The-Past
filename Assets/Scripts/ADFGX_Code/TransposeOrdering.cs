@@ -6,13 +6,12 @@ public class TransposeOrdering : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ProblemHandler ProblemHandlerObj = GameObject.FindObjectOfType<ProblemHandler>();
-
+        ProblemHandler ProblemHandlerObj = this.gameObject.GetComponent<ADFGX_Cipher>();
+        print("KEY: " + ProblemHandlerObj.CurrentProblemData.key);
 	    for (int i = 0; i < 4; i++)
         {
-
-            transform.FindChild(i + "keyindex").GetComponent<Text>().text = ProblemHandlerObj.CurrentProblemData.key[i].ToString();
-            print("Finding Objects");
+            print(i + "keyindex" + "Assigned to: " + ProblemHandlerObj.CurrentProblemData.key[i].ToString());
+            GameObject.Find(i + "keyindex").GetComponent<Text>().text = ProblemHandlerObj.CurrentProblemData.key[i].ToString();
         }
 	}
 	

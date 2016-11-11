@@ -9,11 +9,7 @@ using UnityEngine.UI;
 
 class ADFGX_Cipher : ProblemHandler
 {
-    
-    private string CurrentProblemData;
-    private string plaintext;
-    private string ciphertext;
-    private StringBuilder matrixText ;
+    private StringBuilder matrixText;
     public static char[,] table;
     public static char[,] matrix = new char[5,5];
 
@@ -50,7 +46,7 @@ class ADFGX_Cipher : ProblemHandler
         if(matrixText.Equals(GameObject.Find("InputField").GetComponent<Text>().text))
         {
             // Now they can fill the table accordingly.
-
+            print("Good Job");
         }
     }
     public string getEncodedCharText(char c)
@@ -59,7 +55,6 @@ class ADFGX_Cipher : ProblemHandler
         int charRow = getCharRowIndex(c);
         int charCol = getCharColIndex(c);       
         // breakpoint
-       print(matrix);
 
         switch (charRow)
         {
@@ -468,6 +463,7 @@ class ADFGX_Cipher : ProblemHandler
         fillMatrix();
         data.ciphertext = GenerateCipherText();
         base.ProblemSetup(data);
+        
 
     }
     public void printMatrixText()

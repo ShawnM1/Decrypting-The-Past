@@ -21,9 +21,8 @@ public class ProblemData : ScriptableObject {
     public ProblemData(ProblemHandler _handler,string key,TextType ProblemType)
     {
         this.key = key;
-        this.plaintext = plaintext;
         this.ciphertext = "";
-
+        
         this.ProblemType = ProblemType;
         handler = _handler;
  
