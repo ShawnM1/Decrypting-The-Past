@@ -60,48 +60,50 @@ class ADFGX_Cipher : ProblemHandler
     {
         StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
-        int charCol = getCharColIndex(c);       
+        int charCol = getCharColIndex(c);
         // breakpoint
-
-        switch (charRow)
+        if (charCol != 0)
         {
-            case 0:
+            switch (charRow)
+            {
+                case 0:
 
-            case 1:
-               encodedCharText.Append('A');
-                break;
-            case 2:
-                encodedCharText.Append('D');
-                break;
-            case 3:
-                encodedCharText.Append('F');
-                break;
-            case 4:
-                encodedCharText.Append('G');
-                break;
-            case 5:
-                encodedCharText.Append('X');
-                break;
-        }
-        switch (charCol)
-        {
-            case 0:
-                
-            case 1:
-                encodedCharText.Append('A');
-                break;
-            case 2:
-                encodedCharText.Append('D');
-                break;
-            case 3:
-                encodedCharText.Append('F');
-                break;
-            case 4:
-                encodedCharText.Append('G');
-                break;
-            case 5:
-                encodedCharText.Append('X');
-                break;
+                case 1:
+                    encodedCharText.Append('A');
+                    break;
+                case 2:
+                    encodedCharText.Append('D');
+                    break;
+                case 3:
+                    encodedCharText.Append('F');
+                    break;
+                case 4:
+                    encodedCharText.Append('G');
+                    break;
+                case 5:
+                    encodedCharText.Append('X');
+                    break;
+            }
+            switch (charCol)
+            {
+                case 0:
+
+                case 1:
+                    encodedCharText.Append('A');
+                    break;
+                case 2:
+                    encodedCharText.Append('D');
+                    break;
+                case 3:
+                    encodedCharText.Append('F');
+                    break;
+                case 4:
+                    encodedCharText.Append('G');
+                    break;
+                case 5:
+                    encodedCharText.Append('X');
+                    break;
+            }
         }
         // breakpoint
        // print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);

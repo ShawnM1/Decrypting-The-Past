@@ -11,6 +11,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     private bool lockInput = false;
     private string currentText = "";
     private int currentProblem = 0;
+    bool debugMode = false;
     #endregion
     #region Properties
     /// <summary>
@@ -174,7 +175,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     public virtual void ProblemSetup(ProblemData data)
     {
         CurrentProblemData.UpdateMessage();
-        if (Application.isEditor)
+        if (Application.isEditor && debugMode)
         {
             if (CurrentProblemData.ProblemType == TextType.Encryption)
             {
