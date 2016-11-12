@@ -45,8 +45,9 @@ class ADFGX_Cipher : ProblemHandler
     {
         if (CurrentProblemData.ProblemType == TextType.Encryption)
         {
-            print(this.CurrentText);
-            if (this.CurrentText.Equals(matrixText))
+            print("Current:" + CurrentText + CurrentText.Length);
+            print("Matrix: " + matrixText + matrixText.Length);
+            if (matrixText.ToString().Equals(CurrentText))
             {
                 print("Matrix Text Correct");
                 //Show Table With cool effect
@@ -483,7 +484,8 @@ class ADFGX_Cipher : ProblemHandler
         if(CurrentProblemData.ProblemType == TextType.Encryption)
         {
             //MapUI Button
-            HUD.SetActionButtonEvent(() => this.checkMatrixText());
+            //HUD.SetActionButtonEvent(() => this.checkMatrixText());
+            HUD.SetActionButtonEvent(this.checkMatrixText);
         }   
 
     }

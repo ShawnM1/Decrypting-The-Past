@@ -9,7 +9,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     public List<string> _words = new List<string>();
     public List<ProblemData> problems = new List<ProblemData>();
     private bool lockInput = false;
-    private string currentText = "";
+    private string currentText = "";//
     private int currentProblem = 0;
     bool debugMode = false;
     #endregion
@@ -65,6 +65,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     {
         ProblemSetup(CurrentProblemData);
         HUD.UISetup(problems[currentProblem]);
+        print("Start");
     }
     
     public void CickToGoToNextProblem()
@@ -124,11 +125,16 @@ public abstract class ProblemHandler : MonoBehaviour {
     /// <param name="text">Input Text</param>
     public void AppendCurrentText(string text)
     {
-        StringBuilder builder = new StringBuilder(currentText);
+        StringBuilder builder = new StringBuilder(this.currentText);
         builder.Append(text);
-        currentText = builder.ToString();
+        this.currentText = builder.ToString();
+        
         UpdateUI();
-        print(currentText);
+        print(this.currentText);
+    }
+    public string GETCURRENTTEXT()
+    {
+        return currentText;
     }
     public virtual void Update()
     {
@@ -159,7 +165,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     }
     public void CheckInputFromHUD()
     {
-        currentText = HUD.GetInputText();
+        //currentText = HUD.GetInputText();
         GoToNextProblem();
     }
     #region Abstract Methods (These are defined in Cipher)
