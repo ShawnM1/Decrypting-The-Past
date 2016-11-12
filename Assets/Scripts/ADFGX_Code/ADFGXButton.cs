@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 using System.Collections;
 
 public class ADFGXButton : MonoBehaviour
@@ -16,17 +17,12 @@ public class ADFGXButton : MonoBehaviour
         handler = GameObject.FindObjectOfType<ADFGX_Cipher>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (player.active)
+        if ((Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), this.transform.position) < 5) && Input.GetMouseButtonDown(0))
         {
-            if (Vector2.Distance(player.transform.position, this.transform.position) < 5)
-            {
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    handler.AppendCurrentText(handler.getEncodedCharText(mesh.text[0]));
-                }
-            }
+            handler.AppendCurrentText(handler.getEncodedCharText(mesh.text[0]));
         }
+        
     }
 }

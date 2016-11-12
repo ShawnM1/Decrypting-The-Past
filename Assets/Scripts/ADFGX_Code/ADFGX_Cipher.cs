@@ -45,10 +45,15 @@ class ADFGX_Cipher : ProblemHandler
     {
         if (CurrentProblemData.ProblemType == TextType.Encryption)
         {
-            if (HUD.GetInputText().Equals(matrixText))
+            print(this.CurrentText);
+            if (this.CurrentText.Equals(matrixText))
             {
                 print("Matrix Text Correct");
                 //Show Table With cool effect
+            }
+            else
+            {
+                print("Incorrect Matrix Text");
             }
         }
         else

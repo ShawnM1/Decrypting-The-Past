@@ -79,6 +79,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     /// <returns></returns>
     public bool GoToNextProblem()
     {
+        print("Goto Next Problem Called");
         if (currentProblem <= problems.Count - 1)
         {
             if (problems[currentProblem].compareResult(currentText))
