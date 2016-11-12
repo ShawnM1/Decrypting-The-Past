@@ -3,6 +3,8 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 
+
+public delegate void OnProblemChangedEventHandler();
 public abstract class ProblemHandler : MonoBehaviour {
 
     #region Variables
@@ -12,6 +14,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     private string currentText = "";//
     private int currentProblem = 0;
     bool debugMode = false;
+    public event OnProblemChangedEventHandler handler;
     #endregion
     #region Properties
     /// <summary>
@@ -65,6 +68,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     {
         ProblemSetup(CurrentProblemData);
         HUD.UISetup(problems[currentProblem]);
+        FireOnProblemChangedEventHandler();
         print("Start");
     }
     
@@ -73,6 +77,11 @@ public abstract class ProblemHandler : MonoBehaviour {
         print("PlainText: " + CurrentProblemData.plaintext);
         print("CipherText: " + CurrentProblemData.ciphertext);
         GoToNextProblem();
+    }
+    public bool GoToNextProblem(string currentText)
+    {
+        this.currentText = currentText;
+        return GoToNextProblem();
     }
     /// <summary>
     /// Checks to see if the problem is solved. If so, move on to the next problem. If its the last problem solved, show stats and go to the next level.
@@ -93,7 +102,6 @@ public abstract class ProblemHandler : MonoBehaviour {
                 {
                     OnGoToNextProblem();
                     HUD.UISetup(problems[currentProblem]);
-                    
                     return true;
                 }
                 else
@@ -117,6 +125,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     public virtual void OnGoToNextProblem()
     {
         ProblemSetup(CurrentProblemData);
+        FireOnProblemChangedEventHandler();
     }
     
     /// <summary>
@@ -167,6 +176,13 @@ public abstract class ProblemHandler : MonoBehaviour {
     {
         //currentText = HUD.GetInputText();
         GoToNextProblem();
+    }
+    void FireOnProblemChangedEventHandler()
+    {
+        if(handler != null)
+        {
+            handler();
+        }
     }
     #region Abstract Methods (These are defined in Cipher)
     /// <summary>

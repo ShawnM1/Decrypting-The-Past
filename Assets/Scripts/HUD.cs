@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using System.Text;
 
 public class HUD : MonoBehaviour {
     static Text BottomUIText;
@@ -15,6 +16,7 @@ public class HUD : MonoBehaviour {
     static GameObject InputCanvas;
     static Button InputButton;
     static Button ActionButton;
+    static Text InfoText;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -25,7 +27,9 @@ public class HUD : MonoBehaviour {
         InputButton = this.transform.Find("KeyInputCanvas/InputTextButton").GetComponent<Button>();
         InputCanvas = this.transform.Find("KeyInputCanvas").gameObject;
         ActionButton = this.transform.Find("ActionButton").GetComponent<Button>();
+        InfoText = this.transform.Find("Info/InfoText").GetComponent<Text>();
         print("Called");
+        AppendToInfoBox("TEST");
 	}
 	
 	// Update is called once per frame
@@ -110,5 +114,16 @@ public class HUD : MonoBehaviour {
     {
         ActionButton.onClick.RemoveAllListeners();
         ActionButton.onClick.AddListener(action);
+    }
+    public static void AppendToInfoBox(string text)
+    {
+        StringBuilder builder = new StringBuilder(InfoText.text);
+        builder.AppendLine("\n" + text);
+        InfoText.text = builder.ToString();
+        print("AppendToInfoBoxalled");
+    }
+    public static void ClearInfoBox()
+    {
+        InfoText.text = "InfoBox";
     }
 }

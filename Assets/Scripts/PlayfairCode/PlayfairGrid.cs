@@ -19,6 +19,21 @@ public class PlayfairGrid : MonoBehaviour {
 	void Update () {
 	
 	}
+    public void DisableInput()
+    {
+        SetListenState(false);
+    }
+    public void EnableInput()
+    {
+        SetListenState(true);
+    }
+    void SetListenState(bool state)
+    {
+        for (int i = 0; i < this.transform.GetChildCount(); i++)
+        {
+            this.transform.GetChild(i).GetComponent<ADFGXButton>().SetListenState(state);
+        }
+    }
     void Awake()
     {
         for (int i = 0; i < width; i++)

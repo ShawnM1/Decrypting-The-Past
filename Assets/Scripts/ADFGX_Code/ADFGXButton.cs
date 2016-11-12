@@ -9,6 +9,7 @@ public class ADFGXButton : MonoBehaviour
     GameObject player;
     TextMesh mesh;
     ADFGX_Cipher handler;
+    private bool listenToInput = true;
     // Use this for initialization
     void Start()
     {
@@ -19,10 +20,21 @@ public class ADFGXButton : MonoBehaviour
 
     void Update()
     {
-        if ((Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), this.transform.position) < 5) && Input.GetMouseButtonDown(0))
+        if ((Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), this.transform.position) < 5) && Input.GetMouseButtonDown(0) && listenToInput)
         {
-            handler.AppendCurrentText(handler.getEncodedCharText(mesh.text[0]));
+            if (handler.CurrentProblemData.ProblemType == TextType.Encryption)
+            {
+                handler.AppendCurrentText(handler.getEncodedCharText(mesh.text[0]));
+            }
+            else
+            {
+                handler.AppendCurrentText(mesh.text[0].ToString());
+            }
         }
         
+    }
+    public void SetListenState(bool state)
+    {
+        listenToInput = state;
     }
 }

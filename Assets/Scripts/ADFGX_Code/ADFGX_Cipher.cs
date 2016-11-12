@@ -12,16 +12,20 @@ class ADFGX_Cipher : ProblemHandler
     private StringBuilder matrixText;
     public static char[,] table;
     public static char[,] matrix = new char[5,5];
+    public GameObject TransposeInput;
+    public GameObject ADFGXMatrix;
 
-
+    
     void Start()
     {
         fillMatrix();
        // printMatrix();
-        PopulateWordDictionary("Car", "Hello");
+        PopulateWordDictionary("Car", "Hi", "Rob");
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
         GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
+        //TransposeInput = GameObject.Find("TransposeTable");
         base.Start();
        
       //  print("ct " + this.GenerateCipherText());
@@ -50,7 +54,11 @@ class ADFGX_Cipher : ProblemHandler
             if (matrixText.ToString().Equals(CurrentText))
             {
                 print("Matrix Text Correct");
-                //Show Table With cool effect
+                TransposeInput.SetActive(true);
+                ADFGXMatrix.GetComponent<PlayfairGrid>().DisableInput();
+                this.LockInput();
+
+                //ADFGXMatrix.SetActive(false);
             }
             else
             {
@@ -59,8 +67,19 @@ class ADFGX_Cipher : ProblemHandler
         }
         else
         {
+            if(matrixText.ToString().Equals(HUD.GetInputText()))
+            {
+                //Display the matrix
+                //HUD.AppendToInfoBox(HUD.GetInputText());
+                ///HUD.HideInputHUD();
+                //HUD.SetActionButtonEvent(CheckPlainTextInput);
 
+            }
         }
+    }
+    public void CheckPlainTextInput()
+    {
+        //COME BAKC HERe
     }
     public string getEncodedCharText(char c)
     {
@@ -452,8 +471,46 @@ class ADFGX_Cipher : ProblemHandler
         if(checkTableInput())
         {
             print("Table Correct");
+            //TransposeInput.SetActive(false);
+            if (CurrentProblemData.ProblemType == TextType.Encryption)
+            {
+                HUD.SetupInputBox("Please enter Ciphertext:", CheckUserCipherText);
+            }
+            else
+            {
+                HUD.SetupInputBox("Please enter Matrixtext:", CheckUserMatrixText);
+
+            }
         }
     }
+    public void CheckUserCipherText()
+    {
+        
+        if(GoToNextProblem(HUD.GetInputText()))
+        {
+            //ADFGXMatrix.SetActive(true);
+            HUD.HideInputHUD();
+        }
+    }
+    void CheckPlainTextFromMatrix()
+    {
+        GoToNextProblem();
+    }
+    public void CheckUserMatrixText()
+    {
+        if(matrixText.ToString().ToUpper().Equals(HUD.GetInputText().ToUpper()))
+        {
+            HUD.AppendToInfoBox(matrixText.ToString().ToUpper());
+            HUD.HideInputHUD();
+            ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
+            HUD.SetActionButtonEvent(CheckPlainTextFromMatrix);
+        }
+        else
+        {
+            print("CheckUserMatrixText: Input is wrong. UserInput:" + HUD.GetInputText() + " Matrix Text: " + matrixText.ToString());
+        }
+    }
+
     
 
     public override void OnAllProblemsSolved()
@@ -480,12 +537,26 @@ class ADFGX_Cipher : ProblemHandler
     {
         fillMatrix();
         data.ciphertext = GenerateCipherText();
+        UpdateUI();
+        HUD.ClearInfoBox();
+        //TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
         base.ProblemSetup(data);
         if(CurrentProblemData.ProblemType == TextType.Encryption)
         {
-            //MapUI Button
-            //HUD.SetActionButtonEvent(() => this.checkMatrixText());
             HUD.SetActionButtonEvent(this.checkMatrixText);
+            ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
+            //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
+            TransposeInput.SetActive(false);
+            HUD.HideInputHUD();
+        }
+        else
+        {
+            HUD.HideInputHUD();
+            TransposeInput.SetActive(true);
+            TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
+            TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
+            ADFGXMatrix.GetComponent<PlayfairGrid>().DisableInput();
+            //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
         }   
 
     }
