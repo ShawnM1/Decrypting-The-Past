@@ -141,10 +141,6 @@ public abstract class ProblemHandler : MonoBehaviour {
         UpdateUI();
         print(this.currentText);
     }
-    public string GETCURRENTTEXT()
-    {
-        return currentText;
-    }
     public virtual void Update()
     {
         //Handles deleting a character off the end of current text
@@ -183,6 +179,7 @@ public abstract class ProblemHandler : MonoBehaviour {
         {
             handler();
         }
+        
     }
     #region Abstract Methods (These are defined in Cipher)
     /// <summary>

@@ -503,6 +503,7 @@ class ADFGX_Cipher : ProblemHandler
             HUD.AppendToInfoBox(matrixText.ToString().ToUpper());
             HUD.HideInputHUD();
             ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
+            this.UnlockInput();
             HUD.SetActionButtonEvent(CheckPlainTextFromMatrix);
         }
         else
