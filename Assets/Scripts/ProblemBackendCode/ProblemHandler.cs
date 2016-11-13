@@ -60,7 +60,7 @@ public abstract class ProblemHandler : MonoBehaviour {
         if(_words.Count > 0)
         {
             ProblemData tmp = new ProblemData(this, data.key, data.ProblemType);
-            tmp.plaintext = GetRandomWord();
+            tmp.Plaintext = GetRandomWord();
             problems.Add(tmp);
         }
     }
@@ -74,8 +74,8 @@ public abstract class ProblemHandler : MonoBehaviour {
     
     public void CickToGoToNextProblem()
     {
-        print("PlainText: " + CurrentProblemData.plaintext);
-        print("CipherText: " + CurrentProblemData.ciphertext);
+        print("PlainText: " + CurrentProblemData.Plaintext);
+        print("CipherText: " + CurrentProblemData.Ciphertext);
         GoToNextProblem();
     }
     public bool GoToNextProblem(string currentText)
@@ -199,11 +199,11 @@ public abstract class ProblemHandler : MonoBehaviour {
         {
             if (CurrentProblemData.ProblemType == TextType.Encryption)
             {
-                currentText = CurrentProblemData.ciphertext;
+                currentText = CurrentProblemData.Ciphertext;
             }
             else
             {
-                currentText = CurrentProblemData.plaintext;
+                currentText = CurrentProblemData.Plaintext;
             }
         }
         HUD.UISetup(CurrentProblemData);

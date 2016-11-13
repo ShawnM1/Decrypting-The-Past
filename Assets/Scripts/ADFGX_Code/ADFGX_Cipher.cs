@@ -10,28 +10,27 @@ using UnityEngine.UI;
 class ADFGX_Cipher : ProblemHandler
 {
     private StringBuilder matrixText;
-    public static char[,] table;
-    public static char[,] matrix = new char[5,5];
+    private static char[,] table;
+    private static char[,] matrix = new char[5,5];
+#pragma warning disable 
     public GameObject TransposeInput;
+#pragma warning disable
     public GameObject ADFGXMatrix;
 
     
     void Start()
     {
         fillMatrix();
-       // printMatrix();
         PopulateWordDictionary("Car", "Hi", "Rob");
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
         GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
-        //TransposeInput = GameObject.Find("TransposeTable");
+        HUD.ShowInfoBox();
         base.Start();
-       
-      //  print("ct " + this.GenerateCipherText());
     }
 
-    public string generateRandomKey()
+    private string generateRandomKey()
     {
         StringBuilder key = new StringBuilder();
         StringBuilder keyOptions = new StringBuilder("1234");
@@ -45,7 +44,7 @@ class ADFGX_Cipher : ProblemHandler
         return key.ToString();
 
     }
-    public void checkMatrixText()
+    private void checkMatrixText()
     {
         if (CurrentProblemData.ProblemType == TextType.Encryption)
         {
@@ -57,31 +56,14 @@ class ADFGX_Cipher : ProblemHandler
                 TransposeInput.SetActive(true);
                 ADFGXMatrix.GetComponent<PlayfairGrid>().DisableInput();
                 this.LockInput();
-
-                //ADFGXMatrix.SetActive(false);
             }
             else
             {
                 print("Incorrect Matrix Text");
             }
         }
-        else
-        {
-            if(matrixText.ToString().Equals(HUD.GetInputText()))
-            {
-                //Display the matrix
-                //HUD.AppendToInfoBox(HUD.GetInputText());
-                ///HUD.HideInputHUD();
-                //HUD.SetActionButtonEvent(CheckPlainTextInput);
-
-            }
-        }
     }
-    public void CheckPlainTextInput()
-    {
-        //COME BAKC HERe
-    }
-    public string getEncodedCharText(char c)
+    public string GetEncodedCharText(char c)
     {
         StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
@@ -130,67 +112,15 @@ class ADFGX_Cipher : ProblemHandler
                     break;
             }
         }
-        // breakpoint
-       // print(c + "              " + "Row :   " + charRow + " Col :  " + charCol + " converts to " + encodedCharText);
-        // breakpoint
-        // print(encodedCharText);
         return encodedCharText.ToString();
-
     }
-    public string encrypt(string plaintext)
+    private string encrypt(string plaintext)
     {
-
         matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
-        char currentChar;
-        int currentCharRow;
-        int currentCharCol;
         for (int i = 0; i < plaintext.Length; i++)
         {
-            matrixText.Append(getEncodedCharText(plaintext[i]));
-           
-            /*
-            currentChar = plaintext[i];
-            currentCharRow = getCharRowIndex(currentChar);
-            currentCharCol = getCharColIndex(currentChar);
-
-            switch (currentCharRow)
-            {
-                case 0:
-                    matrixText.Append('A');
-                    break;
-                case 1:
-                    matrixText.Append('D');
-                    break;
-                case 2:
-                    matrixText.Append('F');
-                    break;
-                case 3:
-                    matrixText.Append('G');
-                    break;
-                case 4:
-                    matrixText.Append('X');
-                    break;
-            }
-            switch (currentCharCol)
-            {
-                case 0:
-                    matrixText.Append('A');
-                    break;
-                case 1:
-                    matrixText.Append('D');
-                    break;
-                case 2:
-                    matrixText.Append('F');
-                    break;
-                case 3:
-                    matrixText.Append('G');
-                    break;
-                case 4:
-                    matrixText.Append('X');
-                    break;
-            }
-            */
+            matrixText.Append(GetEncodedCharText(plaintext[i]));
         }
         fillTable(matrixText.ToString());
 
@@ -215,8 +145,6 @@ class ADFGX_Cipher : ProblemHandler
                     break;
 
             }
-
-           
         }
         // TODO: remove whitespace
         // return removeWhitespace(ciphertext.ToString());
@@ -284,7 +212,7 @@ class ADFGX_Cipher : ProblemHandler
         return _ciphertext.ToString();
 
     }
-    public void fillTable(string matrixText)
+    private void fillTable(string matrixText)
     {
         StringBuilder text = new StringBuilder(matrixText);
 
@@ -435,7 +363,7 @@ class ADFGX_Cipher : ProblemHandler
     /// table[,].
     /// </summary>
     /// <returns></returns>
-    public bool checkTableInput()
+    private bool checkTableInput()
     {
 
         bool b = false;
@@ -464,7 +392,7 @@ class ADFGX_Cipher : ProblemHandler
     }
   
     /// <summary>
-    /// Method to check inputfield data in panel.
+    /// Method to check inputfield data in TransposeUI
     /// </summary>
     public void clickCheckTableInput()
     {
@@ -492,7 +420,7 @@ class ADFGX_Cipher : ProblemHandler
             HUD.HideInputHUD();
         }
     }
-    void CheckPlainTextFromMatrix()
+    void checkPlainTextFromMatrix()
     {
         GoToNextProblem();
     }
@@ -504,7 +432,7 @@ class ADFGX_Cipher : ProblemHandler
             HUD.HideInputHUD();
             ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
             this.UnlockInput();
-            HUD.SetActionButtonEvent(CheckPlainTextFromMatrix);
+            HUD.SetActionButtonEvent(checkPlainTextFromMatrix);
         }
         else
         {
@@ -526,7 +454,7 @@ class ADFGX_Cipher : ProblemHandler
 
     public override string GenerateCipherText()
     {
-        return encrypt(base.CurrentProblemData.plaintext);
+        return encrypt(base.CurrentProblemData.Plaintext);
     }
 
     public override string GeneratePlainText()
@@ -537,7 +465,7 @@ class ADFGX_Cipher : ProblemHandler
     public override void ProblemSetup(ProblemData data)
     {
         fillMatrix();
-        data.ciphertext = GenerateCipherText();
+        data.Ciphertext = GenerateCipherText();
         UpdateUI();
         HUD.ClearInfoBox();
         //TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
@@ -561,8 +489,8 @@ class ADFGX_Cipher : ProblemHandler
         }   
 
     }
-    
 
+    #region Debug Functions
     public void printMatrixText()
     {
         print(matrixText);
@@ -581,6 +509,7 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
+    #endregion
 
 }
 

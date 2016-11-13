@@ -15,7 +15,7 @@ public class Playfair : ProblemHandler
     private string answer;
     private Text inputText;
     private Button inputTextButton;
-    private GameObject KeyInput;
+    private GameObject keyInput;
     private int matrixCounter = 0;
     private GameObject gameObjectMatrix;
     private GameObject player;
@@ -26,7 +26,7 @@ public class Playfair : ProblemHandler
         LockInput();
         inputText = GameObject.Find("InputText").GetComponent<Text>();
         inputTextButton = GameObject.Find("InputTextButton").GetComponent<Button>();
-        KeyInput = GameObject.Find("KeyInputCanvas");
+        keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
         PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
@@ -64,8 +64,8 @@ public class Playfair : ProblemHandler
     }
     public void checkPlainTextInput()
     {
-        print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.plaintext));
-        if(inputText.text.Equals(formatPlaintext(CurrentProblemData.plaintext)))
+        print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.Plaintext));
+        if(inputText.text.Equals(formatPlaintext(CurrentProblemData.Plaintext)))
         {
             ///Next we fill the matrix
             ///Call the matrix UI
@@ -122,15 +122,15 @@ public class Playfair : ProblemHandler
         HUD.SetTopText("Please Format the Key");
         player.SetActive(false);
         LockInput();
-        KeyInput.SetActive(true);
+        keyInput.SetActive(true);
         inputTextButton.onClick.AddListener(checkKeyInput);
         fillMatrix(keyword);
-        data.ciphertext = GenerateCipherText();
+        data.Ciphertext = GenerateCipherText();
         CurrentProblemData.UpdateMessage();
         gameObjectMatrix.GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
         gameObjectMatrix.SetActive(false);
-        ciphertext = data.ciphertext;
-        plaintext = data.plaintext;
+        ciphertext = data.Ciphertext;
+        plaintext = data.Plaintext;
         if (data.ProblemType == TextType.Encryption)
         {
             answer = encrypt(plaintext);
@@ -640,7 +640,7 @@ public class Playfair : ProblemHandler
 
     public override string GenerateCipherText()
     {
-        return encrypt(CurrentProblemData.plaintext);
+        return encrypt(CurrentProblemData.Plaintext);
     }
 
     public override string GeneratePlainText()

@@ -17,6 +17,7 @@ public class HUD : MonoBehaviour {
     static Button InputButton;
     static Button ActionButton;
     static Text InfoText;
+    static GameObject infoBox;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -27,7 +28,8 @@ public class HUD : MonoBehaviour {
         InputButton = this.transform.Find("KeyInputCanvas/InputTextButton").GetComponent<Button>();
         InputCanvas = this.transform.Find("KeyInputCanvas").gameObject;
         ActionButton = this.transform.Find("ActionButton").GetComponent<Button>();
-        InfoText = this.transform.Find("Info/InfoText").GetComponent<Text>();
+        infoBox = this.transform.Find("InfoBox").gameObject;
+        InfoText = this.transform.Find("InfoBox/InfoText").GetComponent<Text>();
         print("Called");
         AppendToInfoBox("TEST");
 	}
@@ -38,16 +40,15 @@ public class HUD : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
 
-            if (pauseMenu.active)
+            if (pauseMenu.activeSelf)
             {
-               
                 Time.timeScale = 1;
             }
             else
             {
                 Time.timeScale = 0;
             }
-            pauseMenu.SetActive(!pauseMenu.active);
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
 
         
@@ -66,7 +67,7 @@ public class HUD : MonoBehaviour {
     }
     public static void UISetup(ProblemData data)
     {
-        BottomUIText.text = data.message;
+        BottomUIText.text = data.Message;
         TransitionIn();
     }
 
@@ -125,5 +126,13 @@ public class HUD : MonoBehaviour {
     public static void ClearInfoBox()
     {
         InfoText.text = "InfoBox";
+    }
+    public static void ShowInfoBox()
+    {
+        infoBox.SetActive(true);
+    }
+    public static void HideInfoBox()
+    {
+        infoBox.SetActive(false);
     }
 }

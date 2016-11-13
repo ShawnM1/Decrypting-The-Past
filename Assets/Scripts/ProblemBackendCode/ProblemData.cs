@@ -11,17 +11,17 @@ public class ProblemData : ScriptableObject {
     
     public string key;
    
-    public string plaintext;
-    public string ciphertext;
+    public string Plaintext;
+    public string Ciphertext;
     public TextType ProblemType;
-    public string message;
+    public string Message;
     ProblemHandler handler;
-    string DisplayText;
+    string displayText;
 
     public ProblemData(ProblemHandler _handler,string key,TextType ProblemType)
     {
         this.key = key;
-        this.ciphertext = "";
+        this.Ciphertext = "";
         
         this.ProblemType = ProblemType;
         handler = _handler;
@@ -33,19 +33,19 @@ public class ProblemData : ScriptableObject {
         {
             case TextType.Encryption:
                 {
-                    ciphertext = handler.GenerateCipherText();
-                    message = "Encrpyt " + plaintext + " with key of " + key;
+                    Ciphertext = handler.GenerateCipherText();
+                    Message = "Encrpyt " + Plaintext + " with key of " + key;
                     break;
                 }
             case TextType.Decryption:
                 {
-                    ciphertext = handler.GenerateCipherText();
-                    message = "Decrpyt " + ciphertext + " with key of " + key;
+                    Ciphertext = handler.GenerateCipherText();
+                    Message = "Decrpyt " + Ciphertext + " with key of " + key;
                     break;
                 }
             default:
                 {
-                    message = "error";
+                    Message = "error";
                     break;
                 }
         }
@@ -57,12 +57,12 @@ public class ProblemData : ScriptableObject {
         {
             case TextType.Decryption:
                 {
-                    return answer.Equals(plaintext.ToLower());
+                    return answer.Equals(Plaintext.ToLower());
 
                 }
             case TextType.Encryption:
                 {
-                    return answer.Equals(ciphertext.ToLower());
+                    return answer.Equals(Ciphertext.ToLower());
 
                 }
             default:

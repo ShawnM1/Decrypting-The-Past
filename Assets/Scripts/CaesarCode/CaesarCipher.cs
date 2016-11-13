@@ -7,13 +7,12 @@ using UnityEngine.SceneManagement;
 public class CaesarCipher : ProblemHandler {
     Circle2DPointGenerator pointGenerator;
     private string alphabet = "abcdefghijklmnopqrstuvwxyz";
-    int anglePerItem;
-    public TextMesh mesh;
-    public TextMesh resultMesh;
+    private int anglePerItem;
+    public TextMesh Mesh;
+    public TextMesh ResultMesh;
     
 	// Use this for initialization
 	public override void Start () {
-        //HUD.SetTopText("Ceasar Cipher");
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         AddProblem(new ProblemData(this,"1", TextType.Encryption));
         AddProblem(new ProblemData(this,"2", TextType.Decryption));
@@ -23,8 +22,8 @@ public class CaesarCipher : ProblemHandler {
 
         pointGenerator = GetComponent<Circle2DPointGenerator>();
         anglePerItem = 360 / 25;
-        mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
-        resultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
+        Mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
+        ResultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
         print("Start Called");
         base.Start();
 	}
@@ -35,7 +34,7 @@ public class CaesarCipher : ProblemHandler {
         float z = transform.localEulerAngles.z; ;
         z += 1 * h;
         transform.eulerAngles = new Vector3(0, 0, z);
-        mesh.text = GetLetter().ToString();
+        Mesh.text = GetLetter().ToString();
         base.Update();
     }
     public char GetLetter()
@@ -44,7 +43,7 @@ public class CaesarCipher : ProblemHandler {
     }
     public override void UpdateUI()
     {
-        resultMesh.text = CurrentText;
+        ResultMesh.text = CurrentText;
     }
 
     public override void OnGoToNextProblem()
@@ -61,13 +60,12 @@ public class CaesarCipher : ProblemHandler {
 
     public override string GenerateCipherText()
     {
-        return EncryptCipher(int.Parse(CurrentProblemData.key), CurrentProblemData.plaintext);
+        return encryptCipher(int.Parse(CurrentProblemData.key), CurrentProblemData.Plaintext);
     }
 
     public override string GeneratePlainText()
     {
-        return EncryptCipher(-int.Parse(CurrentProblemData.key), CurrentProblemData.plaintext);
-        throw new NotImplementedException();
+        return encryptCipher(-int.Parse(CurrentProblemData.key), CurrentProblemData.Plaintext);
     }
 
     public override void ProblemSetup(ProblemData data)
@@ -80,16 +78,16 @@ public class CaesarCipher : ProblemHandler {
     /// <param name="key"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    public string EncryptCipher(int key, string message)
+    private string encryptCipher(int key, string message)
     {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < message.Length; i++)
         {
-            builder.Append(alphabet[(FindLetterPositionInAlpha(message[i]) + key) % 25]);
+            builder.Append(alphabet[(findLetterPositionInAlpha(message[i]) + key) % 25]);
         }
         return builder.ToString();
     }
-    private int FindLetterPositionInAlpha(char c)
+    private int findLetterPositionInAlpha(char c)
     {
         for (int i = 0; i < alphabet.Length; i++)
         {

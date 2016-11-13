@@ -3,14 +3,14 @@ using System.Collections;
 
 public class LetterBlock : MonoBehaviour {
 
-    public CaesarCipher potato;
+    private CaesarCipher caesarCipher;
 	// Use this for initialization
 	void Start () {
-        potato = transform.parent.FindChild("HamsterWheel").GetComponent<CaesarCipher>();
+        caesarCipher = transform.parent.FindChild("HamsterWheel").GetComponent<CaesarCipher>();
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
-        potato.AppendCurrentText(potato.GetLetter().ToString());
+        caesarCipher.AppendCurrentText(caesarCipher.GetLetter().ToString());
 
     }
 }

@@ -4,15 +4,11 @@ using UnityEngine.UI;
 
 public class TransposeOrdering : MonoBehaviour
 {
-
     // Use this for initialization
     ProblemHandler ProblemHandlerObj;
-
     void Start()
     {
         ProblemHandlerObj = GameObject.Find("ADFGX").GetComponent<ADFGX_Cipher>();
-        print("KEY: " + ProblemHandlerObj.CurrentProblemData.key);
-        
         UpdateUI();
 
     }

@@ -29,7 +29,7 @@ public class PlayfairGrid : MonoBehaviour {
     }
     void SetListenState(bool state)
     {
-        for (int i = 0; i < this.transform.GetChildCount(); i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             this.transform.GetChild(i).GetComponent<ADFGXButton>().SetListenState(state);
         }

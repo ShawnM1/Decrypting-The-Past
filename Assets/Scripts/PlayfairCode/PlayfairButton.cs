@@ -16,7 +16,7 @@ public class PlayfairButton : MonoBehaviour {
 	
     void FixedUpdate()
     {
-        if (player.active)
+        if (player.activeSelf)
         {
             if (Vector2.Distance(player.transform.position, this.transform.position) < 5)
             {
