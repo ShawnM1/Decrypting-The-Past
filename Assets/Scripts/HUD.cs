@@ -8,7 +8,6 @@ public class HUD : MonoBehaviour {
     static Text BottomUIText;
     static Text TopUIText;
     static Animator animator;
-    private GOM_Script gom;
     private GameObject pauseMenu;
     private static string previousBottomText;
     private static bool showingWrongText = false;
@@ -18,6 +17,8 @@ public class HUD : MonoBehaviour {
     static Button ActionButton;
     static Text InfoText;
     static GameObject infoBox;
+    static GameObject victoryScreen;
+    bool pauseable = true;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -30,13 +31,14 @@ public class HUD : MonoBehaviour {
         ActionButton = this.transform.Find("ActionButton").GetComponent<Button>();
         infoBox = this.transform.Find("InfoBox").gameObject;
         InfoText = this.transform.Find("InfoBox/InfoText").GetComponent<Text>();
+        victoryScreen = this.transform.Find("VictoryScreen").gameObject;
         print("Called");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseable)
         {
 
             if (pauseMenu.activeSelf)
@@ -133,5 +135,13 @@ public class HUD : MonoBehaviour {
     public static void HideInfoBox()
     {
         infoBox.SetActive(false);
+    }
+    public void ShowVictoryScreen(UnityAction buttonAction)
+    {
+        GameTimer.timerActive = false;
+        pauseable = false;
+        victoryScreen.SetActive(true);
+        victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = "Time Completed: " +GameTimer.Ticks;
+        victoryScreen.transform.FindChild("GoToNextLevelButton").GetComponent<Button>().onClick.AddListener(buttonAction);
     }
 }

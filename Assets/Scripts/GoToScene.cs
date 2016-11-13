@@ -8,7 +8,7 @@ public class GoToScene : MonoBehaviour {
     {
         StartCoroutine(GoToSceneEnumerator(sceneName));
     }
-    IEnumerator GoToSceneEnumerator(string sceneName)
+    public static IEnumerator GoToSceneEnumerator(string sceneName)
     {
         Time.timeScale = 1;
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);

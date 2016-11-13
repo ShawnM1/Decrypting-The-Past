@@ -244,6 +244,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1818820097}
+    - target: {fileID: 1000010108016712, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
+      propertyPath: m_Name
+      value: GoToNextLevelButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
   m_IsPrefabParent: 0
@@ -1670,7 +1674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde5a9d2087cddd43a0fe75fb5ef8897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potato: {fileID: 0}
 --- !u!1 &1606221230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,8 +2172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _words: []
   problems: []
-  mesh: {fileID: 0}
-  resultMesh: {fileID: 0}
+  Mesh: {fileID: 0}
+  ResultMesh: {fileID: 0}
 --- !u!1 &1820835850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c7c23b03975944c84722cc006e2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 1818820097}
 --- !u!4 &1998746853
 Transform:
   m_ObjectHideFlags: 0
