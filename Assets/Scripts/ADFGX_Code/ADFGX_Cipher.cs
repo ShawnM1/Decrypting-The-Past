@@ -116,6 +116,7 @@ class ADFGX_Cipher : ProblemHandler
     }
     private string encrypt(string plaintext)
     {
+        plaintext = plaintext.ToLower().Replace('j', 'i');
         matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
         for (int i = 0; i < plaintext.Length; i++)
