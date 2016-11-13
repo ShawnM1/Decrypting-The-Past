@@ -25,7 +25,7 @@ class ADFGX_Cipher : ProblemHandler
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
-        GameObject.FindObjectOfType<PlayfairGrid>().injectADFGX(matrix);
+        GameObject.FindObjectOfType<ADFGXMatrix>().injectADFGX(matrix);
         HUD.ShowInfoBox();
         base.Start();
     }
@@ -54,7 +54,7 @@ class ADFGX_Cipher : ProblemHandler
             {
                 print("Matrix Text Correct");
                 TransposeInput.SetActive(true);
-                ADFGXMatrix.GetComponent<PlayfairGrid>().DisableInput();
+                ADFGXMatrix.GetComponent<ADFGXMatrix>().DisableInput();
                 this.LockInput();
             }
             else
@@ -254,7 +254,7 @@ class ADFGX_Cipher : ProblemHandler
     }
     private static int getCharRowIndex(char c)
     {
-        char[,] array = GameObject.Find("Grid").GetComponent<PlayfairGrid>().ADFGX_array;
+        char[,] array = GameObject.Find("Grid").GetComponent<ADFGXMatrix>().ADFGX_array;
         int row = -1;
         for (int i = 0; i < 6; i++)
         {
@@ -274,7 +274,7 @@ class ADFGX_Cipher : ProblemHandler
     }
     private static int getCharColIndex(char c)
     {
-        char[,] array = GameObject.Find("Grid").GetComponent<PlayfairGrid>().ADFGX_array;
+        char[,] array = GameObject.Find("Grid").GetComponent<ADFGXMatrix>().ADFGX_array;
         
         int col = -1;
         for (int i = 0; i < 6; i++)
@@ -430,7 +430,7 @@ class ADFGX_Cipher : ProblemHandler
         {
             HUD.AppendToInfoBox(matrixText.ToString().ToUpper());
             HUD.HideInputHUD();
-            ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
+            ADFGXMatrix.GetComponent<ADFGXMatrix>().EnableInput();
             this.UnlockInput();
             HUD.SetActionButtonEvent(checkPlainTextFromMatrix);
         }
@@ -473,7 +473,7 @@ class ADFGX_Cipher : ProblemHandler
         if(CurrentProblemData.ProblemType == TextType.Encryption)
         {
             HUD.SetActionButtonEvent(this.checkMatrixText);
-            ADFGXMatrix.GetComponent<PlayfairGrid>().EnableInput();
+            ADFGXMatrix.GetComponent<ADFGXMatrix>().EnableInput();
             //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
             TransposeInput.SetActive(false);
             HUD.HideInputHUD();
@@ -484,7 +484,7 @@ class ADFGX_Cipher : ProblemHandler
             TransposeInput.SetActive(true);
             TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
             TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
-            ADFGXMatrix.GetComponent<PlayfairGrid>().DisableInput();
+            ADFGXMatrix.GetComponent<ADFGXMatrix>().DisableInput();
             //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
         }   
 

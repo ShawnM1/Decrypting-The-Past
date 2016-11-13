@@ -13,8 +13,6 @@ public class Playfair : ProblemHandler
     private string ciphertext;
     private static StringBuilder alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
     private string answer;
-    private Text inputText;
-    private Button inputTextButton;
     private GameObject keyInput;
     private int matrixCounter = 0;
     private GameObject gameObjectMatrix;
@@ -22,17 +20,13 @@ public class Playfair : ProblemHandler
 
     void Start()
     {
-        //HUD.SetTopText("Playfair Cipher");
         LockInput();
-        inputText = GameObject.Find("InputText").GetComponent<Text>();
-        inputTextButton = GameObject.Find("InputTextButton").GetComponent<Button>();
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
         PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
         AddProblem(new ProblemData(this,"secret", TextType.Encryption));
         AddProblem(new ProblemData(this, "secret", TextType.Decryption));
-        //ProblemSetup(problems[0]);
         base.Start();
         
 
@@ -41,31 +35,27 @@ public class Playfair : ProblemHandler
     public void checkKeyInput()
     {
         print("Formatted Key: " + formatKey(CurrentProblemData.key));
-        if(inputText.text.Equals(formatKey(CurrentProblemData.key)))
+        if(HUD.GetInputText().ToUpper().Equals(formatKey(CurrentProblemData.key).ToUpper()))
         {
             //Correct Move to step 2
             if(CurrentProblemData.ProblemType == TextType.Encryption)
             {
-                inputTextButton.onClick.RemoveAllListeners();
-                inputTextButton.onClick.AddListener(checkPlainTextInput);
-                HUD.SetTopText("Please Format the PlainText");
+                HUD.SetupInputBox("Please Format the PlainText", checkPlainTextInput);
             }
             else
             {
-
-                //Fill Matrix
                 SetupMatrixInput();
             }
         }
         else
         {
-            print("Get hosed fine sir.");
+            //Indicate That We are wrong
         }
     }
     public void checkPlainTextInput()
     {
         print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.Plaintext));
-        if(inputText.text.Equals(formatPlaintext(CurrentProblemData.Plaintext)))
+        if(HUD.GetInputText().ToUpper().Equals(formatPlaintext(CurrentProblemData.Plaintext).ToUpper()))
         {
             ///Next we fill the matrix
             ///Call the matrix UI
@@ -84,16 +74,16 @@ public class Playfair : ProblemHandler
     public void checkMatrixInput()
     {
         print("Matrix Row " + matrixCounter + ": " + GetRow(matrixCounter));
-        if (inputText.text.Equals(GetRow(matrixCounter)) && (matrixCounter < 5))
+        if (HUD.GetInputText().ToUpper().Equals(GetRow(matrixCounter).ToUpper()) && (matrixCounter < 5))
         {
             matrixCounter++;
-            HUD.SetTopText("Please enter the " + (matrixCounter) + " row of the matrix");
+            HUD.SetupInputBox("Please enter the " + (matrixCounter) + " row of the matrix", checkMatrixInput);
             if(matrixCounter > 4)
             {
                 //Fade the UI out and Display the matrix and play the game
                 ShowMatrix();
                 matrixCounter = 0;
-                inputTextButton.onClick.RemoveAllListeners();
+                HUD.HideInputHUD();
             }
         }
         else
@@ -109,9 +99,7 @@ public class Playfair : ProblemHandler
     }
     void SetupMatrixInput()
     {
-        inputTextButton.onClick.RemoveAllListeners();
-        inputTextButton.onClick.AddListener(checkMatrixInput);
-        HUD.SetTopText("Please enter the 0 row of the Matrix");
+        HUD.SetupInputBox("Please enter the 0 row of the Matrix", checkMatrixInput);
         matrixCounter = 0;
     }
 
@@ -122,8 +110,8 @@ public class Playfair : ProblemHandler
         HUD.SetTopText("Please Format the Key");
         player.SetActive(false);
         LockInput();
-        keyInput.SetActive(true);
-        inputTextButton.onClick.AddListener(checkKeyInput);
+        //keyInput.SetActive(true);
+        HUD.SetupInputBox("Please Format the Key", checkKeyInput);
         fillMatrix(keyword);
         data.Ciphertext = GenerateCipherText();
         CurrentProblemData.UpdateMessage();

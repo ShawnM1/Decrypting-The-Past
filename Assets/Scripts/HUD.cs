@@ -31,7 +31,6 @@ public class HUD : MonoBehaviour {
         infoBox = this.transform.Find("InfoBox").gameObject;
         InfoText = this.transform.Find("InfoBox/InfoText").GetComponent<Text>();
         print("Called");
-        AppendToInfoBox("TEST");
 	}
 	
 	// Update is called once per frame
