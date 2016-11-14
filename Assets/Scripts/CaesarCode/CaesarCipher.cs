@@ -20,6 +20,7 @@ public class CaesarCipher : ProblemHandler {
         AddProblem(new ProblemData(this, "4", TextType.Decryption));
         AddProblem(new ProblemData(this, "5", TextType.Encryption));
 
+        HUD.SetActionButtonEvent(CickToGoToNextProblem);
         pointGenerator = GetComponent<Circle2DPointGenerator>();
         anglePerItem = 360 / 25;
         Mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
@@ -54,8 +55,17 @@ public class CaesarCipher : ProblemHandler {
 
     public override void OnAllProblemsSolved()
     {
+        SaveContainer.Instance.SaveFile.CaesarCompleted = true;
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int) GameTimer.Ticks;
+        SaveContainer.Instance.SaveDataToFile();
+        
         //Display Score window "YOU WIN"
-        SceneManager.LoadScene("PlayFair");
+        HUD.ShowVictoryScreen(goToNextLevel);
+    }
+
+    void goToNextLevel()
+    {
+        StartCoroutine(GoToScene.GoToSceneEnumerator("TimeLineMenuScene"));
     }
 
     public override string GenerateCipherText()
@@ -83,7 +93,7 @@ public class CaesarCipher : ProblemHandler {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < message.Length; i++)
         {
-            builder.Append(alphabet[(findLetterPositionInAlpha(message[i]) + key) % 25]);
+            builder.Append(alphabet[(findLetterPositionInAlpha(message[i]) + key) % 26]);
         }
         return builder.ToString();
     }

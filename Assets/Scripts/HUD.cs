@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour {
     static Text InfoText;
     static GameObject infoBox;
     static GameObject victoryScreen;
-    bool pauseable = true;
+    static bool pauseable = true;
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -136,7 +136,7 @@ public class HUD : MonoBehaviour {
     {
         infoBox.SetActive(false);
     }
-    public void ShowVictoryScreen(UnityAction buttonAction)
+    public static void ShowVictoryScreen(UnityAction buttonAction)
     {
         GameTimer.timerActive = false;
         pauseable = false;
