@@ -29,7 +29,10 @@ class ADFGX_Cipher : ProblemHandler
         HUD.ShowInfoBox();
         base.Start();
     }
-
+    /// <summary>
+    /// Generates a random permutation of a key length 4
+    /// </summary>
+    /// <returns>String</returns>
     private string generateRandomKey()
     {
         StringBuilder key = new StringBuilder();
@@ -63,12 +66,16 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
+    /// <summary>
+    /// Returns the encoding of a plaintext character referencing the ADFGX matrix.
+    /// </summary>
+    /// <param name="c">plaintext character</param>
+    /// <returns>String</returns>
     public string GetEncodedCharText(char c)
     {
         StringBuilder encodedCharText = new StringBuilder();
         int charRow = getCharRowIndex(c);
         int charCol = getCharColIndex(c);
-        // breakpoint
         if (charCol != 0)
         {
             switch (charRow)
@@ -114,17 +121,25 @@ class ADFGX_Cipher : ProblemHandler
         }
         return encodedCharText.ToString();
     }
+    /// <summary>
+    /// Encrypts plaintext. Note the all j's are replaced with i's
+    /// </summary>
+    /// <param name="plaintext"></param>
+    /// <returns> cipher text</returns>
     private string encrypt(string plaintext)
     {
         plaintext = plaintext.ToLower().Replace('j', 'i');
+        // Matrix text are the characters encoded by the ADFGX matrix
         matrixText = new StringBuilder();
         StringBuilder ciphertext = new StringBuilder();
         for (int i = 0; i < plaintext.Length; i++)
         {
             matrixText.Append(GetEncodedCharText(plaintext[i]));
         }
+  
         fillTable(matrixText.ToString());
-
+        // The following for loop accesses columns in numeric order by name. For example, in 
+        // the key 231, the third row "1" is accessed first, followed by 2, then 3.
         for (int i = 0; i < base.CurrentProblemData.key.Length; i++)
         {
            
@@ -147,8 +162,7 @@ class ADFGX_Cipher : ProblemHandler
 
             }
         }
-        // TODO: remove whitespace
-        // return removeWhitespace(ciphertext.ToString());
+
         return ciphertext.ToString().Replace(" ", string.Empty);
         
 
@@ -213,6 +227,12 @@ class ADFGX_Cipher : ProblemHandler
         return _ciphertext.ToString();
 
     }
+    /// <summary>
+    /// organizes matrix text according to the key order. i.e. 231
+    /// where the third column labeled "1" will be accessed first inside
+    /// the encrypt function
+    /// </summary>
+    /// <param name="matrixText">passed in from encrypt method</param>
     private void fillTable(string matrixText)
     {
         StringBuilder text = new StringBuilder(matrixText);
@@ -253,6 +273,11 @@ class ADFGX_Cipher : ProblemHandler
 
         printMatrix(table);
     }
+    /// <summary>
+    /// Accesses the matrix on screen to compare and locate the character's row in the matrix
+    /// </summary>
+    /// <param name="c">character</param>
+    /// <returns>int coressponding to the row of the matrix</returns>
     private static int getCharRowIndex(char c)
     {
         char[,] array = GameObject.Find("Grid").GetComponent<ADFGXMatrix>().ADFGX_array;
@@ -273,6 +298,11 @@ class ADFGX_Cipher : ProblemHandler
         return row;
 
     }
+    /// <summary>
+    ///  Accesses the matrix on screen to compare and locate the character's column in the matrix
+    /// </summary>
+    /// <param name="c">character</param>
+    /// <returns>int coressponding to the column of the matrix</returns>
     private static int getCharColIndex(char c)
     {
         char[,] array = GameObject.Find("Grid").GetComponent<ADFGXMatrix>().ADFGX_array;
@@ -308,6 +338,12 @@ class ADFGX_Cipher : ProblemHandler
             }
         }
     }
+    /// <summary>
+    /// gets the data in the specified column of the table consisting of matrix text.
+    /// Used in the encrypt method
+    /// </summary>
+    /// <param name="index">int</param>
+    /// <returns>string</returns>
     private string getColumn(int index)
     {   
         StringBuilder columnData = new StringBuilder();
@@ -342,6 +378,10 @@ class ADFGX_Cipher : ProblemHandler
         return s;
 
     }
+    /// <summary>
+    /// Randomly fills the matrix with text from the alphabet.
+    /// All letters are unique. 
+    /// </summary>
     private static void fillMatrix()
     {
         System.Random r = new System.Random();
