@@ -22,6 +22,10 @@ public class PlayfairGrid : MonoBehaviour {
         }
         this.transform.Rotate(0, 0, -90);
     }
+    /// <summary>
+    /// copies input array into scene array. Input array must be a 5x5 matrix
+    /// </summary>
+    /// <param name="array">2D array 5x5</param>
     public void AppendLettersToObjectMatrix(char[,] array)
     {
         for (int i = 0; i < Width; i++)

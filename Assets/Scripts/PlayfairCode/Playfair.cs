@@ -31,7 +31,9 @@ public class Playfair : ProblemHandler
         
 
     }
-
+    /// <summary>
+    /// Method to check if the user formatted the key correctly
+    /// </summary>
     public void checkKeyInput()
     {
         print("Formatted Key: " + formatKey(CurrentProblemData.key));
@@ -49,9 +51,13 @@ public class Playfair : ProblemHandler
         }
         else
         {
-            //Indicate That We are wrong
+            //TODO: Indicate That We are wrong
+
         }
     }
+    /// <summary>
+    /// Method to check if user formatted plaintext correctly
+    /// </summary>
     public void checkPlainTextInput()
     {
         print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.Plaintext));
@@ -60,8 +66,17 @@ public class Playfair : ProblemHandler
             ///Next we fill the matrix
             ///Call the matrix UI
             SetupMatrixInput();
+        } else
+        {
+            //TODO: Indicate to the user that they are wrong.
         }
     }
+    /// <summary>
+    /// Helper method to get the specified row in the matrix.
+    /// See use in checkMatrixInput() method.
+    /// </summary>
+    /// <param name="row"></param>
+    /// <returns></returns>
     public string GetRow(int row)
     {
         StringBuilder builder = new StringBuilder();
@@ -71,6 +86,9 @@ public class Playfair : ProblemHandler
         }
         return builder.ToString();
     }
+    /// <summary>
+    /// User enters matrix row by row, check each row to see if it is correct.
+    /// </summary>
     public void checkMatrixInput()
     {
         print("Matrix Row " + matrixCounter + ": " + GetRow(matrixCounter));
@@ -131,7 +149,7 @@ public class Playfair : ProblemHandler
     }
 
     /// <summary>
-    /// Method to remove non-distance characters.
+    /// Method to remove non-distinct characters.
     /// Each char of the string is compared to the
     /// other characters. remove if comparison is the same
     /// </summary>
@@ -493,7 +511,11 @@ public class Playfair : ProblemHandler
         }
         return ciphertext.ToString();
 
-    }
+    }/// <summary>
+    /// Decrypts ciphertext into original plaintext message
+    /// </summary>
+    /// <param name="ciphertext">String ciphertext</param>
+    /// <returns>String that is the plaintext message</returns>
     private static string decrypt(String ciphertext)
     {
         StringBuilder formattedPlaintext = new StringBuilder(formatPlaintext(ciphertext));
@@ -566,8 +588,8 @@ public class Playfair : ProblemHandler
     /// <summary>
     /// Reurns the row index of specified char in matrix
     /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
+    /// <param name="c">char c</param>
+    /// <returns>int row index of the character</returns>
     private static int charRowPosition(char c)
     {
         int index = -1;
@@ -587,8 +609,8 @@ public class Playfair : ProblemHandler
     /// <summary>
     /// Returns the column index of the specified char in matrix
     /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
+    /// <param name="c">char c</param>
+    /// <returns>int column index of the character</returns>
     private static int charColumnPosition(char c)
     {
         int index = -1;

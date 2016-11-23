@@ -75,7 +75,7 @@ public class CaesarCipher : ProblemHandler {
 
     public override string GeneratePlainText()
     {
-        return encryptCipher(-int.Parse(CurrentProblemData.key), CurrentProblemData.Plaintext);
+        return decrypt (-int.Parse(CurrentProblemData.key), CurrentProblemData.Plaintext);
     }
 
     public override void ProblemSetup(ProblemData data)
@@ -84,6 +84,7 @@ public class CaesarCipher : ProblemHandler {
     }
     /// <summary>
     /// This function can encrypt or decrypt a cipher depending wheather the key is positive.
+    /// See decrypt method.
     /// </summary>
     /// <param name="key"></param>
     /// <param name="message"></param>
@@ -96,6 +97,16 @@ public class CaesarCipher : ProblemHandler {
             builder.Append(alphabet[(findLetterPositionInAlpha(message[i]) + key) % 26]);
         }
         return builder.ToString();
+    }
+    /// <summary>
+    /// Calls encryptCipher with negative key value.
+    /// </summary>
+    /// <param name="key">integer that is negated</param>
+    /// <param name="message">plaintext essage</param>
+    /// <returns>string ciphertext</returns>
+     private string decrypt(int key, string message)
+    {
+       return encryptCipher(key, message);
     }
     private int findLetterPositionInAlpha(char c)
     {

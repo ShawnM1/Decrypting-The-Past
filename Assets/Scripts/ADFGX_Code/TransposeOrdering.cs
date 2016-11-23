@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+/// <summary>
+/// Orders the table rows by the key index
+/// </summary>
 public class TransposeOrdering : MonoBehaviour
 {
     // Use this for initialization
