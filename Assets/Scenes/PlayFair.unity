@@ -654,6 +654,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 831496229}
   - 212: {fileID: 831496228}
+  - 114: {fileID: 831496230}
   m_Layer: 0
   m_Name: seahorse-md
   m_TagString: Untagged
@@ -692,7 +693,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 986ddab34c4d341358f0f62bafc037d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
 --- !u!4 &831496229
 Transform:
@@ -707,6 +708,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 30
+--- !u!114 &831496230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 831496227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cc7a40ed09f8545b733f2246f05c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 25
 --- !u!1 &932823677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1300,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1381977927}
   - 212: {fileID: 1381977926}
+  - 114: {fileID: 1381977928}
   m_Layer: 0
   m_Name: sword fish
   m_TagString: Untagged
@@ -1334,12 +1348,24 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1381977925}
   m_LocalRotation: {x: -0.19795032, y: -0.98019946, z: 0.0021317326, w: 0.004486109}
-  m_LocalPosition: {x: -19.5, y: 18.7, z: -2.7}
+  m_LocalPosition: {x: -19.14, y: 18.7, z: -2.7}
   m_LocalScale: {x: 10.004004, y: 12.299652, z: 1}
   m_LocalEulerAnglesHint: {x: 0.136, y: -179.464, z: 22.605001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 23
+--- !u!114 &1381977928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1381977925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cc7a40ed09f8545b733f2246f05c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 29
 --- !u!1 &1470351595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,7 +1894,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1890,7 +1916,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!4 &1993399133 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013606038004, guid: c59ef7f9e968bf04f950813305cc3ef2,
