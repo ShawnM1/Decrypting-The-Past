@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 /// <summary>
-/// Orders the table rows by the key index
+/// Orders the table rows by the key index. For example,
+/// if the key is 3214, input field 1 is labeled "3"
 /// </summary>
 public class TransposeOrdering : MonoBehaviour
 {

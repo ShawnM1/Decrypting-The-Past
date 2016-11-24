@@ -80,8 +80,9 @@ class ADFGX_Cipher : ProblemHandler
         {
             switch (charRow)
             {
+                
                 case 0:
-
+                // Empty since this row of the matrix is the title ADFGX, and not actual alphabet letters
                 case 1:
                     encodedCharText.Append('A');
                     break;
@@ -101,7 +102,7 @@ class ADFGX_Cipher : ProblemHandler
             switch (charCol)
             {
                 case 0:
-
+                // Empty since this row of the matrix is the title ADFGX, and not actual alphabet letters
                 case 1:
                     encodedCharText.Append('A');
                     break;
@@ -142,7 +143,7 @@ class ADFGX_Cipher : ProblemHandler
         // the key 231, the third row "1" is accessed first, followed by 2, then 3.
         for (int i = 0; i < base.CurrentProblemData.key.Length; i++)
         {
-           
+            // loop through 1-4 and find its index in the key
             string s = (i + 1).ToString();
             int index = base.CurrentProblemData.key.IndexOf(s);
             switch(base.CurrentProblemData.key.IndexOf(s))
@@ -236,9 +237,10 @@ class ADFGX_Cipher : ProblemHandler
     private void fillTable(string matrixText)
     {
         StringBuilder text = new StringBuilder(matrixText);
-
+        // should always be 4 since key is always length 4
         int numOfCols = base.CurrentProblemData.key.Length;
         int numOfRows;
+        // if there are left over characters, we will need an extra row
         if (text.Length % numOfCols != 0)
         {
             numOfRows = (text.Length / numOfCols) + 1;
@@ -255,6 +257,7 @@ class ADFGX_Cipher : ProblemHandler
         {
             for (int k = 0; k < numOfCols; k++)
             {
+                // Add the first character to the matrix and remove it from the string. Repeat until string is empty.
                 if (text.Length > 0)
                 {
                     char addedChar = text[0];
@@ -415,7 +418,7 @@ class ADFGX_Cipher : ProblemHandler
             // index of c in the key
             int indexPos = base.CurrentProblemData.key.IndexOf(currentChar);
             string currentColumn = getColumn(indexPos);
-            
+            // Error logic
             if (!input.ToUpper().Equals(currentColumn))
              {
                  print("inputfield" + (i+1) + " is incorrect");

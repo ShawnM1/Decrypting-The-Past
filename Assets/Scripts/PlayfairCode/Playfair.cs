@@ -188,10 +188,10 @@ public class Playfair : ProblemHandler
 
 
         }
-        // TODO: I and J must be mutually exclusive in the matrix
+        // I and J must be mutually exclusive in the matrix
         int indexOf_I = characterIndex(formattedKey, 'i');
         int indexOf_J = characterIndex(formattedKey, 'j');
-
+    
         if (indexOf_I > 0 && indexOf_J > 0)
         {
             formattedKey.Remove(indexOf_J, 1);
@@ -272,7 +272,7 @@ public class Playfair : ProblemHandler
                 break;
             }
         }
-        // TODO: fill the matrix with the remaining alphabet
+ 
         // First lets fill the complete row
 
         int startRow = fKey.Length / 5;
@@ -281,7 +281,6 @@ public class Playfair : ProblemHandler
 
         if (fKey.Length % 5 != 0)
         {
-
 
             for (int i = remainingChars; i <= emptyElements; i++)
             {
@@ -310,8 +309,6 @@ public class Playfair : ProblemHandler
                 }
             }
         }
-
-
 
     }
     /// <summary>
