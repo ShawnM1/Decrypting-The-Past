@@ -42,6 +42,7 @@ public class Playfair : ProblemHandler
             //Correct Move to step 2
             if(CurrentProblemData.ProblemType == TextType.Encryption)
             {
+                HUD.SetTopText("Please format the plaintext");
                 HUD.SetupInputBox("Please Format the PlainText", checkPlainTextInput);
             }
             else
@@ -51,8 +52,7 @@ public class Playfair : ProblemHandler
         }
         else
         {
-            //TODO: Indicate That We are wrong
-
+            HUD.SetTopText("Incorrect key formatting");
         }
     }
     /// <summary>
@@ -68,7 +68,7 @@ public class Playfair : ProblemHandler
             SetupMatrixInput();
         } else
         {
-            //TODO: Indicate to the user that they are wrong.
+            HUD.SetTopText("Incorrect plaintext formatting");
         }
     }
     /// <summary>
@@ -91,14 +91,16 @@ public class Playfair : ProblemHandler
     /// </summary>
     public void checkMatrixInput()
     {
-        print("Matrix Row " + matrixCounter + ": " + GetRow(matrixCounter));
+        GameObject UserMatrixText = GameObject.Find("UserMatrixTextbox");
         if (HUD.GetInputText().ToUpper().Equals(GetRow(matrixCounter).ToUpper()) && (matrixCounter < 5))
         {
+            UserMatrixText.GetComponent<Text>().text += HUD.GetInputText().ToUpper() + '\n';
             matrixCounter++;
             HUD.SetupInputBox("Please enter the " + (matrixCounter) + " row of the matrix", checkMatrixInput);
             if(matrixCounter > 4)
             {
                 //Fade the UI out and Display the matrix and play the game
+                GameObject.Destroy(UserMatrixText,0);
                 ShowMatrix();
                 matrixCounter = 0;
                 HUD.HideInputHUD();
@@ -106,7 +108,7 @@ public class Playfair : ProblemHandler
         }
         else
         {
-            print("Matrix is wrong");
+            print("Matrix is wrong, should be : " + GetRow(matrixCounter));
         }
     }
     void ShowMatrix()
@@ -117,6 +119,7 @@ public class Playfair : ProblemHandler
     }
     void SetupMatrixInput()
     {
+        HUD.SetTopText("Please enter each row of the matrix");
         HUD.SetupInputBox("Please enter the 0 row of the Matrix", checkMatrixInput);
         matrixCounter = 0;
     }
