@@ -18,6 +18,7 @@ public class Playfair : ProblemHandler
     private GameObject gameObjectMatrix;
     private GameObject player;
 
+
     void Start()
     {
         LockInput();
