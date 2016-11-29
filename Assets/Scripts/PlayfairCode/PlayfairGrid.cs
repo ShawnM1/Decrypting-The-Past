@@ -20,7 +20,7 @@ public class PlayfairGrid : MonoBehaviour {
                 
             }
         }
-        this.transform.Rotate(0, 0, -90);
+        //this.transform.Rotate(0, 0, -90);
     }
     /// <summary>
     /// copies input array into scene array. Input array must be a 5x5 matrix
@@ -36,5 +36,17 @@ public class PlayfairGrid : MonoBehaviour {
             }
         }
     }
-    
+    void OnDrawGizmos()
+    {
+
+        Vector3 position = this.transform.position;
+        Gizmos.color = Color.green;
+        for (int i = 0; i < Width; i++)
+        {
+            for (int k = 0; k < Height; k++)
+            {
+                Gizmos.DrawWireCube(new Vector3(this.transform.position.x + (i * XOffset), this.transform.position.y + (k * XOffset), transform.position.z), new Vector3(5,5));
+            }
+        }
+    }
 }
