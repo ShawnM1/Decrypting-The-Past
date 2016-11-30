@@ -13,7 +13,7 @@ public class ADFGXMatrix : MonoBehaviour {
             for (int k = 0; k < 6; k++)
             {
                 GameObject objectElement = (GameObject)Instantiate(Prefab);
-                objectElement.transform.position = new Vector3(objectElement.transform.position.x + (i * XOffset), objectElement.transform.position.y + (k * XOffset), objectElement.transform.position.z);
+                objectElement.transform.position = new Vector3(transform.position.x + (i * XOffset), transform.position.y + (k * XOffset), transform.position.z);
                 objectElement.transform.parent = this.transform;
                 ADFGXobjectMatrix[i, k] = objectElement;
 
@@ -72,6 +72,19 @@ public class ADFGXMatrix : MonoBehaviour {
             for (int k = 0; k < 6; k++)
             {
                 ADFGXobjectMatrix[i, k].GetComponent<TextMesh>().text = ADFGX_array[i, k].ToString();
+            }
+        }
+    }
+    void OnDrawGizmos()
+    {
+
+        Vector3 position = this.transform.position;
+        Gizmos.color = Color.green;
+        for (int i = 0; i < 6; i++)
+        {
+            for (int k = 0; k < 6; k++)
+            {
+                Gizmos.DrawWireCube(new Vector3(this.transform.position.x + (i * XOffset), this.transform.position.y - (k * XOffset), transform.position.z), new Vector3(5, 5));
             }
         }
     }
