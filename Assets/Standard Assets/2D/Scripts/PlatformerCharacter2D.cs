@@ -21,7 +21,8 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         public bool isCeaserCipher = false;
-
+        public bool isPlayfair = false;
+     
         private void Awake()
         {
             // Setting up references.
@@ -51,7 +52,7 @@ namespace UnityStandardAssets._2D
         }
 
 
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(Vector2 move, bool crouch, bool jump)
         {
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
@@ -73,21 +74,21 @@ namespace UnityStandardAssets._2D
                 move = (crouch ? move*m_CrouchSpeed : move);
 
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
-                m_Anim.SetFloat("Speed", Mathf.Abs(move));
+                m_Anim.SetFloat("Speed", Mathf.Abs(move.x));
 
                 if (!isCeaserCipher)
                 {
                     // Move the character
-                    m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                    m_Rigidbody2D.velocity = new Vector2(move.x * m_MaxSpeed, move.y * m_MaxSpeed);
                 }
                 // If the input is moving the player right and the player is facing left...
-                if (move > 0 && !m_FacingRight)
+                if (move.x > 0 && !m_FacingRight)
                 {
                     // ... flip the player.
                     Flip();
                 }
                     // Otherwise if the input is moving the player left and the player is facing right...
-                else if (move < 0 && m_FacingRight)
+                else if (move.x < 0 && m_FacingRight)
                 {
                     // ... flip the player.
                     Flip();

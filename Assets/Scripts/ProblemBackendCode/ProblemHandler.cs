@@ -107,6 +107,7 @@ public abstract class ProblemHandler : MonoBehaviour {
                 else
                 {
                     OnAllProblemsSolved();
+                    HUD.ShowVictoryScreen();
                     return true;
                 }
             }

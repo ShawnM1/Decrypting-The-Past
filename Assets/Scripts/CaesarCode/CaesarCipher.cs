@@ -15,10 +15,10 @@ public class CaesarCipher : ProblemHandler {
 	public override void Start () {
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         AddProblem(new ProblemData(this,"1", TextType.Encryption));
-        AddProblem(new ProblemData(this,"2", TextType.Decryption));
-        AddProblem(new ProblemData(this, "3", TextType.Encryption));
-        AddProblem(new ProblemData(this, "4", TextType.Decryption));
-        AddProblem(new ProblemData(this, "5", TextType.Encryption));
+        //AddProblem(new ProblemData(this,"2", TextType.Decryption));
+        //AddProblem(new ProblemData(this, "3", TextType.Encryption));
+        //AddProblem(new ProblemData(this, "4", TextType.Decryption));
+        //AddProblem(new ProblemData(this, "5", TextType.Encryption));
 
         HUD.SetActionButtonEvent(CickToGoToNextProblem);
         pointGenerator = GetComponent<Circle2DPointGenerator>();
@@ -55,10 +55,13 @@ public class CaesarCipher : ProblemHandler {
 
     public override void OnAllProblemsSolved()
     {
+#if DEBUG
+        print("Debug flag");
+#else
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
         SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int) GameTimer.Ticks;
         SaveContainer.Instance.SaveDataToFile();
-        
+#endif
         //Display Score window "YOU WIN"
         HUD.ShowVictoryScreen(goToNextLevel);
     }

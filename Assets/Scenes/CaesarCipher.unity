@@ -234,32 +234,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 223000013845409496, guid: a54966d6445e96f48b7c3c9701b30d1a,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 816616539}
     - target: {fileID: 114000012497404772, guid: a54966d6445e96f48b7c3c9701b30d1a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1818820097}
-    - target: {fileID: 4000011910412976, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -576.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011910412976, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 60.88368
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011910412976, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -266
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011910412976, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 27.236862
-      objectReference: {fileID: 0}
+    - target: {fileID: 223000013845409496, guid: a54966d6445e96f48b7c3c9701b30d1a,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 816616539}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
   m_IsPrefabParent: 0
@@ -3145,6 +3129,11 @@ Prefab:
         type: 2}
       propertyPath: isCeaserCipher
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50000013587316370, guid: c59ef7f9e968bf04f950813305cc3ef2,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c59ef7f9e968bf04f950813305cc3ef2, type: 2}

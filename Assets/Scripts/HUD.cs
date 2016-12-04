@@ -150,8 +150,17 @@ public class HUD : MonoBehaviour {
         GameTimer.timerActive = false;
         pauseable = false;
         victoryScreen.SetActive(true);
-        victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = "Time Completed: " +GameTimer.Ticks;
+        victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = "Time Completed: " +GameTimer.getTime();
         victoryScreen.transform.FindChild("GoToNextLevelButton").GetComponent<Button>().onClick.AddListener(buttonAction);
+    }
+    public static void ShowVictoryScreen()
+    {
+        GameTimer.timerActive = false;
+        pauseable = false;
+        victoryScreen.SetActive(true);
+        string victoryTime = "Time Completed : " + GameTimer.getTime();
+        victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = victoryTime;
+        print(GameTimer.getTime());
     }
     public static void HideEverything()
     {

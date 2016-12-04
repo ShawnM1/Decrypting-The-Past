@@ -3,13 +3,7 @@ using System.Collections;
 
 public class GameTimer : MonoBehaviour {
 
-    public static float Ticks
-    {
-        get
-        {
-            return timer;
-        }
-    }
+    
     public static bool timerActive = true;
     static float timer = 0;
     string minutes;
@@ -23,5 +17,13 @@ public class GameTimer : MonoBehaviour {
             minutes = Mathf.Floor(timer / 60).ToString("00");
             seconds = (timer % 60).ToString("00");
         }
+    }
+    public static float getTime()
+    {
+        return timer;
+    }
+    public static void StopTimer()
+    {
+        timerActive = false;
     }
 }
