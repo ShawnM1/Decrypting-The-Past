@@ -25,7 +25,7 @@ public class Playfair : ProblemHandler
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
-        PopulateWordDictionary("Bugatti", "Ford", "SnoopDogg");
+        PopulateWordDictionary("bugatti", "ford", "SnoopDogg");
         AddProblem(new ProblemData(this,"secret", TextType.Encryption));
         AddProblem(new ProblemData(this, "secret", TextType.Decryption));
         base.Start();
@@ -117,6 +117,7 @@ public class Playfair : ProblemHandler
         UnlockInput();
         gameObjectMatrix.SetActive(true);
         player.SetActive(true);
+        HUD.SetActionButtonEvent(CickToGoToNextProblem);
     }
     void SetupMatrixInput()
     {
@@ -162,6 +163,7 @@ public class Playfair : ProblemHandler
     private static String formatKey(String key)
     {
         key.ToLower();
+        key = key.Replace("j", "i");
         StringBuilder formattedKey = new StringBuilder(key);
 
         char currentChar;
@@ -213,7 +215,7 @@ public class Playfair : ProblemHandler
     private static void fillMatrix(String key)
     {
         alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
-        String fKey = formatKey(key);
+        string fKey = formatKey(key);
 
         StringBuilder formattedKey = new StringBuilder(fKey);
 
@@ -356,6 +358,7 @@ public class Playfair : ProblemHandler
     private static string formatPlaintext(string plaintext)
     {
         plaintext.Replace(" ", string.Empty).ToLower();
+        plaintext.Replace("j", "i");
         StringBuilder formattedPlaintext = new StringBuilder();
 
         for (int i = 0; i < plaintext.Length; i += 2)
