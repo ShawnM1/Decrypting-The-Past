@@ -25,9 +25,9 @@ public class Playfair : ProblemHandler
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
-        PopulateWordDictionary("bugatti", "ford", "SnoopDogg");
+        PopulateWordDictionary("rob", "joe", "hello", "bugatti");
         AddProblem(new ProblemData(this,"secret", TextType.Encryption));
-        AddProblem(new ProblemData(this, "secret", TextType.Decryption));
+        AddProblem(new ProblemData(this, "clams", TextType.Decryption));
         base.Start();
         
 
@@ -162,7 +162,7 @@ public class Playfair : ProblemHandler
     /// <returns></returns>
     private static String formatKey(String key)
     {
-        key.ToLower();
+        key = key.ToLower();
         key = key.Replace("j", "i");
         StringBuilder formattedKey = new StringBuilder(key);
 
@@ -195,13 +195,13 @@ public class Playfair : ProblemHandler
 
         }
         // I and J must be mutually exclusive in the matrix
-        int indexOf_I = characterIndex(formattedKey, 'i');
+        /*int indexOf_I = characterIndex(formattedKey, 'i');
         int indexOf_J = characterIndex(formattedKey, 'j');
     
         if (indexOf_I > 0 && indexOf_J > 0)
         {
             formattedKey.Remove(indexOf_J, 1);
-        }
+        }*/
 
 
 
@@ -357,8 +357,8 @@ public class Playfair : ProblemHandler
     /// <param name="plaintext"></param>
     private static string formatPlaintext(string plaintext)
     {
-        plaintext.Replace(" ", string.Empty).ToLower();
-        plaintext.Replace("j", "i");
+        plaintext = plaintext.Replace(" ", string.Empty).ToLower();
+        plaintext = plaintext.Replace("j", "i");
         StringBuilder formattedPlaintext = new StringBuilder();
 
         for (int i = 0; i < plaintext.Length; i += 2)
@@ -509,6 +509,7 @@ public class Playfair : ProblemHandler
             // Case where pair of characters are not in same row or column
             else
             {
+                print("c1Row " + c1Row + " c2Column : " + c2Column);
                 ciphertext.Append(matrix[c1Row, c2Column]);
                 ciphertext.Append(matrix[c2Row, c1Column]);
             }
