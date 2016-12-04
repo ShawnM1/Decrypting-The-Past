@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 public class HUD : MonoBehaviour {
@@ -19,6 +20,9 @@ public class HUD : MonoBehaviour {
     static GameObject infoBox;
     static GameObject victoryScreen;
     static bool pauseable = true;
+    public static bool Hidden = false;
+    static List<GameObject> States = new List<GameObject>();
+    static Button tutorialButton; 
 	// Use this for initialization
 	void Start () {
         BottomUIText = this.transform.Find("UIDisplayText").GetComponent<Text>();
@@ -32,23 +36,27 @@ public class HUD : MonoBehaviour {
         infoBox = this.transform.Find("InfoBox").gameObject;
         InfoText = this.transform.Find("InfoBox/InfoText").GetComponent<Text>();
         victoryScreen = this.transform.Find("VictoryScreen").gameObject;
+        tutorialButton = this.transform.Find("TutorialButton").gameObject.GetComponent<Button>();
         print("Called");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseable)
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseable && !Hidden)
         {
 
             if (pauseMenu.activeSelf)
             {
                 Time.timeScale = 1;
+                UnHideEverything();
             }
             else
             {
                 Time.timeScale = 0;
+                HideEverything();
             }
+            
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
 
@@ -74,6 +82,7 @@ public class HUD : MonoBehaviour {
 
     public void resumeGameOnClick()
     {
+        UnHideEverything();
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }
@@ -143,5 +152,43 @@ public class HUD : MonoBehaviour {
         victoryScreen.SetActive(true);
         victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = "Time Completed: " +GameTimer.Ticks;
         victoryScreen.transform.FindChild("GoToNextLevelButton").GetComponent<Button>().onClick.AddListener(buttonAction);
+    }
+    public static void HideEverything()
+    {
+        print("Hiding HUD");
+        List<GameObject> tmp = new List<GameObject>();
+        tmp.Add(TopUIText.gameObject);
+        tmp.Add(BottomUIText.gameObject);
+        tmp.Add(InputCanvas);
+        GameObject grid = GameObject.Find("Grid");
+        if (grid != null)
+        {
+            if (grid.activeSelf)
+            {
+                tmp.Add(grid);
+            }
+        }
+        for(int i = 0; i < tmp.Count; i++)
+        {
+            if(tmp[i].activeSelf != false)
+            {
+                tmp[i].SetActive(!tmp[i].activeSelf);
+                States.Add(tmp[i]);
+            }
+        }
+        Hidden = true;
+    }
+    public static void UnHideEverything()
+    {
+        for (int i = 0; i < States.Count; i++)
+        {
+            States[i].SetActive(!States[i].activeSelf);
+        }
+        States.Clear();
+        Hidden = false;
+    }
+    public static void SetTutorialButtonState(bool state)
+    {
+        tutorialButton.interactable = state;
     }
 }

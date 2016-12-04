@@ -20,7 +20,7 @@ public class PlayfairGrid : MonoBehaviour {
                 
             }
         }
-        //this.transform.Rotate(0, 0, -90);
+        this.transform.Rotate(0, 0, -90);
     }
     /// <summary>
     /// copies input array into scene array. Input array must be a 5x5 matrix
