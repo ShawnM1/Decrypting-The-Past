@@ -25,9 +25,12 @@ public class Playfair : ProblemHandler
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
-        PopulateWordDictionary("rob", "joe", "hello", "bugatti");
-        AddProblem(new ProblemData(this,"secret", TextType.Encryption));
-        AddProblem(new ProblemData(this, "clams", TextType.Decryption));
+        PopulateWordDictionary("hello", "hello");
+        AddProblem(new ProblemData(this, "secret", TextType.Encryption));
+        AddProblem(new ProblemData(this, "secret", TextType.Decryption));
+        //PopulateWordDictionary("rob", "joe", "hello", "bugatti");
+        //AddProblem(new ProblemData(this,"secret", TextType.Encryption));
+        //AddProblem(new ProblemData(this, "clams", TextType.Decryption));
         base.Start();
         
 
