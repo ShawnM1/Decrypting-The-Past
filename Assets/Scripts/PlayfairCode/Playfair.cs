@@ -17,10 +17,12 @@ public class Playfair : ProblemHandler
     private int matrixCounter = 0;
     private GameObject gameObjectMatrix;
     private GameObject player;
+    private GameObject UserMatrixText;
 
 
     void Start()
     {
+        UserMatrixText = GameObject.Find("UserMatrixTextbox");
         LockInput();
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
@@ -104,7 +106,8 @@ public class Playfair : ProblemHandler
             if(matrixCounter > 4)
             {
                 //Fade the UI out and Display the matrix and play the game
-                GameObject.Destroy(UserMatrixText,0);
+                UserMatrixText.GetComponent<Text>().text = "";
+                //GameObject.Destroy(UserMatrixText,0);
                 ShowMatrix();
                 matrixCounter = 0;
                 HUD.HideInputHUD();
