@@ -650,8 +650,9 @@ public class Playfair : ProblemHandler
 
     public override void OnAllProblemsSolved()
     {
-        //Nex tLEvel
-        print("Winner my chicken dinner");
+        SaveContainer.Instance.SaveFile.CaesarCompleted = true;
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTime();
+        SaveContainer.Instance.SaveDataToFile();
     }
 
     public override void UpdateUI()

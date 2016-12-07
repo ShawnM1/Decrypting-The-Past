@@ -20,7 +20,7 @@ public class TransposeOrdering : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            print(i + "keyindex" + "Assigned to: " + ProblemHandlerObj.CurrentProblemData.key[i].ToString());
+           // print(i + "keyindex" + "Assigned to: " + ProblemHandlerObj.CurrentProblemData.key[i].ToString());
             GameObject.Find(i + "keyindex").GetComponent<Text>().text = ProblemHandlerObj.CurrentProblemData.key[i].ToString();
         }
         ClearFields();

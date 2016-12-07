@@ -15,6 +15,8 @@ public abstract class ProblemHandler : MonoBehaviour {
     private int currentProblem = 0;
     bool debugMode = false;
     public event OnProblemChangedEventHandler handler;
+
+    public GameObject SavePrefab;
     #endregion
     #region Properties
     /// <summary>
@@ -38,6 +40,13 @@ public abstract class ProblemHandler : MonoBehaviour {
         }
     }
     #endregion
+    void Awake()
+    {
+#if DEBUG
+
+        GameObject.Instantiate(SavePrefab);
+#endif
+    }
     public void PopulateWordDictionary(params string[] words)
     {
         foreach(string x in words)

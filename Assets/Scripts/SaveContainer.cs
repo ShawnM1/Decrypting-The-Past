@@ -9,6 +9,12 @@ public class SaveContainer : MonoBehaviour {
     private static SaveContainer instance = null;
     public SaveFile SaveFile;
     string originalPath = "";
+    void Start()
+    {
+#if DEBUG
+        CreateNewSaveFile("test.dtp");
+#endif
+    }
     public void LoadSaveFile(string fileName)
     {
         if(File.Exists(Application.persistentDataPath + "/" + fileName))

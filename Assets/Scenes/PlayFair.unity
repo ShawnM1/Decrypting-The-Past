@@ -805,6 +805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _words: []
   problems: []
+  SavePrefab: {fileID: 1000012966947506, guid: c68faf6a106523049ae2b97591178aa5, type: 2}
 --- !u!4 &727742586
 Transform:
   m_ObjectHideFlags: 0

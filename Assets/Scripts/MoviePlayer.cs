@@ -26,6 +26,10 @@ public class MoviePlayer : MonoBehaviour {
             HUD.UnHideEverything();
             HUD.SetTutorialButtonState(true);
         }
+        if (movie.isPlaying && Input.GetKeyDown(KeyCode.Escape))
+        {
+            movie.Stop();
+        }
 	}
     public void playMovie()
     {
@@ -48,6 +52,7 @@ public class MoviePlayer : MonoBehaviour {
         if(gameObject.activeSelf && HUD.Hidden != true)
         {
             HUD.HideEverything();
+            HUD.Hidden = true;
             HUD.SetTutorialButtonState(false);
         }
     }

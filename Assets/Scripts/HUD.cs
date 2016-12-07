@@ -42,7 +42,7 @@ public class HUD : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        print(Hidden);
         if (Input.GetKeyDown(KeyCode.Escape) && pauseable && !Hidden)
         {
 
@@ -165,6 +165,8 @@ public class HUD : MonoBehaviour {
     public static void HideEverything()
     {
         print("Hiding HUD");
+        tutorialButton.interactable = false;
+        ActionButton.interactable = false;
         List<GameObject> tmp = new List<GameObject>();
         tmp.Add(TopUIText.gameObject);
         tmp.Add(BottomUIText.gameObject);
@@ -185,10 +187,12 @@ public class HUD : MonoBehaviour {
                 States.Add(tmp[i]);
             }
         }
-        Hidden = true;
+        //Hidden = true;
     }
     public static void UnHideEverything()
     {
+        tutorialButton.interactable = true;
+        ActionButton.interactable = true;
         for (int i = 0; i < States.Count; i++)
         {
             States[i].SetActive(!States[i].activeSelf);

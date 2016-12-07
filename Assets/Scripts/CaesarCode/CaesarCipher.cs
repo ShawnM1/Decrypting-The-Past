@@ -55,15 +55,9 @@ public class CaesarCipher : ProblemHandler {
 
     public override void OnAllProblemsSolved()
     {
-#if DEBUG
-        print("Debug flag");
-#else
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int) GameTimer.Ticks;
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTime();
         SaveContainer.Instance.SaveDataToFile();
-#endif
-        //Display Score window "YOU WIN"
-        HUD.ShowVictoryScreen(goToNextLevel);
     }
 
     void goToNextLevel()
