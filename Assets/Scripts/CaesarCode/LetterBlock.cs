@@ -3,10 +3,10 @@ using System.Collections;
 
 public class LetterBlock : MonoBehaviour {
 
-    private CaesarCipher caesarCipher;
+    private CaesarCipherHandler caesarCipher;
 	// Use this for initialization
 	void Start () {
-        caesarCipher = transform.parent.FindChild("HamsterWheel").GetComponent<CaesarCipher>();
+        caesarCipher = transform.parent.FindChild("HamsterWheel").GetComponent<CaesarCipherHandler>();
 	}
     void OnTriggerEnter2D(Collider2D other)
     {

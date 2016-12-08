@@ -75,7 +75,6 @@ public class ProblemData : ScriptableObject {
                 {
                     return false;
                 }
-
         }
     }
 }
