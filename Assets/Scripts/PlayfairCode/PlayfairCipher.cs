@@ -1,79 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using UnityEngine;
+using System.Collections;
 using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
+using System;
 
-public class Playfair : ProblemHandler
-{
-    static char[,] matrix = new char[5, 5];
-    private static string keyword;
+public class PlayfairCipher{
+
+    private StringBuilder alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
+    public StringBuilder formattedPlaintextSTB;
+    char[,] matrix = new char[5, 5];
+    private string keyword;
+    
     private string plaintext;
     private string ciphertext;
-    private static StringBuilder alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
-    private string answer;
-    private GameObject keyInput;
-    private int matrixCounter = 0;
-    private GameObject gameObjectMatrix;
-    private GameObject player;
-    private GameObject UserMatrixText;
-
-
-    void Start()
+    public PlayfairCipher(string key)
     {
-        UserMatrixText = GameObject.Find("UserMatrixTextbox");
-        LockInput();
-        keyInput = GameObject.Find("KeyInputCanvas");
-        gameObjectMatrix = GameObject.Find("Grid");
-        player = GameObject.Find("CharacterRobotBoy");
-        //"hello", "sponge", "cicirello", "jackhammer", "stockton", "rob", "secret", "project", "diffie");
-        PopulateWordDictionary( "secret", "rob", "hello", "diffie");
-        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Encryption));
-        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Decryption));
-       // AddProblem(new ProblemData(this, GetRandomWord(), TextType.Decryption));
-       // AddProblem(new ProblemData(this, GetRandomWord(), TextType.Encryption));
-        base.Start();
-       
-
-    }
-    /// <summary>
-    /// Method to check if the user formatted the key correctly
-    /// </summary>
-    public void checkKeyInput()
-    {
-        if(HUD.GetInputText().ToUpper().Equals(formatKey(CurrentProblemData.key).ToUpper()))
-        {
-            //Correct Move to step 2
-            if(CurrentProblemData.ProblemType == TextType.Encryption)
-            {
-                HUD.SetTopText("Please format the plaintext");
-                HUD.SetupInputBox("Please Format the PlainText", checkPlainTextInput);
-            }
-            else
-            {
-                SetupMatrixInput();
-            }
-        }
-        else
-        {
-            HUD.ShowWrongAnswerText();
-        }
-    }
-    /// <summary>
-    /// Method to check if user formatted plaintext correctly
-    /// </summary>
-    public void checkPlainTextInput()
-    {
-        if(HUD.GetInputText().ToUpper().Equals(formatPlaintext(CurrentProblemData.Plaintext).ToUpper()))
-        {
-            ///Next we fill the matrix
-            ///Call the matrix UI
-            SetupMatrixInput();
-        } else
-        {
-            HUD.SetTopText("Incorrect plaintext formatting");
-        }
+        keyword = key;
     }
     /// <summary>
     /// Helper method to get the specified row in the matrix.
@@ -84,79 +25,155 @@ public class Playfair : ProblemHandler
     public string GetRow(int row)
     {
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             builder.Append(matrix[row, i]);
         }
         return builder.ToString();
     }
     /// <summary>
-    /// User enters matrix row by row, check each row to see if it is correct.
+    /// Fill the matrix with the formatted key word.
+    /// Proceed to fill with the rest of the alphabet.
     /// </summary>
-    public void checkMatrixInput()
+    /// <param name="key"></param>
+    public void fillMatrix(String key)
     {
-        GameObject UserMatrixText = GameObject.Find("UserMatrixTextbox");
-        if (HUD.GetInputText().ToUpper().Equals(GetRow(matrixCounter).ToUpper()) && (matrixCounter < 5))
+
+        alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
+        string fKey = formatKey(key);
+
+        StringBuilder formattedKey = new StringBuilder(fKey);
+        int kBreakPos = 0;
+        // Number of characters that will spill over to the next row
+        int remainderCharacters = formattedKey.Length % 5;
+        // Number of complete rows filled by the keyword.
+        int rowsForKey = formattedKey.Length / 5;
+        // We need to access an additional row if we have extra characters
+        if (remainderCharacters != 0 && formattedKey.Length > 5)
         {
-            print(GetRow(matrixCounter));
-            UserMatrixText.GetComponent<Text>().text += HUD.GetInputText().ToUpper() + '\n';
-            matrixCounter++;
-            HUD.SetupInputBox("Please enter the " + (matrixCounter) + " row of the matrix", checkMatrixInput);
-            if(matrixCounter > 4)
+            rowsForKey += 1;
+        }
+
+        for (int i = 0; i <= rowsForKey; i++)
+        {
+            for (int k = 0; k < 5; k++)
             {
-                //Fade the UI out and Display the matrix and play the game
-                UserMatrixText.GetComponent<Text>().text = "";
-                ShowMatrix();
-                matrixCounter = 0;
-                HUD.HideInputHUD();
+                if (formattedKey.Length > 0)
+                {
+                    // Add the keyword character to the matrix and remove itself
+                    // remove the added letter from out alphabet string using helper method
+                    char addedChar = formattedKey[0];
+                    int alphabetCharIndex = characterIndex(alphabet, addedChar);
+                    alphabet.Remove(alphabetCharIndex, 1);
+
+                    matrix[i, k] = addedChar;
+                    formattedKey.Remove(0, 1);
+                    // Console.WriteLine(formattedKey);
+                    // reference value to fill in the rest of the matric with the alphabet
+
+                }
+                else
+                {
+                    kBreakPos = k;
+                    break;
+                }
             }
         }
-        else
-        {
-            HUD.ShowWrongAnswerText();
-        }
-    }
-    void ShowMatrix()
-    {
-        UnlockInput();
-        gameObjectMatrix.SetActive(true);
-        player.SetActive(true);
-        HUD.SetActionButtonEvent(CickToGoToNextProblem);
-    }
-    void SetupMatrixInput()
-    {
-        HUD.SetTopText("Please enter each row of the matrix");
-        HUD.SetupInputBox("Please enter the 0 row of the Matrix", checkMatrixInput);
-        matrixCounter = 0;
-    }
+        // I and J must be mutually exclusive. Format accordingly
+        int indexOf_I = characterIndex(alphabet, 'i');
+        int indexOf_J = characterIndex(alphabet, 'j');
 
-     public override void ProblemSetup(ProblemData data)
-    {
-        keyword = data.key;
-        //Call Grid here
-        HUD.SetTopText("Please Format the Key");
-        player.SetActive(false);
-        LockInput();
-        HUD.SetupInputBox("Please Format the Key", checkKeyInput);
-        print(data.key);
-        fillMatrix(keyword);
-        data.Ciphertext = GenerateCipherText();
-        CurrentProblemData.UpdateMessage();
-        gameObjectMatrix.GetComponent<PlayfairGrid>().AppendLettersToObjectMatrix(getMatrix());
-        gameObjectMatrix.SetActive(false);
-        ciphertext = data.Ciphertext;
-        plaintext = data.Plaintext;
-        if (data.ProblemType == TextType.Encryption)
+        for (int i = 0; i < alphabet.Length; i++)
         {
-            answer = encrypt(plaintext);
+            // Both in alphabet, choose one to delete (j)
+            if (indexOf_I > 0 && indexOf_J > 0)
+            {
+                alphabet.Remove(indexOf_J, 1);
+                break;
+            }
+            // I is in the alphabet and J is not (meaning J is in the matrix)
+            else if (indexOf_I > 0 && indexOf_J == -1)
+            {
+                alphabet.Remove(indexOf_I, 1);
+                break;
+            }
+            // J is in the alphabet and I is not (meaning I is in the matrix)
+            else if (indexOf_J > 0 && indexOf_I == -1)
+            {
+                alphabet.Remove(indexOf_J, 1);
+                break;
+            }
         }
-        else if (data.ProblemType == TextType.Decryption)
-        {
-            answer = decrypt(ciphertext);
-        }
-        base.ProblemSetup(data);
-    }
 
+        // First lets fill the complete row
+
+        int startRow = fKey.Length / 5;
+        int remainingChars = fKey.Length % 5;
+        int emptyElements = 5 - remainingChars;
+
+        if (fKey.Length % 5 != 0)
+        {
+
+            for (int i = kBreakPos; i < 5; i++)
+            {
+                matrix[startRow, i] = alphabet[0];
+                alphabet.Remove(0, 1);
+
+            }
+            // Now we can fill the rest of the complete rows
+            for (int i = startRow + 1; i < 5; i++)
+            {
+                for (int k = 0; k < 5; k++)
+                {
+                    matrix[i, k] = alphabet[0];
+                    alphabet.Remove(0, 1);
+                }
+            }
+        }
+        else if (fKey.Length % 5 == 0)
+        {
+            for (int i = startRow; i < 5 - startRow + 1; i++)
+            {
+                for (int k = 0; k < 5; k++)
+                {
+                    matrix[i, k] = alphabet[0];
+                    alphabet.Remove(0, 1);
+                }
+            }
+        }
+
+    }
+    /// <summary>
+    /// Returns the index of the char in the specified string.
+    /// Used in formatKey and fillMatrix
+    /// </summary>
+    /// <param name="c"></param>
+    private static int characterIndex(StringBuilder s, char c)
+    {
+        int index = -1;
+        for (int i = 0; i < s.Length; i++)
+        {
+            char currentChar = s[i];
+            if (currentChar.Equals(c))
+            {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+    private void printMatrx()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine();
+            for (int k = 0; k < 5; k++)
+            {
+                Console.Write(matrix[i, k]);
+            }
+        }
+
+    }
     /// <summary>
     /// Method to remove non-distinct characters.
     /// Each char of the string is compared to the
@@ -164,7 +181,7 @@ public class Playfair : ProblemHandler
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    private static String formatKey(String key)
+    public String formatKey(String key)
     {
         key = key.ToLower();
         key = key.Replace("j", "i");
@@ -198,141 +215,20 @@ public class Playfair : ProblemHandler
 
 
         }
- 
+        // I and J must be mutually exclusive in the matrix
+        /*int indexOf_I = characterIndex(formattedKey, 'i');
+        int indexOf_J = characterIndex(formattedKey, 'j');
+    
+        if (indexOf_I > 0 && indexOf_J > 0)
+        {
+            formattedKey.Remove(indexOf_J, 1);
+        }*/
+
+
+
         return formattedKey.ToString();
     }
-    /// <summary>
-    /// Fill the matrix with the formatted key word.
-    /// Proceed to fill with the rest of the alphabet.
-    /// </summary>
-    /// <param name="key"></param>
-    private static void fillMatrix(String key)
-    {
-        alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
-        string fKey = formatKey(key);
-        print("fk" + fKey);
-        StringBuilder formattedKey = new StringBuilder(fKey);
-        int leaveOfPos = 0;
-        // Number of characters that will spill over to the next row
-        int remainderCharacters = formattedKey.Length % 5;
-        // Number of complete rows filled by the keyword
-        int rowsForKey = formattedKey.Length / 5;
-        
-        // We need to access an additional row if we have extra characters
-        if (remainderCharacters != 0 && fKey.Length > 5)
-        {
-            rowsForKey += 1;
-        }
 
-        for (int i = 0; i <= rowsForKey; i++)
-        {
-            for (int k = 0; k < 5; k++)
-            {
-                if (formattedKey.Length > 0)
-                {
-                    // Add the keyword character to the matrix and remove itself
-                    // remove the added letter from out alphabet string using helper method
-                    char addedChar = formattedKey[0];
-                    int alphabetCharIndex = characterIndex(alphabet, addedChar);
-                    alphabet.Remove(alphabetCharIndex, 1);
-
-                    matrix[i, k] = addedChar;
-                    formattedKey.Remove(0, 1);
-                    // Console.WriteLine(formattedKey);
-                    // reference value to fill in the rest of the matric with the alphabet
-
-                }
-                else
-                {
-                    leaveOfPos = k; 
-                    break;
-                }
-            }
-        }
-        // I and J must be mutually exclusive. Format accordingly
-        int indexOf_I = characterIndex(alphabet, 'i');
-        int indexOf_J = characterIndex(alphabet, 'j');
-
-        for (int i = 0; i < alphabet.Length; i++)
-        {
-            // Both in alphabet, choose one to delete (j)
-            if (indexOf_I > 0 && indexOf_J > 0)
-            {
-                alphabet.Remove(indexOf_J, 1);
-                break;
-            }
-            // I is in the alphabet and J is not (meaning J is in the matrix)
-            else if (indexOf_I > 0 && indexOf_J == -1)
-            {
-                alphabet.Remove(indexOf_I, 1);
-                break;
-            }
-            // J is in the alphabet and I is not (meaning I is in the matrix)
-            else if (indexOf_J > 0 && indexOf_I == -1)
-            {
-                alphabet.Remove(indexOf_J, 1);
-                break;
-            }
-        }
- 
-        // First lets fill the complete row
-
-        int startRow = fKey.Length / 5;
-        int remainingChars = fKey.Length % 5;
-        int emptyElements = 5 - remainingChars;
-
-        if (fKey.Length % 5 != 0)
-        {
-
-            for (int i = leaveOfPos; i < 5; i++)
-            {
-                matrix[startRow, leaveOfPos] = alphabet[0];
-                alphabet.Remove(0, 1);
-
-            }
-            // Now we can fill the rest of the complete rows
-            for (int i = startRow + 1; i < 5 - startRow; i++)
-            {
-                for (int k = 0; k < 5; k++)
-                {
-                    matrix[i, k] = alphabet[0];
-                    alphabet.Remove(0, 1);
-                }
-            }
-        }   
-        else if (fKey.Length % 5 == 0)
-        {
-            for (int i = startRow; i < 5 - startRow + 1; i++)
-            {
-                for (int k = 0; k < 5; k++)
-                {
-                    matrix[i, k] = alphabet[0];
-                    alphabet.Remove(0, 1);
-                }
-            }
-        }
-
-    }
-    /// <summary>
-    /// Returns the index of the char in the specified string.
-    /// Used in formatKey and fillMatrix
-    /// </summary>
-    /// <param name="c"></param>
-    private static int characterIndex(StringBuilder s, char c)
-    {
-        int index = -1;
-        for (int i = 0; i < s.Length; i++)
-        {
-            char currentChar = s[i];
-            if (currentChar.Equals(c))
-            {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
- 
     /// <summary>
     /// No pair of letters can be the same. Put an x
     /// inbetween them. E.g. hello --> helxlo
@@ -340,11 +236,11 @@ public class Playfair : ProblemHandler
     /// Append an X char is there is an odd amount.
     /// </summary>
     /// <param name="plaintext"></param>
-    private static string formatPlaintext(string plaintext)
+    public string formatPlaintext(string plaintext)
     {
         plaintext = plaintext.Replace(" ", string.Empty).ToLower();
         plaintext = plaintext.Replace("j", "i");
-        StringBuilder formattedPlaintext = new StringBuilder();
+        StringBuilder local_FormattedPlaintext = new StringBuilder();
 
         for (int i = 0; i < plaintext.Length; i += 2)
         {
@@ -362,23 +258,23 @@ public class Playfair : ProblemHandler
                     // character in the stringbuilder is not the same as the one we are appending
 
 
-                    if (formattedPlaintext.Length > 0)
+                    if (local_FormattedPlaintext.Length > 0)
                     {
                         // Case where last char in stringbuilder is the same as the one we are appending.
-                        char lastChar = formattedPlaintext[formattedPlaintext.Length - 1];
+                        char lastChar = local_FormattedPlaintext[local_FormattedPlaintext.Length - 1];
                         if (lastChar.Equals(currnetChar))
                         {
-                            formattedPlaintext.Append('x');
-                            formattedPlaintext.Append(currnetChar);
-                            formattedPlaintext.Append('x');
-                            formattedPlaintext.Append(neighborChar);
+                            local_FormattedPlaintext.Append('x');
+                            local_FormattedPlaintext.Append(currnetChar);
+                            local_FormattedPlaintext.Append('x');
+                            local_FormattedPlaintext.Append(neighborChar);
                         }
                         // Case where last char in stringbuilder is not the same as the one we are appending
                         else
                         {
-                            formattedPlaintext.Append(currnetChar);
-                            formattedPlaintext.Append('x');
-                            formattedPlaintext.Append(neighborChar);
+                            local_FormattedPlaintext.Append(currnetChar);
+                            local_FormattedPlaintext.Append('x');
+                            local_FormattedPlaintext.Append(neighborChar);
                         }
 
 
@@ -386,9 +282,9 @@ public class Playfair : ProblemHandler
                     // StringBuilder empty, only ran on first iteration
                     else
                     {
-                        formattedPlaintext.Append(currnetChar);
-                        formattedPlaintext.Append('x');
-                        formattedPlaintext.Append(neighborChar);
+                        local_FormattedPlaintext.Append(currnetChar);
+                        local_FormattedPlaintext.Append('x');
+                        local_FormattedPlaintext.Append(neighborChar);
 
                     }
 
@@ -396,8 +292,8 @@ public class Playfair : ProblemHandler
                 // currentChar and neighborChar are different
                 else
                 {
-                    formattedPlaintext.Append(currnetChar);
-                    formattedPlaintext.Append(neighborChar);
+                    local_FormattedPlaintext.Append(currnetChar);
+                    local_FormattedPlaintext.Append(neighborChar);
                 }
 
             }
@@ -405,27 +301,27 @@ public class Playfair : ProblemHandler
             else
             {
                 char lastPlaintextChar = plaintext[plaintext.Length - 1];
-                char lastFormattedPlaintextChar = formattedPlaintext[formattedPlaintext.Length - 1];
+                char lastFormattedPlaintextChar = local_FormattedPlaintext[local_FormattedPlaintext.Length - 1];
 
                 if (lastPlaintextChar.Equals(lastFormattedPlaintextChar))
                 {
-                    formattedPlaintext.Append('x');
-                    formattedPlaintext.Append(lastPlaintextChar);
+                    local_FormattedPlaintext.Append('x');
+                    local_FormattedPlaintext.Append(lastPlaintextChar);
                 }
                 else
                 {
-                    formattedPlaintext.Append(lastPlaintextChar);
+                    local_FormattedPlaintext.Append(lastPlaintextChar);
                 }
             }
 
 
         }
         // Need an event amount of characters to have pairs. Append x
-        if (formattedPlaintext.Length % 2 != 0)
+        if (local_FormattedPlaintext.Length % 2 != 0)
         {
-            formattedPlaintext.Append('x');
+            local_FormattedPlaintext.Append('x');
         }
-        return formattedPlaintext.ToString();
+        return local_FormattedPlaintext.ToString();
 
     }
     /// <summary>
@@ -433,20 +329,18 @@ public class Playfair : ProblemHandler
     /// </summary>
     /// <param name="plaintext"></param>
     /// <returns>Ciphertext from the plaintext</returns>
-    private static string encrypt(String plaintext)
+    public string encrypt(string plaintext)
     {
-        char[,] m = getMatrix();
-        StringBuilder formattedPlaintext = new StringBuilder(formatPlaintext(plaintext));
-        print(formattedPlaintext);
+        formattedPlaintextSTB = new StringBuilder(formatPlaintext(plaintext));
         StringBuilder ciphertext = new StringBuilder();
 
-        for (int i = 0; i < formattedPlaintext.Length; i += 2)
+        for (int i = 0; i < formattedPlaintextSTB.Length; i += 2)
         {
-            char c1 = formattedPlaintext[i];
+            char c1 = formattedPlaintextSTB[i];
             int c1Row = charRowPosition(c1);
             int c1Column = charColumnPosition(c1);
 
-            char c2 = formattedPlaintext[i + 1];
+            char c2 = formattedPlaintextSTB[i + 1];
             int c2Row = charRowPosition(c2);
             int c2Column = charColumnPosition(c2);
 
@@ -496,6 +390,7 @@ public class Playfair : ProblemHandler
             // Case where pair of characters are not in same row or column
             else
             {
+                // print("c1Row " + c1Row + " c2Column : " + c2Column);
                 ciphertext.Append(matrix[c1Row, c2Column]);
                 ciphertext.Append(matrix[c2Row, c1Column]);
             }
@@ -503,28 +398,30 @@ public class Playfair : ProblemHandler
         return ciphertext.ToString();
 
     }/// <summary>
-    /// Decrypts ciphertext into original plaintext message
-    /// </summary>
-    /// <param name="ciphertext">String ciphertext</param>
-    /// <returns>String that is the plaintext message</returns>
-    private static string decrypt(String ciphertext)
+     /// Decrypts ciphertext into original plaintext message
+     /// </summary>
+     /// <param name="ciphertext">String ciphertext</param>
+     /// <returns>String that is the plaintext message</returns>
+    public string decrypt(String ciphertext)
     {
-        StringBuilder formattedPlaintext = new StringBuilder(formatPlaintext(ciphertext));
         StringBuilder originalPlaintext = new StringBuilder();
 
-        for (int i = 0; i < formattedPlaintext.Length; i += 2)
+        for (int i = 0; i < ciphertext.Length; i += 2)
         {
-            char c1 = formattedPlaintext[i];
+            char c1 = ciphertext[i];
             int c1Row = charRowPosition(c1);
             int c1Column = charColumnPosition(c1);
 
-            char c2 = formattedPlaintext[i + 1];
+            char c2 = ciphertext[i + 1];
             int c2Row = charRowPosition(c2);
             int c2Column = charColumnPosition(c2);
 
             // Case: chars are in same row of the matrix
             if (c1Row == c2Row)
             {
+                //print("c1 and row " + c1 + " " + c1Row + " and col" + c1Column + " " + "c2 and row " + c2 + " " + c2Row + " and col" + c2Column);
+
+
                 // If at the end of the row, wrap around
                 if (c1Column == 4)
                 {
@@ -532,7 +429,15 @@ public class Playfair : ProblemHandler
                 }
                 else
                 {
-                    originalPlaintext.Append(matrix[c1Row, c1Column - 1]);
+                    if (c1Column == 0)
+                    {
+                        originalPlaintext.Append(matrix[c1Row, 4]);
+                    }
+                    else
+                    {
+                        originalPlaintext.Append(matrix[c1Row, c1Column - 1]);
+                    }
+
                 }
 
                 if (c2Column == 4)
@@ -541,7 +446,15 @@ public class Playfair : ProblemHandler
                 }
                 else
                 {
-                    originalPlaintext.Append(matrix[c2Row, c2Column - 1]);
+                    if (c2Column == 0)
+                    {
+                        originalPlaintext.Append(matrix[c2Row, 4]);
+
+                    }
+                    else
+                    {
+                        originalPlaintext.Append(matrix[c2Row, c2Column - 1]);
+                    }
                 }
             }
             // Case: chars are in the same column in the matrix. 
@@ -554,7 +467,16 @@ public class Playfair : ProblemHandler
                 }
                 else
                 {
-                    originalPlaintext.Append(matrix[c1Row - 1, c1Column]);
+                    // wrap around
+                    if (c1Row == 0)
+                    {
+                        originalPlaintext.Append(matrix[4, c1Column]);
+                    }
+                    else
+                    {
+                        originalPlaintext.Append(matrix[c1Row - 1, c1Column]);
+                    }
+
                 }
                 if (c2Row == 4)
                 {
@@ -562,7 +484,16 @@ public class Playfair : ProblemHandler
                 }
                 else
                 {
-                    originalPlaintext.Append(matrix[c2Row - 1, c2Column]);
+                    //wrap around
+                    if (c2Row == 0)
+                    {
+                        originalPlaintext.Append(matrix[4, c2Column]);
+                    }
+                    else
+                    {
+                        originalPlaintext.Append(matrix[c2Row - 1, c2Column]);
+                    }
+
                 }
             }
             // Case where pair of characters are not in same row or column
@@ -575,13 +506,12 @@ public class Playfair : ProblemHandler
         return originalPlaintext.ToString();
 
     }
-
     /// <summary>
     /// Reurns the row index of specified char in matrix
     /// </summary>
     /// <param name="c">char c</param>
     /// <returns>int row index of the character</returns>
-    private static int charRowPosition(char c)
+    private int charRowPosition(char c)
     {
         int index = -1;
         for (int i = 0; i < 5; i++)
@@ -602,7 +532,7 @@ public class Playfair : ProblemHandler
     /// </summary>
     /// <param name="c">char c</param>
     /// <returns>int column index of the character</returns>
-    private static int charColumnPosition(char c)
+    private int charColumnPosition(char c)
     {
         int index = -1;
         for (int i = 0; i < 5; i++)
@@ -618,40 +548,8 @@ public class Playfair : ProblemHandler
         }
         return index;
     }
-    private static char[,] getMatrix()
+    public char[,] getMatrix()
     {
         return matrix;
     }
-    public override void OnGoToNextProblem()
-    {
-        //Recreate Matrix
-        base.OnGoToNextProblem();
-    }
-
-    public override void OnAllProblemsSolved()
-    {
-        SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
-        SaveContainer.Instance.SaveDataToFile();
-    }
-
-    public override void UpdateUI()
-    {
-        HUD.SetTopText(CurrentText);
-    }
-
-    public override string GenerateCipherText()
-    {
-        print(CurrentProblemData.key);
-        return encrypt(CurrentProblemData.Plaintext);
-    }
-
-    public override string GeneratePlainText()
-    {
-        return "";
-    }
 }
-
-
-
-

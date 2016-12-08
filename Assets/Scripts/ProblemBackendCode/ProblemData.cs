@@ -1,33 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
- public enum TextType
+public enum TextType
 {
     Encryption,
     Decryption
 }
+public enum CipherType
+{
+    Playfair,
+    Caesar,
+    ADFGX
+}
 
-public class ProblemData : ScriptableObject {
+public class ProblemData : ScriptableObject
+{
+    // Data
 
     public string key;
+
     public string Plaintext;
     public string Ciphertext;
     public TextType ProblemType;
+    public CipherType _level;
     public string Message;
     ProblemHandler handler;
     string displayText;
 
-    public ProblemData(ProblemHandler _handler,string key,TextType ProblemType)
+    public ProblemData(ProblemHandler _handler, string key, TextType ProblemType)
     {
         this.key = key;
         this.Ciphertext = "";
-        
         this.ProblemType = ProblemType;
         handler = _handler;
- 
+
     }
-    /// <summary>
-    /// Updates the problem message for the UI to show.
-    /// </summary>
+    public ProblemData(ProblemHandler _handler, string key, TextType ProblemType, CipherType level)
+    {
+        this.key = key;
+        this.Ciphertext = "";
+        _level = level;
+        this.ProblemType = ProblemType;
+        handler = _handler;
+
+    }
     public void UpdateMessage()
     {
         switch (ProblemType)
@@ -51,11 +66,6 @@ public class ProblemData : ScriptableObject {
                 }
         }
     }
-    /// <summary>
-    /// Checks the final result from the answer input
-    /// </summary>
-    /// <param name="answer">Wills be ciphertext or plaintext</param>
-    /// <returns>True if answer matches</returns>
     public bool compareResult(string answer)
     {
         answer = answer.ToLower();
@@ -63,8 +73,15 @@ public class ProblemData : ScriptableObject {
         {
             case TextType.Decryption:
                 {
-                    return answer.Equals(Plaintext.ToLower());
-
+                    if (_level == CipherType.Playfair)
+                    {
+                        PlayfairHandler playfair = handler as PlayfairHandler;
+                        return answer.Equals(playfair.cipher.formattedPlaintextSTB.ToString());
+                    }
+                    else
+                    {
+                        return answer.Equals(Plaintext.ToLower());
+                    }
                 }
             case TextType.Encryption:
                 {
@@ -75,6 +92,7 @@ public class ProblemData : ScriptableObject {
                 {
                     return false;
                 }
+
         }
     }
 }

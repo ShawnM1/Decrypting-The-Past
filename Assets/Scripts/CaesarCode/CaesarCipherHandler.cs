@@ -14,8 +14,9 @@ public class CaesarCipherHandler : ProblemHandler {
 	public override void Start () {
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         System.Random r = new System.Random();
-        AddProblem(new ProblemData(this,r.Next(1,6).ToString(), TextType.Decryption));
-        AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
+        AddProblem(new ProblemData(this,r.Next(1,6).ToString(), TextType.Decryption,CipherType.Caesar));
+        AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption, CipherType.Caesar));
+        
         //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
         //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
 
@@ -25,7 +26,8 @@ public class CaesarCipherHandler : ProblemHandler {
         Mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
         ResultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
         base.Start();
-	}
+        print("Level" + CurrentProblemData._level);
+    }
 	
 	// Update is called once per frame
     /// <summary>

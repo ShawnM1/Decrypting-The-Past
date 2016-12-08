@@ -51,9 +51,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CaesarCipherTest.cs" />
+    <Compile Include="PlayfairUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Decrypting the Past.CSharp.csproj">
+      <Project>{e9e4e3e9-fd1d-270e-68f0-24cca2bc672d}</Project>
+      <Name>Decrypting the Past.CSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\decrypting-the-past.CSharp.csproj">
       <Project>{94adc1bf-9a3a-cda3-ae46-d40bd8487516}</Project>
       <Name>decrypting-the-past.CSharp</Name>

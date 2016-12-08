@@ -69,7 +69,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     {
         if(_words.Count > 0)
         {
-            ProblemData tmp = new ProblemData(this, data.key, data.ProblemType);
+            ProblemData tmp = new ProblemData(this, data.key, data.ProblemType, data._level);
             tmp.Plaintext = GetRandomWord();
             problems.Add(tmp);
         }
