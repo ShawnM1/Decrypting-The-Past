@@ -49,12 +49,12 @@ public class PlayfairCipher{
         // Number of complete rows filled by the keyword.
         int rowsForKey = formattedKey.Length / 5;
         // We need to access an additional row if we have extra characters
-        if (remainderCharacters != 0 && formattedKey.Length > 5)
+        if (remainderCharacters != 0)
         {
             rowsForKey += 1;
         }
 
-        for (int i = 0; i <= rowsForKey; i++)
+        for (int i = 0; i < rowsForKey; i++)
         {
             for (int k = 0; k < 5; k++)
             {
