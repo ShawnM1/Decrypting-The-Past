@@ -14,10 +14,10 @@ public class CaesarCipherHandler : ProblemHandler {
 	public override void Start () {
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
         System.Random r = new System.Random();
-        AddProblem(new ProblemData(this,r.Next(1,6).ToString(), TextType.Encryption));
+        AddProblem(new ProblemData(this,r.Next(1,6).ToString(), TextType.Decryption));
         AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
-        AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
-        AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
+        //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
+        //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
 
         HUD.SetActionButtonEvent(CickToGoToNextProblem);
         pointGenerator = GetComponent<Circle2DPointGenerator>();

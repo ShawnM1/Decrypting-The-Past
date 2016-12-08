@@ -26,7 +26,16 @@ public class CaesarCipher {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < message.Length; i++)
         {
-            builder.Append(alphabet[(findLetterPositionInAlpha(message[i]) + key) % 26]);
+            int localKey = key;
+            if(localKey < 0)
+            {
+                localKey = findLetterPositionInAlpha(message[i]) + (key + 26);
+            }
+            else
+            {
+                localKey = (findLetterPositionInAlpha(message[i]) + key);
+            }
+            builder.Append(alphabet[localKey % 26]);
         }
         return builder.ToString();
     }
@@ -46,6 +55,7 @@ public class CaesarCipher {
         {
             if (c == alphabet[i])
             {
+                System.Diagnostics.Debug.WriteLine(c + "i pos " + i);
                 return i;
             }
         }
