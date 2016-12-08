@@ -17,11 +17,5 @@ public class TimeLineMenu : MonoBehaviour {
                 BtnADFGXCipher.interactable = true;
             }
         }
-
-	
-	}
-	
-	void Update () {
-	
 	}
 }

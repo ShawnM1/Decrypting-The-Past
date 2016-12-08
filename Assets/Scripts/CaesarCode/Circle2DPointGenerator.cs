@@ -64,6 +64,9 @@ public class Circle2DPointGenerator : MonoBehaviour
         EdgeCollider.points = edgePoints;
         CurrentRadius = Radius;
     }
+    /// <summary>
+    /// Renders shape of circle in the editor outside of runtime
+    /// </summary>
     void OnDrawGizmos()
     {
         if(DebugDrawEditor)

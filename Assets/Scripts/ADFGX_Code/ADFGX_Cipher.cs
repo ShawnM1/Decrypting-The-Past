@@ -47,22 +47,22 @@ class ADFGX_Cipher : ProblemHandler
         return key.ToString();
 
     }
+    /// <summary>
+    /// Checks user input after clicking matrix elements on UI
+    /// If correct, display Transpose UI.
+    /// </summary>
     private void checkMatrixText()
     {
         if (CurrentProblemData.ProblemType == TextType.Encryption)
         {
-            print("Current:" + CurrentText + CurrentText.Length);
-            print("Matrix: " + matrixText + matrixText.Length);
             if (matrixText.ToString().Equals(CurrentText))
             {
-                print("Matrix Text Correct");
                 TransposeInput.SetActive(true);
                 ADFGXMatrix.GetComponent<ADFGXMatrix>().DisableInput();
                 this.LockInput();
-            }
-            else
+            } else
             {
-                print("Incorrect Matrix Text");
+                HUD.ShowWrongAnswerText();
             }
         }
     }
@@ -229,7 +229,7 @@ class ADFGX_Cipher : ProblemHandler
 
     }
     /// <summary>
-    /// organizes matrix text according to the key order. i.e. 231
+    /// Organizes matrix text according to the key order. i.e. 231
     /// where the third column labeled "1" will be accessed first inside
     /// the encrypt function
     /// </summary>
@@ -249,8 +249,6 @@ class ADFGX_Cipher : ProblemHandler
         {
             numOfRows = text.Length / numOfCols;
         }
-
-
         table = new char[numOfRows, numOfCols];
 
         for (int i = 0; i < numOfRows; i++)
@@ -325,6 +323,10 @@ class ADFGX_Cipher : ProblemHandler
         }
         return col;
     }
+    /// <summary>
+    /// Used for debugging purposes
+    /// </summary>
+    /// <param name="matrix"></param>
     private static void printMatrix(char[,] matrix)
     {
         int rowLength = matrix.GetLength(0);
@@ -342,7 +344,7 @@ class ADFGX_Cipher : ProblemHandler
         }
     }
     /// <summary>
-    /// gets the data in the specified column of the table consisting of matrix text.
+    /// Gets the data in the specified column of the table consisting of matrix text.
     /// Used in the encrypt method
     /// </summary>
     /// <param name="index">int</param>
@@ -366,21 +368,6 @@ class ADFGX_Cipher : ProblemHandler
         }
         return columnData.ToString().Trim();
     }
-    private static string removeWhitespace(string s)
-    {
-      
-        for (int i = 0; i < s.Length; i++)
-        {
-            
-            if (s[i].Equals(' '))
-            {
-                Console.WriteLine("True");
-                s.Remove(i, 1);
-            }
-        }
-        return s;
-
-    }
     /// <summary>
     /// Randomly fills the matrix with text from the alphabet.
     /// All letters are unique. 
@@ -395,14 +382,13 @@ class ADFGX_Cipher : ProblemHandler
             for (int k = 0; k < 5; k++)
             {
                 int removeIndex = r.Next(0, alphabet.Length);
-                //print(removeIndex + " " + alphabet);
                 matrix[i, k] = alphabet[removeIndex];
                 alphabet.Remove(removeIndex, 1);
             }
         }
     }
     /// <summary>
-    /// loops through all 4 inputfield objects.
+    /// Loops through all 4 inputfield objects.
     /// Compares each text entry to the corresponding column in 
     /// table[,].
     /// </summary>
@@ -421,8 +407,7 @@ class ADFGX_Cipher : ProblemHandler
             // Error logic
             if (!input.ToUpper().Equals(currentColumn))
              {
-                 print("inputfield" + (i+1) + " is incorrect");
-                
+                 HUD.ShowWrongAnswerText();
                  b = false;
                  break;
              } else
@@ -442,8 +427,6 @@ class ADFGX_Cipher : ProblemHandler
     {
         if(checkTableInput())
         {
-            print("Table Correct");
-            //TransposeInput.SetActive(false);
             if (CurrentProblemData.ProblemType == TextType.Encryption)
             {
                 HUD.SetupInputBox("Please enter Ciphertext:", CheckUserCipherText);
@@ -460,7 +443,6 @@ class ADFGX_Cipher : ProblemHandler
         
         if(GoToNextProblem(HUD.GetInputText()))
         {
-            //ADFGXMatrix.SetActive(true);
             HUD.HideInputHUD();
         }
     }
@@ -468,6 +450,10 @@ class ADFGX_Cipher : ProblemHandler
     {
         GoToNextProblem();
     }
+    /// <summary>
+    /// During decryption, checks user matrix text after transpose step.
+    /// If correct, make the matrix clickable.
+    /// </summary>
     public void CheckUserMatrixText()
     {
         if(matrixText.ToString().ToUpper().Equals(HUD.GetInputText().ToUpper()))
@@ -480,16 +466,13 @@ class ADFGX_Cipher : ProblemHandler
         }
         else
         {
-            print("CheckUserMatrixText: Input is wrong. UserInput:" + HUD.GetInputText() + " Matrix Text: " + matrixText.ToString());
+            HUD.ShowWrongAnswerText();
         }
     }
-
-    
-
     public override void OnAllProblemsSolved()
     {
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTime();
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
     }
 
@@ -514,13 +497,11 @@ class ADFGX_Cipher : ProblemHandler
         data.Ciphertext = GenerateCipherText();
         UpdateUI();
         HUD.ClearInfoBox();
-        //TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
         base.ProblemSetup(data);
         if(CurrentProblemData.ProblemType == TextType.Encryption)
         {
             HUD.SetActionButtonEvent(this.checkMatrixText);
             ADFGXMatrix.GetComponent<ADFGXMatrix>().EnableInput();
-            //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
             TransposeInput.SetActive(false);
             HUD.HideInputHUD();
         }
@@ -531,7 +512,6 @@ class ADFGX_Cipher : ProblemHandler
             TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
             TransposeInput.GetComponent<TransposeOrdering>().ClearFields();
             ADFGXMatrix.GetComponent<ADFGXMatrix>().DisableInput();
-            //TransposeInput.GetComponent<TransposeOrdering>().UpdateUI();
         }   
 
     }

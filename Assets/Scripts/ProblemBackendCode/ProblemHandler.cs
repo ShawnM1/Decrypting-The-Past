@@ -42,6 +42,7 @@ public abstract class ProblemHandler : MonoBehaviour {
     #endregion
     void Awake()
     {
+        // Creates dummy save data if we start the scene from the editor.
 #if DEBUG
 
         GameObject.Instantiate(SavePrefab);
@@ -54,7 +55,7 @@ public abstract class ProblemHandler : MonoBehaviour {
             _words.Add(x.ToLower());
         }
     }
-    string GetRandomWord()
+    public string GetRandomWord()
     {
         if(_words.Count > 0)
         {
@@ -78,13 +79,10 @@ public abstract class ProblemHandler : MonoBehaviour {
         ProblemSetup(CurrentProblemData);
         HUD.UISetup(problems[currentProblem]);
         FireOnProblemChangedEventHandler();
-        print("Start");
     }
     
     public void CickToGoToNextProblem()
     {
-        print("PlainText: " + CurrentProblemData.Plaintext);
-        print("CipherText: " + CurrentProblemData.Ciphertext);
         GoToNextProblem();
     }
     public bool GoToNextProblem(string currentText)
@@ -106,7 +104,6 @@ public abstract class ProblemHandler : MonoBehaviour {
                 print("Correct");
                 currentProblem++;
                 currentText = "";
-                //Do UI BS
                 if(currentProblem <= problems.Count - 1)
                 {
                     OnGoToNextProblem();
@@ -122,7 +119,6 @@ public abstract class ProblemHandler : MonoBehaviour {
             }
             else
             {
-                print("Wrong Answer .exe");
                 HUD.ShowWrongAnswerText();
                 return false;
             }
@@ -164,10 +160,6 @@ public abstract class ProblemHandler : MonoBehaviour {
                     UpdateUI();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //GoToNextProblem();
-            }
         }
     }
     public void UnlockInput()
@@ -180,7 +172,6 @@ public abstract class ProblemHandler : MonoBehaviour {
     }
     public void CheckInputFromHUD()
     {
-        //currentText = HUD.GetInputText();
         GoToNextProblem();
     }
     void FireOnProblemChangedEventHandler()
@@ -202,6 +193,10 @@ public abstract class ProblemHandler : MonoBehaviour {
     public abstract void UpdateUI();
     public abstract string GenerateCipherText();
     public abstract string GeneratePlainText();
+    /// <summary>
+    /// Executes anything that is needed to set up problems
+    /// </summary>
+    /// <param name="data"></param>
     public virtual void ProblemSetup(ProblemData data)
     {
         CurrentProblemData.UpdateMessage();

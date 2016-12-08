@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
-
+/// <summary>
+/// Moves fish in the playfair scene
+/// </summary>
 public class Fish : MonoBehaviour {
 
     Vector2 originalPos;
@@ -21,7 +23,6 @@ public class Fish : MonoBehaviour {
     }
 	void FixedUpdate()
     {
-        //this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + (Mathf.Sin(Time.deltaTime) / 180) * 10, this.transform.position.z);
         if (direction > 0 && this.transform.position.x < rightBound)
         {
             Move(direction);
@@ -47,8 +48,7 @@ public class Fish : MonoBehaviour {
         this.transform.position = new Vector3(this.transform.position.x + direction, this.transform.position.y, this.transform.position.z);
     }
     void OnDrawGizmos()
-    {
-        
+    { 
         Vector3 position = this.transform.position;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(new Vector3(originalPos.x - Range, originalPos.y,-10), new Vector3(originalPos.x + Range, originalPos.y, -10));

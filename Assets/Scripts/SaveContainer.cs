@@ -11,16 +11,20 @@ public class SaveContainer : MonoBehaviour {
     string originalPath = "";
     void Start()
     {
+     // if we are playing from editor, create fake save file
 #if DEBUG
         CreateNewSaveFile("test.dtp");
 #endif
     }
+    /// <summary>
+    /// Loads save file
+    /// </summary>
+    /// <param name="fileName"></param>
     public void LoadSaveFile(string fileName)
     {
         if(File.Exists(Application.persistentDataPath + "/" + fileName))
         {
             originalPath = Application.persistentDataPath + "/" + fileName;
-            print("Loading From: " + originalPath);
             BinaryFormatter bf = new BinaryFormatter();
             FileStream stream = File.Open(originalPath, FileMode.Open);
             SaveFile = (SaveFile)bf.Deserialize(stream);
@@ -43,9 +47,11 @@ public class SaveContainer : MonoBehaviour {
             FileStream stream = File.Create(originalPath);
             bf.Serialize(stream, SaveFile);
             stream.Close();
-            print("Saving to: " + originalPath);
         }
     }
+    /// <summary>
+    /// Static singleton instance of the save container
+    /// </summary>
     public static SaveContainer Instance
     {
         get
@@ -55,7 +61,9 @@ public class SaveContainer : MonoBehaviour {
     }
     private void Awake()
     {
-        // if the singleton hasn't been initialized yet
+        // if the singleton hasn't been initialized yet. 
+        // If thre is an instance and instance isn't this, then destroy
+        // the other instance and make this the instance
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);

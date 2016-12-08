@@ -18,6 +18,7 @@ public class ADFGXButton : MonoBehaviour
 
     void Update()
     {
+        // If the player is within range of the button, they can interact with it.
         if ((Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), this.transform.position) < 5) && Input.GetMouseButtonDown(0) && listenToInput)
         {
             if (handler.CurrentProblemData.ProblemType == TextType.Encryption)
@@ -31,6 +32,10 @@ public class ADFGXButton : MonoBehaviour
         }
         
     }
+    /// <summary>
+    /// Sets whether the button is listening to input or not
+    /// </summary>
+    /// <param name="state"></param>
     public void SetListenState(bool state)
     {
         listenToInput = state;

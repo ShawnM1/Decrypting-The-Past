@@ -14,23 +14,26 @@ public class CaesarCipher : ProblemHandler {
 	// Use this for initialization
 	public override void Start () {
         PopulateWordDictionary("Hello", "Cicirello","Xana","Slack","Gamer");
-        AddProblem(new ProblemData(this,"1", TextType.Encryption));
-        //AddProblem(new ProblemData(this,"2", TextType.Decryption));
-        //AddProblem(new ProblemData(this, "3", TextType.Encryption));
-        //AddProblem(new ProblemData(this, "4", TextType.Decryption));
-        //AddProblem(new ProblemData(this, "5", TextType.Encryption));
+        System.Random r = new System.Random();
+        AddProblem(new ProblemData(this,r.Next(1,6).ToString(), TextType.Encryption));
+        //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
+        //AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
+       // AddProblem(new ProblemData(this, r.Next(1, 6).ToString(), TextType.Encryption));
 
         HUD.SetActionButtonEvent(CickToGoToNextProblem);
         pointGenerator = GetComponent<Circle2DPointGenerator>();
         anglePerItem = 360 / 25;
         Mesh = this.transform.parent.Find("LetterBlock").GetComponent<TextMesh>();
         ResultMesh = this.transform.parent.Find("StoredLetters").GetComponent<TextMesh>();
-        print("Start Called");
         base.Start();
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+    /// <summary>
+    /// Gets the angle of the wheel and updates the text accordingly
+    /// </summary>
+	public override void Update ()
+    {
         float h = Input.GetAxis("Horizontal");
         float z = transform.localEulerAngles.z; ;
         z += 1 * h;
@@ -38,6 +41,10 @@ public class CaesarCipher : ProblemHandler {
         Mesh.text = GetLetter().ToString();
         base.Update();
     }
+    /// <summary>
+    /// Finds letter based on angle of wheel.
+    /// </summary>
+    /// <returns></returns>
     public char GetLetter()
     {
         return alphabet[((int)transform.localEulerAngles.z / anglePerItem)];
@@ -56,7 +63,7 @@ public class CaesarCipher : ProblemHandler {
     public override void OnAllProblemsSolved()
     {
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTime();
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
     }
 

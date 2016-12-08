@@ -7,10 +7,8 @@ using System.Collections;
 }
 
 public class ProblemData : ScriptableObject {
-    // Data
-    
+
     public string key;
-   
     public string Plaintext;
     public string Ciphertext;
     public TextType ProblemType;
@@ -27,6 +25,9 @@ public class ProblemData : ScriptableObject {
         handler = _handler;
  
     }
+    /// <summary>
+    /// Updates the problem message for the UI to show.
+    /// </summary>
     public void UpdateMessage()
     {
         switch (ProblemType)
@@ -50,6 +51,11 @@ public class ProblemData : ScriptableObject {
                 }
         }
     }
+    /// <summary>
+    /// Checks the final result from the answer input
+    /// </summary>
+    /// <param name="answer">Wills be ciphertext or plaintext</param>
+    /// <returns>True if answer matches</returns>
     public bool compareResult(string answer)
     {
         answer = answer.ToLower();

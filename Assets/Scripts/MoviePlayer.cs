@@ -10,7 +10,6 @@ public class MoviePlayer : MonoBehaviour {
     bool firstStart = true;
 	// Use this for initialization
 	void Start () {
-        //movie = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
         GOM = GameObject.Find("GOM");
         rImage = GetComponent<RawImage>();
         movie = (MovieTexture)rImage.mainTexture;
@@ -18,7 +17,9 @@ public class MoviePlayer : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        // if the movie isnt playing unhide UI and hide video.
 	    if(!movie.isPlaying && gameObject.activeSelf && !firstStart)
         {
             gameObject.SetActive(false);
@@ -33,19 +34,13 @@ public class MoviePlayer : MonoBehaviour {
 	}
     public void playMovie()
     {
-        // this line of code will make the Movie Texture begin playing
-        //((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
         firstStart = false;
         gameObject.SetActive(true);
         HideHUD();
         GOM.GetComponent<AudioSource>().Pause();
         movie.Stop();
         movie.Play();
-        
-        
         GetComponent<AudioSource>().Play();
-  
-
     }
     void HideHUD()
     {

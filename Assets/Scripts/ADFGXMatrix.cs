@@ -66,7 +66,6 @@ public class ADFGXMatrix : MonoBehaviour {
                 }
             }
         }
-        print(ADFGX_array);
         for (int i = 0; i < 6; i++)
         {
             for (int k = 0; k < 6; k++)
@@ -77,7 +76,6 @@ public class ADFGXMatrix : MonoBehaviour {
     }
     void OnDrawGizmos()
     {
-
         Vector3 position = this.transform.position;
         Gizmos.color = Color.green;
         for (int i = 0; i < 6; i++)

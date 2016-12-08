@@ -27,14 +27,14 @@ public class Playfair : ProblemHandler
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
-        PopulateWordDictionary("hello", "hello");
-        AddProblem(new ProblemData(this, "secret", TextType.Encryption));
-        AddProblem(new ProblemData(this, "secret", TextType.Decryption));
-        //PopulateWordDictionary("rob", "joe", "hello", "bugatti");
-        //AddProblem(new ProblemData(this,"secret", TextType.Encryption));
-        //AddProblem(new ProblemData(this, "clams", TextType.Decryption));
+        //"hello", "sponge", "cicirello", "jackhammer", "stockton", "rob", "secret", "project", "diffie");
+        PopulateWordDictionary( "secret", "rob", "hello", "diffie");
+        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Encryption));
+        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Decryption));
+       // AddProblem(new ProblemData(this, GetRandomWord(), TextType.Decryption));
+       // AddProblem(new ProblemData(this, GetRandomWord(), TextType.Encryption));
         base.Start();
-        
+       
 
     }
     /// <summary>
@@ -42,7 +42,6 @@ public class Playfair : ProblemHandler
     /// </summary>
     public void checkKeyInput()
     {
-        print("Formatted Key: " + formatKey(CurrentProblemData.key));
         if(HUD.GetInputText().ToUpper().Equals(formatKey(CurrentProblemData.key).ToUpper()))
         {
             //Correct Move to step 2
@@ -58,7 +57,7 @@ public class Playfair : ProblemHandler
         }
         else
         {
-            HUD.SetTopText("Incorrect key formatting");
+            HUD.ShowWrongAnswerText();
         }
     }
     /// <summary>
@@ -66,7 +65,6 @@ public class Playfair : ProblemHandler
     /// </summary>
     public void checkPlainTextInput()
     {
-        print("Formatted PlainText: " + formatPlaintext(CurrentProblemData.Plaintext));
         if(HUD.GetInputText().ToUpper().Equals(formatPlaintext(CurrentProblemData.Plaintext).ToUpper()))
         {
             ///Next we fill the matrix
@@ -100,6 +98,7 @@ public class Playfair : ProblemHandler
         GameObject UserMatrixText = GameObject.Find("UserMatrixTextbox");
         if (HUD.GetInputText().ToUpper().Equals(GetRow(matrixCounter).ToUpper()) && (matrixCounter < 5))
         {
+            print(GetRow(matrixCounter));
             UserMatrixText.GetComponent<Text>().text += HUD.GetInputText().ToUpper() + '\n';
             matrixCounter++;
             HUD.SetupInputBox("Please enter the " + (matrixCounter) + " row of the matrix", checkMatrixInput);
@@ -107,7 +106,6 @@ public class Playfair : ProblemHandler
             {
                 //Fade the UI out and Display the matrix and play the game
                 UserMatrixText.GetComponent<Text>().text = "";
-                //GameObject.Destroy(UserMatrixText,0);
                 ShowMatrix();
                 matrixCounter = 0;
                 HUD.HideInputHUD();
@@ -115,7 +113,7 @@ public class Playfair : ProblemHandler
         }
         else
         {
-            print("Matrix is wrong, should be : " + GetRow(matrixCounter));
+            HUD.ShowWrongAnswerText();
         }
     }
     void ShowMatrix()
@@ -139,8 +137,8 @@ public class Playfair : ProblemHandler
         HUD.SetTopText("Please Format the Key");
         player.SetActive(false);
         LockInput();
-        //keyInput.SetActive(true);
         HUD.SetupInputBox("Please Format the Key", checkKeyInput);
+        print(data.key);
         fillMatrix(keyword);
         data.Ciphertext = GenerateCipherText();
         CurrentProblemData.UpdateMessage();
@@ -200,17 +198,7 @@ public class Playfair : ProblemHandler
 
 
         }
-        // I and J must be mutually exclusive in the matrix
-        /*int indexOf_I = characterIndex(formattedKey, 'i');
-        int indexOf_J = characterIndex(formattedKey, 'j');
-    
-        if (indexOf_I > 0 && indexOf_J > 0)
-        {
-            formattedKey.Remove(indexOf_J, 1);
-        }*/
-
-
-
+ 
         return formattedKey.ToString();
     }
     /// <summary>
@@ -222,15 +210,16 @@ public class Playfair : ProblemHandler
     {
         alphabet = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
         string fKey = formatKey(key);
-
+        print("fk" + fKey);
         StringBuilder formattedKey = new StringBuilder(fKey);
-
+        int leaveOfPos = 0;
         // Number of characters that will spill over to the next row
         int remainderCharacters = formattedKey.Length % 5;
-        // Number of complete rows filled by the keyword.
+        // Number of complete rows filled by the keyword
         int rowsForKey = formattedKey.Length / 5;
+        
         // We need to access an additional row if we have extra characters
-        if (remainderCharacters != 0)
+        if (remainderCharacters != 0 && fKey.Length > 5)
         {
             rowsForKey += 1;
         }
@@ -255,6 +244,7 @@ public class Playfair : ProblemHandler
                 }
                 else
                 {
+                    leaveOfPos = k; 
                     break;
                 }
             }
@@ -294,14 +284,14 @@ public class Playfair : ProblemHandler
         if (fKey.Length % 5 != 0)
         {
 
-            for (int i = remainingChars; i <= emptyElements; i++)
+            for (int i = leaveOfPos; i < 5; i++)
             {
-                matrix[startRow, i] = alphabet[0];
+                matrix[startRow, leaveOfPos] = alphabet[0];
                 alphabet.Remove(0, 1);
 
             }
             // Now we can fill the rest of the complete rows
-            for (int i = startRow + 1; i < 5 - startRow + 1; i++)
+            for (int i = startRow + 1; i < 5 - startRow; i++)
             {
                 for (int k = 0; k < 5; k++)
                 {
@@ -309,7 +299,7 @@ public class Playfair : ProblemHandler
                     alphabet.Remove(0, 1);
                 }
             }
-        }
+        }   
         else if (fKey.Length % 5 == 0)
         {
             for (int i = startRow; i < 5 - startRow + 1; i++)
@@ -342,18 +332,7 @@ public class Playfair : ProblemHandler
         }
         return index;
     }
-    private static void printMatrx()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            Console.WriteLine();
-            for (int k = 0; k < 5; k++)
-            {
-                Console.Write(matrix[i, k]);
-            }
-        }
-
-    }
+ 
     /// <summary>
     /// No pair of letters can be the same. Put an x
     /// inbetween them. E.g. hello --> helxlo
@@ -456,7 +435,9 @@ public class Playfair : ProblemHandler
     /// <returns>Ciphertext from the plaintext</returns>
     private static string encrypt(String plaintext)
     {
+        char[,] m = getMatrix();
         StringBuilder formattedPlaintext = new StringBuilder(formatPlaintext(plaintext));
+        print(formattedPlaintext);
         StringBuilder ciphertext = new StringBuilder();
 
         for (int i = 0; i < formattedPlaintext.Length; i += 2)
@@ -515,7 +496,6 @@ public class Playfair : ProblemHandler
             // Case where pair of characters are not in same row or column
             else
             {
-                print("c1Row " + c1Row + " c2Column : " + c2Column);
                 ciphertext.Append(matrix[c1Row, c2Column]);
                 ciphertext.Append(matrix[c2Row, c1Column]);
             }
@@ -651,7 +631,7 @@ public class Playfair : ProblemHandler
     public override void OnAllProblemsSolved()
     {
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTime();
+        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
     }
 
@@ -662,6 +642,7 @@ public class Playfair : ProblemHandler
 
     public override string GenerateCipherText()
     {
+        print(CurrentProblemData.key);
         return encrypt(CurrentProblemData.Plaintext);
     }
 

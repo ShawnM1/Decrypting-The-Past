@@ -18,6 +18,7 @@ public class PlayfairButton : MonoBehaviour {
     {
         if (player.activeSelf)
         {
+            // If player is within range, they can interact with the button
             if (Vector2.Distance(player.transform.position, this.transform.position) < 5)
             {
                 if (Input.GetKeyDown(KeyCode.Return))

@@ -42,7 +42,6 @@ public class HUD : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        print(Hidden);
         if (Input.GetKeyDown(KeyCode.Escape) && pauseable && !Hidden)
         {
 
@@ -131,7 +130,6 @@ public class HUD : MonoBehaviour {
         StringBuilder builder = new StringBuilder(InfoText.text);
         builder.AppendLine("\n" + text);
         InfoText.text = builder.ToString();
-        print("AppendToInfoBoxalled");
     }
     public static void ClearInfoBox()
     {
@@ -145,22 +143,14 @@ public class HUD : MonoBehaviour {
     {
         infoBox.SetActive(false);
     }
-    public static void ShowVictoryScreen(UnityAction buttonAction)
-    {
-        GameTimer.timerActive = false;
-        pauseable = false;
-        victoryScreen.SetActive(true);
-        victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = "Time Completed: " +GameTimer.getTime();
-        victoryScreen.transform.FindChild("GoToNextLevelButton").GetComponent<Button>().onClick.AddListener(buttonAction);
-    }
     public static void ShowVictoryScreen()
     {
         GameTimer.timerActive = false;
         pauseable = false;
         victoryScreen.SetActive(true);
-        string victoryTime = "Time Completed : " + GameTimer.getTime();
+        string victoryTime = "Time Completed : " + GameTimer.GetTimeString();
         victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = victoryTime;
-        print(GameTimer.getTime());
+        print(GameTimer.getTimeInSeconds());
     }
     public static void HideEverything()
     {
@@ -187,7 +177,6 @@ public class HUD : MonoBehaviour {
                 States.Add(tmp[i]);
             }
         }
-        //Hidden = true;
     }
     public static void UnHideEverything()
     {

@@ -3,11 +3,10 @@ using System.Collections;
 
 public class GameTimer : MonoBehaviour {
 
-    
     public static bool timerActive = true;
     static float timer = 0;
-    string minutes;
-    string seconds;
+    static string minutes;
+    static string seconds;
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,9 +17,13 @@ public class GameTimer : MonoBehaviour {
             seconds = (timer % 60).ToString("00");
         }
     }
-    public static float getTime()
+    public static float getTimeInSeconds()
     {
         return timer;
+    }
+    public static string GetTimeString()
+    {
+        return minutes + ":" + seconds;
     }
     public static void StopTimer()
     {

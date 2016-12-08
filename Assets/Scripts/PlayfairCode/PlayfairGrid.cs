@@ -36,6 +36,9 @@ public class PlayfairGrid : MonoBehaviour {
             }
         }
     }
+    /// <summary>
+    /// Renders matrix position in editior outside play mode.
+    /// </summary>
     void OnDrawGizmos()
     {
 
