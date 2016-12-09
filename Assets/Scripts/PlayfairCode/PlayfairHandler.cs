@@ -21,9 +21,9 @@ public class PlayfairHandler : ProblemHandler
         keyInput = GameObject.Find("KeyInputCanvas");
         gameObjectMatrix = GameObject.Find("Grid");
         player = GameObject.Find("CharacterRobotBoy");
-        PopulateWordDictionary("diffie", "hellman", "hello", "secret", "bugatti");
-        AddProblem(new ProblemData(this, "secret", TextType.Encryption, CipherType.Playfair));
-        AddProblem(new ProblemData(this, "diffie", TextType.Decryption, CipherType.Playfair));
+        PopulateWordDictionary("juice", "diffie", "hellman", "hello", "secret", "bugatti","cicirello", "keyboard", "snoopdogg", "unity","jackhammer", "juniper");
+        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Encryption, CipherType.Playfair));
+        AddProblem(new ProblemData(this, GetRandomWord(), TextType.Decryption, CipherType.Playfair));
         //PopulateWordDictionary("rob", "joe", "hello", "bugatti");
         //AddProblem(new ProblemData(this,"secret", TextType.Encryption));
         //AddProblem(new ProblemData(this, "clams", TextType.Decryption));
@@ -36,7 +36,6 @@ public class PlayfairHandler : ProblemHandler
     /// </summary>
     public void checkKeyInput()
     {
-        print("Formatted Key: " +cipher.formatKey(CurrentProblemData.key));
         if (HUD.GetInputText().ToUpper().Equals(cipher.formatKey(CurrentProblemData.key).ToUpper()))
         {
             //Correct Move to step 2
@@ -52,7 +51,7 @@ public class PlayfairHandler : ProblemHandler
         }
         else
         {
-            HUD.SetTopText("Incorrect key formatting");
+            HUD.ShowWrongAnswerText();
         }
     }
     /// <summary>
@@ -60,7 +59,6 @@ public class PlayfairHandler : ProblemHandler
     /// </summary>
     public void checkPlainTextInput()
     {
-        print("Formatted PlainText: " +cipher.formatPlaintext(CurrentProblemData.Plaintext));
         if (HUD.GetInputText().ToUpper().Equals(cipher.formatPlaintext(CurrentProblemData.Plaintext).ToUpper()))
         {
             ///Next we fill the matrix
@@ -69,7 +67,7 @@ public class PlayfairHandler : ProblemHandler
         }
         else
         {
-            HUD.SetTopText("Incorrect plaintext formatting");
+            HUD.ShowWrongAnswerText();
         }
     }
     /// <summary>
@@ -95,7 +93,7 @@ public class PlayfairHandler : ProblemHandler
         }
         else
         {
-            print("Matrix is wrong, should be : " + cipher.GetRow(matrixCounter));
+            HUD.ShowWrongAnswerText();
         }
     }
     void ShowMatrix()
@@ -119,7 +117,6 @@ public class PlayfairHandler : ProblemHandler
         HUD.SetTopText("Please Format the Key");
         player.SetActive(false);
         LockInput();
-        //keyInput.SetActive(true);
         HUD.SetupInputBox("Please Format the Key", checkKeyInput);
         cipher.fillMatrix(data.key);
         data.Ciphertext = GenerateCipherText();

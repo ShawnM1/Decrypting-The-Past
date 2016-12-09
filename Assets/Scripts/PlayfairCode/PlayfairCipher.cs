@@ -213,18 +213,7 @@ public class PlayfairCipher{
                 }
             }
 
-
         }
-        // I and J must be mutually exclusive in the matrix
-        /*int indexOf_I = characterIndex(formattedKey, 'i');
-        int indexOf_J = characterIndex(formattedKey, 'j');
-    
-        if (indexOf_I > 0 && indexOf_J > 0)
-        {
-            formattedKey.Remove(indexOf_J, 1);
-        }*/
-
-
 
         return formattedKey.ToString();
     }
@@ -313,7 +302,6 @@ public class PlayfairCipher{
                     local_FormattedPlaintext.Append(lastPlaintextChar);
                 }
             }
-
 
         }
         // Need an event amount of characters to have pairs. Append x
@@ -419,9 +407,6 @@ public class PlayfairCipher{
             // Case: chars are in same row of the matrix
             if (c1Row == c2Row)
             {
-                //print("c1 and row " + c1 + " " + c1Row + " and col" + c1Column + " " + "c2 and row " + c2 + " " + c2Row + " and col" + c2Column);
-
-
                 // If at the end of the row, wrap around
                 if (c1Column == 4)
                 {
