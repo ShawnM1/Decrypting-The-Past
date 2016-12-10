@@ -50,7 +50,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CaesarCipher.cs" />
     <Compile Include="CaesarCipherTest.cs" />
+    <Compile Include="PlayfairCipher.cs" />
     <Compile Include="PlayfairUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
