@@ -1179,7 +1179,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013599931132, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1000010285489116, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
       propertyPath: m_IsActive
@@ -1190,6 +1190,17 @@ Prefab:
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010326745680, guid: a54966d6445e96f48b7c3c9701b30d1a,
+        type: 2}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 15200000, guid: 6b0fa21e803e3284b957595915b316f7,
+        type: 3}
+    - target: {fileID: 82000010724302154, guid: a54966d6445e96f48b7c3c9701b30d1a,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b0fa21e803e3284b957595915b316f7, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a54966d6445e96f48b7c3c9701b30d1a, type: 2}
   m_IsPrefabParent: 0
@@ -3438,6 +3449,11 @@ Prefab:
         type: 2}
       propertyPath: Loop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82000013909230898, guid: 651071d7c2881bc41956693fc14b5fbc,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 651071d7c2881bc41956693fc14b5fbc, type: 2}
