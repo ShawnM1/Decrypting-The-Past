@@ -527,8 +527,9 @@ AudioSource:
   m_GameObject: {fileID: 1000013599931132}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: da33085746a2a2244926f46d8c836cf4, type: 3}
+  OutputAudioMixerGroup: {fileID: 243000011419435264, guid: 661e58f688c5ebf4a914ba864b2726bd,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 2c40ce1d52f0ee449a732533d15565bc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -746,7 +747,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 15200000, guid: da33085746a2a2244926f46d8c836cf4, type: 3}
+  m_Texture: {fileID: 15200000, guid: 2c40ce1d52f0ee449a732533d15565bc, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -957,7 +958,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114000011831076638}
-        m_MethodName: goToScene
+        m_MethodName: goToSceneClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1009,7 +1010,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114000011528557992}
-        m_MethodName: goToScene
+        m_MethodName: goToSceneClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1883,7 +1884,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114000011831076638}
-        m_MethodName: goToScene
+        m_MethodName: goToSceneClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

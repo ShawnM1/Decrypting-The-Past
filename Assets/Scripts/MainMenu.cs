@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour {
     {
         //Prompt incase save file exists already
         SaveContainer.Instance.CreateNewSaveFile("test.dtp");
-        StartCoroutine(GoToScene.GoToSceneEnumerator("CaesarCipher"));
+        GoToScene.goToScene("CaesarCipher");
     }
 
     public void ClickToLoadFile()

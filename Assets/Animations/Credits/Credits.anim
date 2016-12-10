@@ -332,7 +332,7 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 36.75
-    functionName: goToScene
+    functionName: goToSceneClick
     data: MainMenuScene
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

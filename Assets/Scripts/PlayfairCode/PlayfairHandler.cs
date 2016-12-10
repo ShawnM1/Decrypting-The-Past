@@ -141,8 +141,8 @@ public class PlayfairHandler : ProblemHandler
 
     public override void OnAllProblemsSolved()
     {
-        SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
+        SaveContainer.Instance.SaveFile.PlayfairCompleted = true;
+        SaveContainer.Instance.SaveFile.PlayfairCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
     }
 

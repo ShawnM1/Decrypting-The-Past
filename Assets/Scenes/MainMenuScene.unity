@@ -423,7 +423,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 936426870}
-        m_MethodName: goToScene
+        m_MethodName: goToSceneClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

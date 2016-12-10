@@ -471,14 +471,14 @@ class ADFGX_Cipher : ProblemHandler
     }
     public override void OnAllProblemsSolved()
     {
-        SaveContainer.Instance.SaveFile.CaesarCompleted = true;
-        SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
+        SaveContainer.Instance.SaveFile.ADFGXCompleted = true;
+        SaveContainer.Instance.SaveFile.ADFGXCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
         HUD.SetVictoryButtonEvent("Go To Credits", GoToCredits);
     }
     void GoToCredits()
     {
-        StartCoroutine(GoToScene.GoToSceneEnumerator("CreditsScreen"));
+        GoToScene.goToScene("CreditsScreen");
     }
 
     public override void UpdateUI()

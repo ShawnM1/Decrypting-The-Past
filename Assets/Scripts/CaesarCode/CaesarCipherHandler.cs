@@ -70,7 +70,7 @@ public class CaesarCipherHandler : ProblemHandler {
 
     void goToNextLevel()
     {
-        StartCoroutine(GoToScene.GoToSceneEnumerator("TimeLineMenuScene"));
+        GoToScene.goToScene("TimeLineMenuScene");
     }
 
     public override string GenerateCipherText()

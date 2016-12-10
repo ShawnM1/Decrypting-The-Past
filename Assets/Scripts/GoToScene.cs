@@ -4,9 +4,34 @@ using UnityEngine.SceneManagement;
 
 public class GoToScene : MonoBehaviour {
 
-	public void goToScene(string sceneName)
+    public void goToSceneClick(string sceneName)
     {
-        StartCoroutine(GoToSceneEnumerator(sceneName));
+        if (sceneName == "MainMenuScene")
+        {
+            GameObject[] objs = GameObject.FindGameObjectsWithTag("Data");
+            for (int i = 0; i < objs.Length; i++)
+            {
+                Destroy(objs[i]);
+            }
+        }
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
+        Debug.Log("Loading complete");
+    }
+	public static void goToScene(string sceneName)
+    {
+        if (sceneName == "MainMenuScene")
+        {
+            GameObject[] objs = GameObject.FindGameObjectsWithTag("Data");
+            for (int i = 0; i < objs.Length; i++)
+            {
+                Destroy(objs[i]);
+            }
+        }
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
+        Debug.Log("Loading complete");
+        //StartCoroutine(GoToSceneEnumerator(sceneName));
     }
     public static IEnumerator GoToSceneEnumerator(string sceneName)
     {

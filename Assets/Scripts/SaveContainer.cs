@@ -29,7 +29,7 @@ public class SaveContainer : MonoBehaviour {
             FileStream stream = File.Open(originalPath, FileMode.Open);
             SaveFile = (SaveFile)bf.Deserialize(stream);
             stream.Close();
-            StartCoroutine(GoToScene.GoToSceneEnumerator("TimeLineMenuScene"));
+            GoToScene.goToScene("TimeLineMenuScene");
         }
     }
     public void CreateNewSaveFile(string fileName)
