@@ -13,7 +13,7 @@ public class SaveContainer : MonoBehaviour {
     {
      // if we are playing from editor, create fake save file
 #if DEBUG
-        CreateNewSaveFile("test.dtp");
+        //CreateNewSaveFile("test.dtp");
 #endif
     }
     /// <summary>
@@ -56,7 +56,14 @@ public class SaveContainer : MonoBehaviour {
     {
         get
         {
-            return instance;
+            if (instance == null)
+            {
+                return new SaveContainer();
+            }
+            else
+            {
+                return instance;
+            }
         }
     }
     private void Awake()
@@ -64,11 +71,14 @@ public class SaveContainer : MonoBehaviour {
         // if the singleton hasn't been initialized yet. 
         // If thre is an instance and instance isn't this, then destroy
         // the other instance and make this the instance
+        //if (instance != ull && instance != this)
+        print("Instance: " + instance + "Are we instantce?: " + (instance != this));
         if (instance != null && instance != this)
         {
+            print("Destroy Called");
             Destroy(this.gameObject);
         }
-
+        print("Singleton Awwake Called");
         instance = this;
         DontDestroyOnLoad(this.gameObject);
     }

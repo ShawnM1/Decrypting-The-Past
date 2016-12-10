@@ -5,6 +5,7 @@ using System.Collections;
 public class MainMenu : MonoBehaviour {
 
     public Button LoadButton;
+    public GameObject SaveContainerPrefab;
 	// Use this for initialization
 	void Start () {
 	    if(SaveContainer.DoSaveFilesExist())
