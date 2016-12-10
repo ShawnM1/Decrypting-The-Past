@@ -152,6 +152,13 @@ public class HUD : MonoBehaviour {
         victoryScreen.transform.FindChild("VictoryText").GetComponent<Text>().text = victoryTime;
         print(GameTimer.getTimeInSeconds());
     }
+    public static void SetVictoryButtonEvent(string message, UnityAction action)
+    {
+        Button b = victoryScreen.transform.FindChild("GoToNextLevelButton").GetComponent<Button>();
+        b.onClick.RemoveAllListeners();
+        b.onClick.AddListener(action);
+        victoryScreen.transform.FindChild("GoToNextLevelButton").transform.FindChild("Text").GetComponent<Text>().text = message;
+    }
     public static void HideEverything()
     {
         print("Hiding HUD");

@@ -22,9 +22,9 @@ class ADFGX_Cipher : ProblemHandler
     {
         fillMatrix();
         PopulateWordDictionary("Car", "Hi", "Rob");
-        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
-        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption));
-        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption));
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption, CipherType.ADFGX));
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption, CipherType.ADFGX));
+        AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption, CipherType.ADFGX));
         GameObject.FindObjectOfType<ADFGXMatrix>().injectADFGX(matrix);
         HUD.ShowInfoBox();
         base.Start();
@@ -474,6 +474,11 @@ class ADFGX_Cipher : ProblemHandler
         SaveContainer.Instance.SaveFile.CaesarCompleted = true;
         SaveContainer.Instance.SaveFile.CaesarCompletionTime = (int)GameTimer.getTimeInSeconds();
         SaveContainer.Instance.SaveDataToFile();
+        HUD.SetVictoryButtonEvent("Go To Credits", GoToCredits);
+    }
+    void GoToCredits()
+    {
+        StartCoroutine(GoToScene.GoToSceneEnumerator("CreditsScreen"));
     }
 
     public override void UpdateUI()
@@ -490,7 +495,6 @@ class ADFGX_Cipher : ProblemHandler
     {
         return "";
     }
-
     public override void ProblemSetup(ProblemData data)
     {
         fillMatrix();

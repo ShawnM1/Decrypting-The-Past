@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayFair.unity
   - enabled: 1
     path: Assets/Scenes/TimeLineMenuScene.unity
+  - enabled: 1
+    path: Assets/Scenes/CreditsScreen.unity
