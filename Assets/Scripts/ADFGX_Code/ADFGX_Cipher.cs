@@ -21,7 +21,7 @@ class ADFGX_Cipher : ProblemHandler
     void Start()
     {
         fillMatrix();
-        PopulateWordDictionary("Car", "Hi", "Rob");
+        PopulateWordDictionary("Iamagod", "Hi", "Rob");
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption, CipherType.ADFGX));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Decryption, CipherType.ADFGX));
         AddProblem(new ProblemData(this, generateRandomKey(), TextType.Encryption, CipherType.ADFGX));
